@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to HomeLuxe.in</title>
+    <link rel="stylesheet" href="default.css" type="text/css">
+
+    <meta name=viewport content="width=device-width, initial-scale=1">
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="fullPageJS/jquery.fullPage.css"/>
+    <link rel="stylesheet" type="text/css" href="fontAwesome/css/font-awesome.css"/>
+
+    <script src="jquery.min.js"></script>
+    <script src="jquery-ui.min.js"></script>
+
+
+    <script type="text/javascript" src="fullPageJS/jquery.slimscroll.min.js"></script>
+    <script type="text/javascript" src="fullPageJS/jquery.fullPage.min.js"></script>
+
+    <script type="text/javascript">
+
+
+        $(document).ready(function () {
+
+            $('#fullpage').fullpage({
+                anchors: ['introductionX', 'howItWorksX', 'styleMatchX', 'whoWeAreX', 'contactUsX'],
+                sectionsColor: ['#E9E9EB', '#FAFAFA', '#E9E9EB', '#DDD', '#E9E9EB'],
+                navigation: true,
+                navigationPosition: 'right',
+                navigationTooltips: ['Introduction', 'How It Works', 'Unsure About Style?', 'Who We Are', 'Call A Designer'],
+                normalScrollElements: ['#stepBox', '.footer'],
+                autoScrolling: false,
+                fitToSection: false
+
+            });
+
+            $(".contactSubmit").click(function (event) {
+
+                event.preventDefault();
+                var name = encodeURIComponent(document.getElementById("NAME").value);
+                var email = encodeURIComponent(document.getElementById("EMAIL").value);
+                var phone = encodeURIComponent(document.getElementById("PHONE").value);
+                var message = encodeURIComponent(document.getElementById("MESSAGE").value);
+
+                var dataString = 'name=' + name + '&email=' + email + '&phone=' + phone + '&message=' + message;
+                console.log(dataString);
+                if (name == '' || email == '' || phone == '') {
+                    alert("Please fill all the details!");
+                } else {
+                    $.ajax({
+                        type: "GET",
+                        url: "send.php",
+                        data: dataString,
+                        success: function (html) {
+
+                            $('.contactSuccess').fadeIn(500);
+                            $('.contactSubmit').fadeOut(500);
+                        }
+                    });
+                }
+                return false;
+            });
+
+
+            var menuState = false;
+            var loginPanelState = false;
+
+            $(".menuTrigger").click(function () {
+                if (!menuState)
+                    menuOpen();
+                else
+                    menuClose();
+            });
+
+
+            $(".loginButton").click(function () {
+                if (!loginPanelState)
+                    loginPanelOpen();
+                else
+                    loginPanelClose();
+            });
+
+            $(".menuContainer").click(function () {
+                if (menuState) {
+                    menuClose();
+                }
+            });
+
+
+            function loginPanelClose() {
+                loginPanelState = false;
+                $(".loginPanel").stop(true, true).fadeOut(200);
+            }
+
+            function loginPanelOpen() {
+                loginPanelState = true;
+                $(".loginPanel").stop(true, true).fadeIn(200);
+            }
+
+            $(".loginPanel").on('click', function (e) {
+                if (e.target !== this)
+                    return;
+                loginPanelClose();
+            });
+
+            function menuClose() {
+                menuState = false;
+
+                $(".menuCloseFeedback").stop(true, true).animate({opacity: 0}, 175);
+                $(".menuContainer").stop(true, true).fadeOut(175);
+                $(".menu").stop(true, true).animate({left: '-270px'}, 175);
+                $("#fullpage").stop(true, true).animate({left: '0px'}, 175);
+            }
+
+            function menuOpen() {
+                menuState = true;
+                $(".menuCloseFeedback").stop(true, true).animate({opacity: 1}, 250);
+                $(".menuContainer").stop(true, true).fadeIn(250);
+                $(".menu").stop(true, true).animate({left: '0px'}, 250);
+                $("#fullpage").stop(true, true).animate({left: '100px'}, 250);
+            }
+
+            $('.bounce').click(function () {
+                menuClose();
+                $("html, body").delay(500).animate({
+                    scrollTop: $('.howItWorksSection').offset().top - 40
+                }, 1000);
+            });
+
+
+            $('.homeButton').click(function () {
+                menuClose();
+                $("html, body").delay(500).animate({
+                    scrollTop: $('.introSection').offset().top - 40
+                }, 1000);
+            });
+
+            $('.howItWorksButton').click(function () {
+                menuClose();
+                $("html, body").delay(500).animate({
+                    scrollTop: $('.howItWorksSection').offset().top - 40
+                }, 1000);
+            });
+            $('.whoWeAreButton').click(function () {
+                menuClose();
+                $("html, body").delay(500).animate({
+                    scrollTop: $('.whoWeAreSection').offset().top - 40
+                }, 1000);
+            });
+            $('.contactUsButton').click(function () {
+                menuClose();
+                $("html, body").delay(500).animate({
+                    scrollTop: $('.contactUsSection').offset().top - 40
+                }, 1000);
+            });
+            $('.logoButton').click(function () {
+                menuClose();
+
+                $("html, body").delay(500).animate({
+                    scrollTop: $('.introSection').offset().top - 40
+                }, 1000);
+            });
+
+            $('.browseOurStylesButton').click(function () {
+                window.location = 'browse.php';
+            });
+
+            $('.findYourStyleButton').click(function () {
+                window.location = 'quiz.html';
+            });
+
+        });
+
+
+    </script>
+
+    <style>
+
+        .introSection {
+            overflow: hidden !important;
+            max-height: 700px !important;
+            background: url('images/SLIDE1.jpg') no-repeat;
+            background-size: 100% auto;
+        }
+
+        .logoButton {
+            margin: 0 auto;
+            margin-top: 12.5px;
+            height: 35px;
+            cursor: pointer;
+        }
+
+        .headerSpacer {
+            height: 100%;
+            width: 38%;
+        }
+
+        .spacerLeft {
+            float: left;
+        }
+
+        .spacerRight {
+            float: right;
+        }
+
+        .introGetStarted {
+            position: absolute;
+            bottom: 100px;
+            right: 120px;
+            z-index: 9999;
+            box-shadow: none;
+        }
+
+        .diamond-image {
+            width: 150px;
+            height: 150px;
+        }
+
+        .diamond-box {
+            width: 200px;
+            height: 230px;
+            display: inline-block;
+            vertical-align: center;
+            margin-left: 10px;
+            margin-right: 10px;
+            text-align: center;
+        }
+
+        .introText {
+            width: 100%;
+            margin-top: 20px;
+            box-sizing: border-box;
+            color: white;
+            font-size: 20px;
+        }
+
+        .dia-huge {
+            width: 0;
+            height: 0;
+            border-left: 50vw solid transparent;
+            border-right: 50vw solid transparent;
+            border-bottom: 50vw solid rgba(0, 0, 0, 0.7);
+            margin: 0 auto;
+
+        }
+
+        .HIWStep {
+            display: inline-block;
+            height: 400px;
+            width: 365px;
+            margin-left: 2px;
+            margin-right: 20px;
+            vertical-align: middle;
+            font-size: 17px;
+        }
+
+        .introContainer {
+            position: absolute;
+            bottom: 0;
+            text-align: center;
+            width: 100%;
+            padding-bottom: 40px;
+        }
+
+        .dia-huge1 {
+            width: 0;
+            height: 0;
+            border-left: 20vw solid transparent;
+            border-right: 20vw solid transparent;
+            border-bottom: 20vw solid rgba(255, 255, 255, .8);
+            float: right;
+            margin-right: -100px;
+
+        }
+
+        .diamond-text {
+            width: 80%;
+            color: #FFF;
+            font-family: RobotoLight;
+            text-transform: uppercase;
+            font-size: 20px;
+            display: inline-block;
+            margin-top: 10px;
+            text-shadow: 0px 0px 10px 10px black;
+        }
+
+        .dia-huge2 {
+            width: 0;
+            height: 0;
+            border-left: 20vw solid transparent;
+            border-right: 20vw solid transparent;
+            border-bottom: 20vw solid rgba(154, 205, 50, 0.6);
+            float: left;
+            margin-left: -100px;
+        }
+
+        .HIWContainer {
+            display: inline-block;
+            margin-top: 30px;
+        }
+
+        .whoWeAreContainer {
+            display: inline-block;
+            height: 600px;
+            vertical-align: top !important;
+            width: 400px;
+            background: rgba(0, 0, 0, 0.05);
+            margin-left: 5px;
+            margin-right: 5px;
+            vertical-align: middle;
+            font-size: 16px;
+            padding: 30px;
+            box-sizing: border-box;
+        }
+
+        .executive-name {
+            font-size: 22px;
+            width: 100%;
+            font-weight: bold;
+        }
+
+        .executive-position {
+            font-size: 18px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .executive-image-outer {
+            width: 170px;
+            height: 170px;
+            margin: 0 auto;
+            margin-bottom: 15px;
+            overflow: hidden;
+            border-radius: 85px;
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .executive-image-inner {
+            width: 150px;
+            height: 150px;
+            margin: 10px;
+
+            overflow: hidden;
+            border-radius: 75px;
+        }
+
+        .diamondContainer {
+            display: inline-block;
+            min-height: 10px;
+        }
+
+        .diaCont {
+            position: absolute;
+            bottom: 0;
+            text-align: center;
+            width: 100%;
+        }
+
+        .showMobile {
+            display: none;
+        }
+
+        .addressContainer, .contactContainer {
+            width: 500px;
+            height: 500px;
+            overflow: hidden;
+            display: inline-block;
+            text-align: center;
+            margin: 10px;
+            margin-top: 20px;
+            vertical-align: top;
+            background: #EEE;
+        }
+
+        .footerFullWidthAligner {
+            width: 1060px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.1);
+            height: 100%;
+            text-align: left;
+        }
+
+        .bounce {
+            margin-top: 70px;
+        }
+
+        .footerBox {
+            height: 100%;
+            padding-left: 20px;
+            padding-right: 20px;
+            background: rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        @media only screen and (max-width: 800px) {
+            html, body {
+                width: 100%;
+                height: 100%;
+                min-width: 300px;
+                overflow-y: auto;
+            }
+
+            .HIWBox {
+                width: 100%;
+                height: 250px;
+                box-sizing: border-box;
+                display: inline-block;
+                font-size: 40px;
+                padding: 30px;
+                margin-top: 30px;
+                background: green;
+            }
+
+            .footerBox {
+                width: 100%;
+                padding-left: 20px;
+                padding-right: 20px;
+                background: rgba(0, 0, 0, 0.1);
+                display: inline-block;
+                vertical-align: middle;
+                float: top;
+            }
+
+            .footerFullWidthAligner {
+                width: 100%;
+                margin: 0 auto;
+                background: rgba(0, 0, 0, 0.1);
+                height: 100%;
+                text-align: left;
+            }
+
+            .addressContainer, .contactContainer {
+                width: 95%;
+                height: auto;
+                padding: 10px;
+
+                display: inline-block;
+                text-align: center;
+                margin: 0 auto;
+                margin-top: 20px;
+                vertical-align: top;
+                background: #EEE;
+            }
+
+            .whoWeAreContainer {
+                width: 95%;
+                margin: 0 auto;
+                padding: 20px;
+                margin-top: 20px;
+                font-size: 17px;
+                min-height: 10px;
+                height: inherit;
+                display: inline-block;
+            }
+
+            .HIWStep {
+                width: 100%;
+                margin: 0 auto;
+                height: auto;
+                display: inline-block;
+                margin-bottom: 20px;
+            }
+
+            .HIWStepTitle {
+                font-size: 20px;
+            }
+
+            .HIWText {
+                font-size: 16px;
+            }
+
+            .HIWImage {
+                width: 130px;
+                height: 130px;
+            }
+
+            .executive-name {
+                font-size: 22px;
+                width: 100%;
+                font-weight: bold;
+            }
+
+            .executive-position {
+                font-size: 18px;
+                width: 100%;
+                margin-bottom: 20px;
+            }
+
+            .executive-image-outer {
+                width: 140px;
+                height: 140px;
+                margin: 0 auto;
+                margin-bottom: 15px;
+                overflow: hidden;
+                border-radius: 85px;
+                background: rgba(0, 0, 0, 0.1);
+            }
+
+            .executive-image-inner {
+                width: 120px;
+                height: 120px;
+                margin: 10px;
+
+                overflow: hidden;
+                border-radius: 75px;
+            }
+
+            .dia-huge {
+                width: 0;
+                height: 0;
+                border-left: 40vw solid transparent;
+                border-right: 40vw solid transparent;
+                border-bottom: 40vw solid rgba(255, 255, 255, 1);
+                margin: 0 auto;
+
+            }
+
+            .introContainer {
+                padding-bottom: 0px;
+            }
+
+            .screen {
+                background: rgba(0, 0, 0, 0.5);
+            }
+
+            .diamond-text {
+                width: 100%;
+                color: #FFF;
+                font-family: RobotoLight;
+                text-transform: uppercase;
+                font-size: 15px;
+                display: inline-block;
+                margin-top: 5px;
+                text-shadow: 0px 0px 10px 10px black;
+            }
+
+            .introText {
+                font-size: 4vw;
+                margin-top: 50px;
+
+                margin-bottom: 20px;
+            }
+
+            .sectionTitle {
+                width: 90%;
+                margin: 0 auto;
+            }
+
+            .sectionLine {
+                width: 90%;
+                margin: 0 auto;
+                margin-bottom: 40px;
+                margin-top: 40px;
+            }
+
+            .diamond-image {
+                width: 100px;
+                height: 100px;
+            }
+
+            .bounce {
+                margin-top: 40px;
+            }
+
+            .diamond-box {
+                margin: 0px;
+                width: 100px;
+                height: 130px;
+                vertical-align: middle;
+            }
+
+            .headerSpacer {
+                width: 150px;
+            }
+
+            .introSection {
+                background: url('images/SLIDE1.jpg') no-repeat;
+                background-size: auto 100%;
+            }
+
+            .logoButton {
+                height: 25px;
+                margin-top: 19.5px;
+            }
+
+            .introGetStarted {
+                position: static;
+                margin: 0 auto;
+                float: top;
+                box-shadow: none;
+            }
+
+            .hideMobile {
+                display: none;
+            }
+
+            .showMobile {
+                display: initial;
+            }
+
+            .footerBlocksContainer {
+                display: none;
+            }
+
+        }
+
+        @media only screen
+        and (min-device-width: 768px)
+        and (max-device-width: 1024px) {
+
+            .bounce {
+                margin-top: 100px;
+            }
+
+            .HIWStep {
+                width: 70%;
+            }
+
+            .whoWeAreContainer {
+                width: 70%;
+            }
+
+            .contactContainer, .addressContainer {
+                width: 70%;
+            }
+
+            .introText {
+                font-size: 25px;
+                margin-bottom: 150px;
+                margin-top: 150px;
+            }
+
+            .diamond-box {
+                margin: 20px;
+                width: 160px;
+            }
+
+            .diamond-image {
+                width: 160px;
+                height: 160px;
+            }
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="header">
+
+    <div class="headerSpacer spacerLeft">
+
+        <div class="menuBox menuTrigger">
+            <i class="fa fa-caret-left menuButton menuCloseFeedback" style="margin-right: 5px; opacity: 0;"></i>
+
+            <img src="images/MENU.png" style="height: 30px; width: 30px; float: left; margin-top: 15px;">
+            <div class="menuTriggerText">
+                MENU
+            </div>
+        </div>
+    </div>
+
+
+    <img class='logoButton' src="images/logo.png">
+
+    <div class="headerSpacer spacerRight ">
+        <div class="menuBox menuLogin hideMobile loginButton">
+            <div class="menuTriggerText">
+                LOGIN/SIGNUP
+            </div>
+        </div>
+        <div class="menuBox hideMobile menuLogin" style="text-align: center; padding-left: 0px; padding-right: 0px;">
+            <div class="skewMe" style=" height: 100%;
+            width: 80px; background: #878787 ;
+            opacity: 0.1;
+             transform: skew(-30deg, 0deg);  position: absolute; margin-left: 30px;"></div>
+            <div class="menuTriggerText boxMe contactUsButton"
+                 style="position: relative; z-index: 100; font-family: RobotoRegular;">
+                CONTACT US
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+<div class="menuContainer"></div>
+
+<div class="menu">
+    <div class="menuOption homeButton">Home</div>
+    <div class="menuOption findYourStyleButton">Find Your Style</div>
+    <div class="menuOption browseOurStylesButton">Browse Our Styles</div>
+    <div class="menuOption howItWorksButton">How It Works</div>
+    <div class="menuOption whoWeAreButton">Who We Are</div>
+    <div class="menuOption contactUsButton">Contact Us</div>
+</div>
+
+<div class="loginPanel">
+    <div class="loginContainer">
+        <div class="loginSelect">LOGIN</div>
+        <div class="loginSelect" style="font-size: 17px; margin-top: 15px; margin-bottom: 15px; ">Sign in to see
+            information about your project and to communicate with us.<br><br><br><br><b>COMING SOON!</b>
+        </div>
+
+        <div class="loginTab" style='display: none;'>
+            <input type='text' class="loginInput" placeholder="EMAIL ADDRESS">
+            <input type='password' class="loginInput" placeholder="PASSWORD">
+
+            <div class="getStartedButton" style="">SIGN IN
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="left-menu"></div>
+
+<div id="fullpage">
+    <div class="section introSection" id="section0">
+        <div class="screen1" style="z-index: 70;">
+            <div class="diaCont">
+                <div class="dia-huge"></div>
+            </div>
+        </div>
+
+        <div class="screen1 hideMobile" style="z-index: 80;">
+            <div class="diaCont ">
+                <div class="dia-huge1"></div>
+            </div>
+        </div>
+
+        <div class="screen1 hideMobile" style="z-index: 85;">
+            <div class="diaCont">
+                <div class="dia-huge2"></div>
+            </div>
+        </div>
+
+        <div class="getStartedButton introGetStarted findYourStyleButton hideMobile">
+            FIND YOUR STYLE
+        </div>
+
+        <div class="screen">
+            <div class="introContainer">
+
+                <div class="diamondContainer">
+                    <div class="diamond-box">
+                        <img src="images/intro1.png" class="diamond-image">
+                        <div class="diamond-text">Find Your Style</div>
+                    </div>
+
+                    <div class="diamond-box">
+                        <img src="images/intro2.png" class="diamond-image">
+                        <div class="diamond-text">Get It Personalized</div>
+                    </div>
+
+                    <div class="diamond-box">
+                        <img src="images/intro3.png" class="diamond-image">
+                        <div class="diamond-text">Enjoy Your New Home</div>
+                    </div>
+                </div>
+
+                <div class="introText">
+                    HomeLuxe.in combines an interactive design discovery<br> platform with a complete implementation
+                    service to<br> create your 'wow' home!
+                </div>
+
+                <div class="getStartedButton introGetStarted findYourStyleButton showMobile">
+                    FIND YOUR STYLE
+                </div>
+
+
+                <div class="bounce">
+                    <img src="images/scroll.png" style="height: 100%">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section HIWBox howItWorksSection" id="section1">
+        <div class="sectionTitle">HOW IT WORKS</div>
+        <div class="HIWContainer">
+            <div class="HIWStep">
+                <img src="images/HIW1.png" class="HIWImage">
+                <div class="HIWStepTitle">Find your style</div>
+                <div class="HIWText">
+                    Take our fun style quiz with 6 simple, visual questions that matches you to what we think your style
+                    fit
+                    is. With 20 current styles, and many more coming to you from our designers across the globe, we are
+                    pretty sure we will find you a style match.
+                    Or browse our styles and talk to our designer to find the perfect fit.
+                </div>
+
+            </div>
+
+            <div class="HIWStep">
+                <img src="images/HIW2.png" class="HIWImage">
+                <div class="HIWStepTitle">Personalize your look</div>
+                <div class="HIWText">
+                    Interact with our designers to bring in the elements that make this your own, unique space. Whether
+                    it is incorporating your old sari, kids awards, or ensuring the space is safe for your elderly
+                    parents.
+                    With wood and brand options for different budgets, we are confident of creating your home without
+                    compromising on quality or material.
+                </div>
+
+            </div>
+
+            <div class="HIWStep">
+                <img src="images/HIW3.png" class="HIWImage">
+                <div class="HIWStepTitle">Enjoy your new home</div>
+                <div class="HIWText">
+                    We order your products, begin works on site and keep you informed with weekly reports and photo
+                    updates.
+                    Coming soon - a user friendly customer portal. So while the anticipation builds up, there will be no
+                    surprises. We offer a 30 days snag fix period, to fix the little snags that crop up after we
+                    handover
+                    your home.
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="section" style="background: url('images/artwork.png') #FFF; background-size: 1200px 1200px;" id="section2">
+        <br>
+        <br>
+        <div class="sectionTitle">UNSURE WHAT YOUR STYLE IS?</div>
+        <div class="sectionLine" style="margin-top: 10px;">LET US HELP YOU FIND A MATCH</div>
+        <div class="getStartedButton findYourStyleButton">TAKE OUR STYLE QUIZ</div>
+        <div class="sectionLine">OR</div>
+        <div class="getStartedButton browseOurStylesButton" style="margin-top: 0px">BROWSE OUR STYLES</div>
+        <br>
+        <br>
+    </div>
+    <div class="section whoWeAreSection" id="section3">
+        <br>
+        <div class="sectionTitle">WHO WE ARE</div>
+        <div class="stepContainer">
+            <div class="whoWeAreContainer">
+
+                <div class="executive-image-outer">
+                    <div class="executive-image-inner">
+                        <img src="images/stuthi2.jpg" style="width: 100%;">
+                    </div>
+                </div>
+                <div class="executive-name">Stuthi Vijayaraghavan</div>
+                <div class="executive-position">Co-founder and Chief Executive Officer</div>
+
+                <div style="width: 100%; text-align: justify !important;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;What design does for Ravee, financial projections and strategy do for
+                    Stuthi. She has worked on
+                    three
+                    continents, managed teams of 2-350 and strongly believes that mainstream businesses need to be
+                    socially responsible while providing customer wow. She dabbles in languages, speaking 7 badly till
+                    date.DuoLingo and Lumosity are her new best friends.
+                    <br><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;Stuthi has spent 20 years alternating between consulting with the likes of
+                    Mckinsey, and building
+                    great P&Ls with firms like Lodha and LexisNexis. An alum of IIMB and Carnegie Mellon, with way too
+                    many
+                    degrees to be of real use.
+                    <br><br>
+                    <a href="https://www.linkedin.com/in/stuthi-vijayaraghavan-a75a97" target="_blank">Find on
+                        LinkedIn</a>
+                </div>
+            </div>
+
+
+            <div class="whoWeAreContainer" style="background: rgba(154,205,50,.85);">
+
+                <img src="images/bulb.png" style="width: 100px; margin-bottom: 15px; opacity: .9;">
+                <div style="font-size: 30px;"><b>What We Believe</b></div>
+                <br>
+                <div style="width: 100%; text-align: justify !important;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<b>Great design makes people happy</b>; happy people do great things! The
+                    stunning
+                    optimization of form and
+                    functionality lies somewhere between science and art. When you sit on the chair, sleep on the bed,
+                    look
+                    on the artwork, you will feel the balance. Enjoy it!
+                    <br><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<b>Homes and spaces will evolve with you</b>; let them tell your story, bear
+                    your
+                    scars, celebrate
+                    your
+                    memories; not look like another model flat with cheap imports
+                    <br><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;Sustainability is not a buzzword; we keep experimenting to make products and
+                    find <b>solutions that don't destroy the planet</b>. Plantation/recycled timber, solar, rain water
+                    harvesting, vertical
+                    gardens.
+                    You will see us trying elements of these with all our design.
+                </div>
+            </div>
+
+            <div class="whoWeAreContainer">
+                <div class="executive-image-outer">
+                    <div class="executive-image-inner">
+                        <img src="images/ravi.jpeg" style="width: 100%;">
+                    </div>
+                </div>
+                <div class="executive-name">Ravindra Kumar</div>
+                <div class="executive-position">Co-founder and Chief Design Officer</div>
+                <div style="width: 100%; text-align: justify !important;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;On any given day Ravee could be in a marine lab in the Arctic, designing
+                    resorts in Ubud, or buying toys at Channapatna. But you know for sure he will be absorbing every
+                    element and bring it to glorious
+                    sketch at his drawing board. He has traveled 158 countries at last count and remains a South
+                    Bangalore guy
+                    who cant live without great saaru.
+                    <br><br>&nbsp;&nbsp;&nbsp;&nbsp;The principal architect at Venkataraman Associates, the founder of
+                    Pragrup,
+                    an activist with RUST.
+                    <br><br><a href="https://www.linkedin.com/in/ravindra-kumar-b31897b" target="_blank">Find on
+                    LinkedIn</a>
+
+                </div>
+            </div>
+
+
+        </div>
+        <br>
+
+    </div>
+    <div class="section contactUsSection" style="background: url('images/artwork.png') #FFF; background-size: 1200px 1200px;" id="section4" >
+        <br>
+        <div class="sectionTitle">CONTACT US</div>
+
+
+        <div class="contactContainer">
+
+            <div class="addressText">
+                Leave us a message
+            </div>
+
+            <form action="send.php" id="contactUs">
+                <input class="contactInput" id="NAME" name="NAME" type="textbox" placeholder="Full Name">
+                <input class="contactInput" id="EMAIL" name="EMAIL" type="email" placeholder="Email Address">
+                <input class="contactInput" id="PHONE" name="PHONE" type="textbox" placeholder="Phone Number">
+                <textarea class="textInput" id="MESSAGE" name="MESSAGE" rows="3"
+                          placeholder="Type your message here"></textarea>
+                <div class="contactSuccess" style="display: none; margin-top: 20px; font-size: 20px;">We will contact
+                    you!
+                </div>
+                <div style="width: 100%; height: 10px;"></div>
+                <button class="contactSubmit">SEND</button>
+
+            </form>
+        </div>
+
+        <div class="addressContainer">
+
+            <div class="addressText">
+                Here's where you can find us
+            </div>
+
+            <iframe class="googleMap"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.80967415446!2d77.57576511482144!3d12.919950990889788!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae157614f434b7%3A0xf64a49807a3cb469!2shomeluxe.in!5e0!3m2!1sen!2sin!4v1456797762457"
+                    frameborder="0" style="border:0" allowfullscreen=""></iframe>
+
+            <div class="addressText">
+
+                <b>HOMELUXE.IN</b><br>
+
+                40th Cross Rd, 8th Block, Jayanagar, <br>
+                Bengaluru, Karnataka - 560070
+                <br>
+                (080) 4205 5580
+            </div>
+
+        </div>
+        <div class="emailContainer">
+            You can also email us on <a href="mailto:info@homeluxe.in?Subject=Contact%20Details" target="_top"><span
+                class="blue">info@homeluxe.in</span></a>
+        </div>
+        <br>
+    </div>
+    <div class="footer" id="footer">
+        <div class="footerFullWidth" style="height: 140px;">
+            <div class="footerFullWidthAligner">
+                <div class="footerBox">
+                    <img src="images/logoWhite.png" style="height: 50px; margin-top: 70px;">
+                </div>
+                <div class="footerBox" style="font-size: 30px; color: #666; box-sizing: border-box; padding-top: 80px;">
+
+                    <i class="fa fa-facebook-square"></i>
+                    <i class="fa fa-pinterest-square"></i>
+                    <i class="fa fa-instagram"></i>
+                    <i class="fa fa-twitter-square"></i>
+                    <i class="fa fa-youtube-square"></i>
+
+                </div>
+            </div>
+        </div>
+        <div class="footerBlocksContainer">
+            <div class="footerBlocks"></div>
+            <div class="footerBlocks"></div>
+            <div class="footerBlocks"></div>
+            <div class="footerBlocks"></div>
+        </div>
+        <div class="footerFullWidth" style="height: 60px;">
+            <div class="footerFullWidthAligner">
+                <div class="footerBox">
+                    <text style="font-family: RobotoLight; color: #FFF; font-size: 16px;">
+                        © 2016 HomeLuxe.in, Inc. All rights reserved.
+                    </text>
+                </div>
+                <div class="footerBox">
+                    <a href="tos.html">
+                        <text style="font-family: RobotoLight; color: #BBB; font-size: 16px;">
+                            Terms Of Service
+                        </text>
+                    </a>
+                </div>
+                <div class="footerBox">
+                    <a href="privacy.html">
+                        <text style="font-family: RobotoLight; color: #BBB; font-size: 16px;">
+                            Privacy Policy
+                        </text>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,127 @@
+<html>
+<body>
+<div id="fb-root"></div>
+
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+
+<style>
+    html {
+        font-family: 'Open Sans', sans-serif;
+    }
+</style>
+<script>
+    window.fbAsyncInit = function () {
+        FB.init({
+            appId: '607233152758333',
+            cookie: true,  // enable cookies to allow the server to access the session
+            xfbml: true,  // parse social plugins on this page
+            version: 'v2.6' // use graph api version 2.5
+        });
+
+        FB.Event.subscribe('auth.authResponseChange', function (response) {
+            if (response.status === 'connected') {
+                getUserInfo();
+                document.getElementById("message").innerHTML += "<br>Connected to Facebook";
+                //SUCCESS
+
+            }
+            else if (response.status === 'not_authorized') {
+                document.getElementById("message").innerHTML += "<br>Failed to Connect";
+
+                //FAILED
+            } else {
+                document.getElementById("message").innerHTML += "<br>Logged Out";
+
+                //UNKNOWN ERROR
+            }
+        });
+
+    };
+
+    function Login() {
+
+        FB.login(function (response) {
+            console.log(response);
+            if (response.authResponse) {
+                getUserInfo();
+            } else {
+                console.log('User cancelled login or did not fully authorize.');
+            }
+        }, {
+            scope: 'email,public_profile',
+            return_scopes: true
+        });
+
+    }
+
+
+    function getUserInfo() {
+        FB.api('/me?fields=name,picture,email,id,link', function (response) {
+
+            console.log(response);
+            var str = "<b>NAME</b> : " + response.name + "<br>";
+            str += "<b>LINK: </b>" + response.link + "<br>";
+            str += "<b>USER SCOPE ID</b>: </b>" + response.id + "<br>";
+            str += "<b>EMAIL:</b> " + response.email + "<br>";
+            str += "<input type='button' value='Logout' onclick='Logout();'/>";
+            document.getElementById("status").innerHTML += str;
+
+
+        });
+        getPhoto();
+    }
+    function getPhoto() {
+        FB.api('/me/picture?type=normal', function (response) {
+
+            var str = "<br/><img src='" + response.data.url + "'/>";
+            document.getElementById("myimage").innerHTML += str;
+
+        });
+
+    }
+    function Logout() {
+        FB.logout(function () {
+            document.location.reload();
+        });
+    }
+
+    // Load the SDK asynchronously
+    (function (d) {
+        var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+        if (d.getElementById(id)) {
+            return;
+        }
+        js = d.createElement('script');
+        js.id = id;
+        js.async = true;
+        js.src = "//connect.facebook.net/en_US/all.js";
+        ref.parentNode.insertBefore(js, ref);
+    }(document));
+
+</script>
+<div align="center">
+
+    <img src="http://i.stack.imgur.com/SoLOz.png"
+         style="cursor:pointer; height: 60px;" onclick="Login()"/>
+
+    <hr>
+    Status
+    <hr>
+    <div id="status">
+    </div>
+
+    <hr>
+    Profile Picture
+    <hr>
+    <div id="myimage">
+    </div>
+
+    <hr>
+    Logs
+    <hr>
+    <div id="message">
+    </div>
+
+</div>
+</body>
+</html>

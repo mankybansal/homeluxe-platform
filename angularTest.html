@@ -1,0 +1,27 @@
+<html>
+
+<script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+<script type="text/javascript">
+
+    answer_set = new Array();
+    answer_set.push(34);
+    answer_set.push(26);
+    answer_set.push(40);
+    answer_set.push(29);
+    answer_set.push(18);
+    answer_set.push(7);
+    $.ajax({
+        type: "POST",
+        contentType:"application/x-www-form-urlencoded",
+        data: {
+            'submit' : 1,
+            'token' : 'eyJhbGciOiJIUzI1NiJ9.MTQ1ODc2MzE2Mjc1NA.nOS_Oube4ekVW9tBq3bl0HbptMsQkMoxSdQI58cbRNo',
+            'answer_set' : answer_set.join()
+        },
+        url: "http://homeluxe.in:3000/quiz",
+        success: function (data) {
+            console.log(data);
+        }
+    });
+</script>
+</html>

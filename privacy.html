@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+
+    <link rel="stylesheet" href="default.css" type="text/css">
+    <link rel="stylesheet" href="animate.css" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="fontAwesome/css/font-awesome.css"/>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+
+    <meta charset="UTF-8">
+    <title>Privacy Policy| HomeLuxe</title>
+
+    <script src="jquery.min.js"></script>
+    <script type="text/javascript" src="jquery.adaptive-backgrounds.js"></script>
+
+
+    <script type="text/javascript">
+
+
+        $(document).ready(function () {
+
+
+            $('.howItWorksButton').click(function () {
+                window.location = 'index.html#howItWorks';
+            });
+            $('.whoWeAreButton').click(function () {
+                window.location = 'index.html#whoWeAre';
+            });
+            $('.contactUsButton').click(function () {
+                window.location = 'index.html#contactUs';
+            });
+            $('.callDesigner').click(function () {
+                window.location = 'index.html#contactUs';
+            });
+            $('.logoButton').click(function () {
+                window.location = 'index.html';
+            });
+
+            $('.browseOurStylesButton').click(function () {
+                window.location = 'browse.php';
+            });
+            $('.browseLooks').click(function () {
+                window.location = 'browse.php';
+            });
+
+            $('.findYourStyleButton').click(function () {
+                window.location = 'quiz.html';
+            });
+
+            var menuState = false;
+            var loginPanelState = false;
+
+            $(".menuTrigger").click(function () {
+                if (!menuState)
+                    menuOpen();
+                else
+                    menuClose();
+            });
+
+            $(".loginButton").click(function () {
+                if (!loginPanelState)
+                    loginPanelOpen();
+                else
+                    loginPanelClose();
+            });
+
+            $(".menuContainer").click(function () {
+                if (menuState) {
+                    menuClose();
+                }
+            });
+
+            $(".loginPanel").click(function () {
+                if (loginPanelState) {
+                    loginPanelClose();
+                }
+            });
+
+            $(".hoverHint").click(function () {
+                imagePanelOpen();
+            });
+
+
+            var imagePanelState = false;
+
+            function imagePanelClose() {
+                imagePanelState = false;
+                $(".imagePanel").stop(true, true).fadeOut(350);
+            }
+
+            function imagePanelOpen() {
+                $(".imageContainer").css("background", "url('images/styles/" + images[currentImage] + "')");
+                $(".imageContainer").css("background-size", "contain");
+                $(".imageContainer").css("background-repeat", "no-repeat");
+                $(".imageContainer").css("background-position", "center");
+                $.adaptiveBackground.run();
+                imagePanelState = true;
+                $(".imagePanel").stop(true, true).fadeIn(350);
+            }
+
+
+            function loginPanelClose() {
+                loginPanelState = false;
+                $(".loginPanel").stop(true, true).fadeOut(350);
+            }
+
+            function loginPanelOpen() {
+                loginPanelState = true;
+                $(".loginPanel").stop(true, true).fadeIn(350);
+            }
+
+            $(".imagePanel").on('click', function (e) {
+                if (e.target !== this)
+                    return;
+                imagePanelClose();
+            });
+
+
+            $(".loginPanel").on('click', function (e) {
+                if (e.target !== this)
+                    return;
+                loginPanelClose();
+            });
+
+            function menuClose() {
+                menuState = false;
+
+                $(".menuCloseFeedback").stop(true, true).animate({opacity: 0}, 500);
+                $(".menuContainer").stop(true, true).fadeOut(350);
+                $(".menu").stop(true, true).animate({left: '-270px'}, 350);
+                $("#fullpage").stop(true, true).animate({left: '0px'}, 350);
+            }
+
+            function menuOpen() {
+                menuState = true;
+                $(".menuCloseFeedback").stop(true, true).animate({opacity: 1}, 500);
+                $(".menuContainer").stop(true, true).fadeIn(350);
+                $(".menu").stop(true, true).animate({left: '0px'}, 350);
+                $("#fullpage").stop(true, true).animate({left: '100px'}, 350);
+            }
+        });
+    </script>
+
+    <style>
+
+        @font-face {
+            font-family: SergoeLight;
+            src: url('fonts/SergoeLight.ttf');
+        }
+
+        @font-face {
+            font-family: RobotoLight;
+            src: url('fonts/roboto/Roboto-Light.ttf');
+        }
+
+        @font-face {
+            font-family: RobotoMedium;
+            src: url('fonts/roboto/Roboto-Medium.ttf');
+        }
+
+        @font-face {
+            font-family: RobotoRegular;
+            src: url('fonts/roboto/Roboto-Regular.ttf');
+        }
+
+        html, body {
+            -webkit-touch-callout: none; /* iOS Safari */
+            -webkit-user-select: none; /* Chrome/Safari/Opera */
+            -khtml-user-select: none; /* Konqueror */
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* IE/Edge */
+            user-select: none;
+            width: 100% !important;
+            height: 100%;
+            max-width: 100% !important;
+            outline: none;
+            padding: 0;
+            border: 0;
+            margin: 0;
+            min-width: 1000px;
+            background: url('images/artwork.png') #E9E9EB;
+            background-size: 1000px 1000px;
+            overflow: hidden !important;
+            font-family: RobotoRegular;
+            color: #333;
+            font-size: 20px;
+        }
+
+        .sectionPanel {
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+
+        .introTitle {
+            width: 100%;
+            text-align: center;
+            font-size: 40px;
+            margin-top: 30px;
+        }
+
+        .introSubTitle {
+            width: 100%;
+            color: #666;
+            text-align: center;
+            font-size: 20px;
+            margin-top: 10px;
+        }
+
+        .introPanel {
+            text-align: justify;
+            padding: 100px 150px 20px 150px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            color: #666;
+        }
+
+        .actionButton {
+            display: inline-block;
+            background: #468FDE;
+            color: #FFF;
+            font-size: 20px;
+            padding: 18px 30px 18px 30px;
+            margin-top: 50px;
+            box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+        }
+
+        .styleFound {
+            font-size: 25px;
+            color: #555;
+            width: 100%;
+            text-align: center;
+            margin-top: -50px;
+            font-family: RobotoLight;
+        }
+
+        .styleFoundDesc {
+            font-size: 17px;
+            color: #777;
+            margin: 0 auto;
+            margin-top: 10px;
+            width: 90%;
+            text-align: center;
+            font-family: RobotoLight;
+        }
+
+        .introIcon {
+            width: 140px;
+            height: 140px;
+            margin: 0 auto;
+            margin-top: 150px;
+        }
+
+        .footer {
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            height: 20px;
+            z-index: 100;
+            background: #CCC;
+        }
+
+        .quizProgress {
+            width: 0px;
+            height: 100%;
+            float: left;
+            transition: all ease .5s;
+            background: yellowgreen;
+        }
+
+        .questionCard {
+            display: none;
+            margin: 0 auto;
+            width: 80%;
+            height: 620px;
+            box-shadow: 0px 0px 100px rgba(0, 0, 0, 0.1);
+            background: white;
+            margin-top: 1000px;
+            box-sizing: border-box;
+            padding: 80px 60px 0px 60px;
+            transition: all ease .5s;
+        }
+
+        .resultCard {
+            display: none;
+            margin: 0 auto;
+            width: 80%;
+            overflow: hidden;
+            height: 620px;
+            box-shadow: 0px 0px 100px rgba(0, 0, 0, 0.1);
+            background: white;
+            margin-top: 1000px;
+            box-sizing: border-box;
+            padding: 80px 60px 0px 60px;
+            transition: all ease .5s;
+        }
+
+        .questionText {
+            font-size: 35px;
+            color: #666;
+            font-family: RobotoLight;
+            width: 100%;
+            padding: 0px 15px 0px 15px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .questionOptions {
+            width: 100%;
+            display: inline-block;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .optionImageContainer {
+            width: 200px;
+            height: 200px;
+            background: rgba(0, 0, 0, 0.1);
+            overflow: hidden !important;
+        }
+
+        .optionImage {
+            height: 100%;
+            width: auto;
+        }
+
+        .optionText {
+            float: top;
+            width: 100%;
+            height: 60px;
+            box-sizing: border-box;
+            padding-top: 17px;
+
+        }
+
+        .option {
+            display: inline-block;
+            vertical-align: middle;
+            margin: 15px;
+            width: 200px;
+            height: 260px;
+            background: rgba(0, 0, 0, 0.1);
+            transition: all ease .5s;
+            cursor: pointer;
+        }
+
+        .option:hover {
+            background: rgba(0, 0, 0, 0.05);
+            box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="header">
+
+    <div class="menuBox menuTrigger">
+        <i class="fa fa-caret-left menuButton menuCloseFeedback" style="margin-right: 5px; opacity: 0;"></i>
+
+        <img src="images/MENU.png" style="height: 30px; width: 30px; float: left; margin-top: 15px;">
+        <div class="menuTriggerText">
+            MENU
+        </div>
+    </div>
+
+    <img class='logoButton' src="images/logo.png"
+         style="float: left; height: 35px; margin-top: 12.5px; margin-left: 15px;margin-right: 30px;">
+
+    <div class="menuBox menuLogin loginButton">
+        <div class="menuTriggerText">
+            LOGIN/SIGNUP
+        </div>
+    </div>
+    <div class="menuBox menuLogin" style="text-align: center; padding-left: 0px; padding-right: 0px;">
+        <div class="skewMe" style=" height: 100%;
+            width: 80px; background: #878787 ;
+            opacity: 0.1;
+             transform: skew(-30deg, 0deg);  position: absolute; margin-left: 30px;">
+
+        </div>
+
+        <div class="menuTriggerText boxMe contactUsButton"
+             style="position: relative; z-index: 100; font-family: RobotoRegular;">
+            CONTACT US
+        </div>
+    </div>
+
+    <div class="menuBox">
+        <div class="menuTriggerTextLink">
+            TERMS OF SERVICE
+        </div>
+    </div>
+
+</div>
+
+<div class="menuContainer">
+
+</div>
+
+<div class="menu">
+    <div class="menuOption findYourStyleButton">Find Your Style</div>
+    <div class="menuOption browseOurStylesButton">Browse Our Styles</div>
+    <div class="menuOption howItWorksButton">How It Works</div>
+    <div class="menuOption whoWeAreButton">Who We Are</div>
+    <div class="menuOption contactUsButton">Contact Us</div>
+</div>
+
+<div class="loginPanel">
+    <div class="loginContainer">
+        <div class="loginSelect">LOGIN</div>
+        <div class="loginSelect" style="font-size: 17px; margin-top: 15px; margin-bottom: 15px; ">Sign in to see
+            information about your project and to communicate with us.
+        </div>
+
+        <div class="loginTab">
+            <input type='text' class="loginInput" placeholder="EMAIL ADDRESS">
+            <input type='password' class="loginInput" placeholder="PASSWORD">
+
+            <div class="getStartedButton" style="">SIGN IN
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="introPanel sectionPanel animated fadeInRight" style="display: block;">
+    <h1> HomeLuxe</h1>
+
+    <h2>Privacy Policy</h2>
+    <h3>1. WE TAKE PRIVACY SERIOUSLY</h3>
+    We at homeluxe.in ("HomeLuxe," "we," "us," or "our") know that our customers ("you," "your," or "yourself") care
+    about how your personal information is used and shared, and we take your privacy very seriously. Please read the
+    following to learn more about our Privacy Policy. By visiting or using the www.homeluxe.in website and domain name,
+    any other linked pages, content and any other services we offer from time to time in connection with any of the
+    foregoing (collectively, the "Website"), you agree to the practices and policies set forth in this Privacy Policy,
+    and you hereby acknowledge and consent to our collection and use of your information as described in this Privacy
+    Policy.<br><br>
+    Our first promise to you is that we will not collect any information about you that we do not need to make your
+    experience at HomeLuxe delightful and will always protect all information about you. We comply with the privacy laws
+    in all regions that we operate in and do more to keep your information confidential. We do everything we reasonably
+    can to protect your rights of privacy on systems and the Website controlled by us, but we are not liable for any
+    unauthorised or unlawful disclosures of your personal and confidential information made by third parties who are not
+    subject to our control, for example advertisers and websites that have links to our Website. You should take note
+    that the information and privacy practices of our business partners, advertisers, sponsors or other sites to which
+    we provide hyperlinks, may be different from ours. This privacy policy is subject to change at any time without
+    notice. To make sure you are aware of any changes, please review this document periodically.
+    <h3>2. WHAT WE COLLECT</h3>
+    When you register on HomeLuxe, we collect some information about you, to complete your profile on HomeLuxe. This may
+    include some or all of the following:
+    <br>1. Information about your personal identity such as gender, marital status, age, preferences, likes and dislikes
+    etc.
+    <br>2. Your financial information such as your banking details and any information relating to your income and lifestyle
+    levels.
+    <br>3. Your contact details such as your physical addresses, postal addresses, telephone numbers etc.
+    <br> 4. In the case you connect with social networking sites (if so opted by you) (a) publicly available information of
+    you, likes and dislikes, etc. (b) Payment and Account Information: Your account history with us including (without
+    limitation) all billing information and communications, payment history etc. We maintain this in encrypted form on
+    secure servers. (c) Service Usage: Information about your navigation using our Services, for example the URLs of
+    websites, which you visit and from which you request downloads. (d) Log information such as your web request, IP
+    address, browser type, browser language, date and time of request. (e) Transactional Information: Transactional
+    history (other than banking details) about your e-commerce activities. (f) Correspondence Information: Content,
+    information about your correspondents, and the destination/origin of communications between you and any other person
+    using our Services, which include email communications, blog, chat room and discussion board communications, instant
+    message communications, experts forum communications, faxmail communications, membership of mailing lists etc. (g)
+    User IDs: Your usernames, passwords, email addresses and other security-related information used by you in relation
+    to our Services. (h) Stored Information: Data either created by you or by a third party and which you wish to store
+    on our servers such as image files, documents etc.
+    We only collect your Personal Information to conduct our business and to enable us to deliver and improve our
+    Services. We do not for any reason whatsoever sell your Personal Information to any third party or otherwise trade
+    on it.
+    <h3>3. WE DO NOT SHARE YOUR INFORMATION</h3>
+    We will only disclose your Personal Information in accordance with this Privacy Policy. If we want to use it for any
+    other purpose, we will obtain your prior written consent. If you decline to submit personal information to us, then
+    we will unfortunately not be in a position to provide the Services to you. Any of your information which you provide
+    when you use certain Services and are to an open, public environment or forum including (without limitation) any
+    blog, community or discussion board, is not confidential, does not constitute Personal Information, and is not
+    subject to protection under Privacy Policy. Since such public environments are accessible by third parties, it is
+    possible that third parties may collect and collate and use such information for their own purposes. You should
+    accordingly be careful when deciding to share any of your Personal Information in such public environments.
+    Information, which is disclosed publicly, is also shared with our affiliates, third party service providers,
+    sponsors of competitions etc. unless expressly stated otherwise. We are not liable to you or any third party for any
+    damages that you or any third party may suffer howsoever arising from your disclosure of Personal Information in any
+    public environment. You accordingly disclose information in a public environment at your own risk.
+    <h3>4. WHY WE NEED WHAT WE COLLECT</h3>
+    We collect your Profiling and Account Information for the following reasons: (a) We need your identity details,
+    contact details, banking information and account history to manage our relationship with you and provide Services to
+    you. We may use this information for suggesting products and promotional offers and schemes. We will only disclose
+    this information as provided below. (b) We use certain of your information in an aggregated form to compile
+    statistical and demographical profiles for our business and marketing activities. We may disclose such information
+    about you, provided that the information is in an aggregated form that is not capable of being used or interpreted
+    in such a manner as to identify you. We collect and store your Service Usage and Transactional Information to: (a)
+    determine and verify the Service Charges payable by you and to administer our relationship with you. (b) comply with
+    any statutory or regulatory requirement. (c) compile statistical and demographical profiles about you for our
+    business and marketing activities and to customise our Services to you. While we are entitled to use such
+    information about you for our own internal business purposes without limitation, we will only disclose it in an
+    aggregated form which is not capable of being used or interpreted in such a manner as to identify you; and (d)
+    monitor your use of our Services for the purposes of ensuring compliance with our Terms of Service. We collect and
+    store your Correspondence Information and Personal Identifiers to: (a) comply with our obligations under law; and
+    (b) monitor your use of our Services in order to ensure your compliance with our Terms of Service.
+    <h3>5. WHEN WE MAY NEED TO DISCLOSE YOUR INFORMATION</h3>
+    If we are required to intercept, disclose, monitor and/or store your Personal Information: (a) by law (b) to conduct
+    our business (c) to secure our systems and ensure the privacy of our users (d) to enforce our own rights, we will do
+    so in the manner as prescribed by law.<br><br>
+    Such interception, disclosure, monitoring and storage may take place without your knowledge. In that case, we will
+    not be liable to you or any third party for any damages howsoever arising from such interception, disclosure,
+    monitoring and storage. In order to ensure that all our Users comply with the Terms of Service, we may monitor your
+    Personal Information to the extent that this may be required to determine compliance and/or to identify instances of
+    non-compliance. To ensure that the security and integrity of our Services are safeguarded, we may monitor your
+    Personal Information. This monitoring may include (without limitation) the filtering of incoming and outgoing
+    electronic data messages to identify, limit and/or prevent the transmission of spam, viruses and/or unlawful,
+    defamatory, obscene or otherwise undesirable material or content. We may under certain circumstances procure an
+    element of the Services from a third party service provider. To the extent that it may be necessary, and solely for
+    the purposes of providing the Service to you, you agree that we may disclose to such third party any of your
+    Personal Information that may be necessary for the procurement of services from the third party.
+
+
+</div>
+
+</body>
+</html>
