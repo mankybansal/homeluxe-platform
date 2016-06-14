@@ -14,7 +14,7 @@ var jwt = require('jsonwebtoken');
 var bodyParser = require('body-parser');
 var sendgrid = require('sendgrid')('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');
 var db = require('seraph')({
-	server: "http://homeluxe.in:7474",
+	server: "http://localhost:7474",
 	user: "neo4j",
 	pass: "homeluxe@123"
 });
@@ -65,68 +65,8 @@ publicRoutes.post('/getToken', function(req,res) {
 	};
 	var token = jwt.sign(payload,superSecret);
 	res.json({
-		success : true,
+		status : 'Success',
 		token : token
-	});
-});
-
-publicRoutes.post('/login', function(req,res) {
-	/* Check for login details */
-	var predicate = {
-		email : req.body.email
-	};
-	db.find(predicate, function(err,results) {
-		if(err) {
-			console.log(err);
-			res.send(err);
-		} else {
-			res.send(results);
-		}
-	});
-});
-
-publicRoutes.post('/register', function(req,res) {
-	/* Check if user exists using email */
-	var predicate = {
-		email : req.body.email
-	};
-	db.find(predicate, function(err,results) {
-		if(err) {
-			console.log(err);
-			res.json(err);
-		} else {
-			/* Check if result array has length greater than 0 */
-			if(results.length == 0) {
-				/* Create user object */
-				newUser = {
-					name : req.body.username,
-					password : req.body.password,
-					email : req.body.email,
-					mobile : req.body.mobile
-				};
-
-				/* Save object to database */
-				db.save(newUser,'User',function(err,node) {
-					if(err) {
-						console.log(err);
-						res.send(err);
-					} else {
-						console.log(node);
-						res.json({
-							status : 'Success',
-							message : 'Successful Registeration'
-						});
-					}
-				});
-			} else {
-				/* User already exists */
-				var responseObject = {
-					status : 'Failed',
-					message : 'User exists'
-				}
-				res.send(responseObject);
-			}
-		}
 	});
 });
 
@@ -158,7 +98,7 @@ publicRoutes.use(function(req,res,next) {
 		jwt.verify(token, superSecret, function(err,decoded) {
 			if(err) {
 				res.json({
-					success : false,
+					status : 'Failed',
 					message : 'Invalid token detected'
 				});
 			} else {
@@ -170,7 +110,7 @@ publicRoutes.use(function(req,res,next) {
 		});
 	} else {
 		return res.status(403).send({
-			success : false,
+			status : 'Failed',
 			message : 'No token detected'
 		});
 	}
@@ -245,7 +185,10 @@ publicRoutes.post('/quiz', function(req,res) {
 				});
 			} else {
 				/* incomplete answer_set, send error */
-				res.send('Incomplete Answer set')
+				res.send({
+					status : 'Failed',
+					message : 'Incomplete Answer set'
+				});
 			}
 
 		}
@@ -274,25 +217,178 @@ app.use('/', publicRoutes);
 /*****************
 * Member Routes *
 *****************/
+memberRoutes.post('/register', function(req,res) {
+	// Check if minimal data is available
+	if(typeof req.body.name == 'undefined' || typeof req.body.email == 'undefined' || typeof req.body.mobile == 'undefined') {
+		res.send({
+			status : 'Failed',
+			message : 'Undefined data variables'
+		});
+		return;
+	}
+
+	// Check if user exists in database
+	var query = 'MATCH (u:User) WHERE u.email = {email} RETURN u;';
+	db.query(query, {email : req.body.email},function(err,results) {
+		if(err) {
+			throw err;
+		}
+		if(results.length == 0) {
+			// User doesn't exist. Create and insert.
+			// Create user object
+			var user = {
+				name : req.body.name,
+				email : req.body.email,
+				mobile : req.body.mobile,
+				oauth : req.body.oauth,
+				password : req.body.password,
+				profile_pic : req.body.profile_pic,
+				user_type : 'member'
+			};
+			db.save(user, 'User', function(err,node) {
+				if(err) {
+					throw err;
+				}
+				console.log('[USER CREATION] ' + node.name);
+				res.send({
+					status : 'Success',
+					message : 'User created successfully'
+				});
+			});
+		} else {
+			// User exists
+			res.send({
+				status : 'Failed',
+				message : 'User already exists'
+			});
+		}
+	});
+});
+
+memberRoutes.post('/login', function(req,res) {
+	// Check request for oAuth or password
+	if(typeof req.body.email == 'undefined') {
+		res.send({
+			status : 'Failed',
+			message : 'Invalid data'
+		});
+	} else {
+		// Check if oAuth exists in request
+		if(typeof req.body.oauth == 'undefined') {
+			// Check for password
+			var query = 'MATCH (u:User) WHERE u.email = {email} RETURN u LIMIT 1;';
+			db.query(query, {email : req.body.email}, function(err,results) {
+				if(err) {
+					console.log(err);
+				}
+				if(results.length == 0) {
+					// User does not exist
+					res.send({
+						status : 'Failed',
+						message : 'User does not exist'
+					});
+					return;
+				}
+				if(typeof results[0].password == 'undefined') {
+					// Wrong method of authentication
+					res.send({
+						status : 'Failed',
+						message : 'Wrong method of authentication'
+					});
+					return;
+				}
+				if(results[0].password == req.body.password) {
+					// True login
+					var payload = {
+						email : results[0].email,
+						userType : results[0].user_type,
+						generatedAt : (new Date).getTime()
+					};
+					var token = jwt.sign(payload,superSecret);
+					res.send({
+						status : 'Success',
+						message : 'Logged in successfully',
+						token : token
+					});
+				} else {
+					// Invalid login
+					res.send({
+						status : 'Failed',
+						message : 'Invalid combination'
+					});
+				}
+			});
+		} else {
+			// Check for oauth
+			var query = 'MATCH (u:User) WHERE u.email = {email} RETURN u LIMIT 1;';
+			db.query(query, {email : req.body.email}, function(err,results) {
+				if(err) {
+					console.log(err);
+				}
+				if(results.length == 0) {
+					// User does not exist
+					res.send({
+						status : 'Failed',
+						message : 'User does not exist'
+					});
+					return;
+				}
+				if(typeof results[0].oauth == 'undefined') {
+					// Wrong method of authentication
+					res.send({
+						status : 'Failed',
+						message : 'Wrong method of authentication'
+					});
+					return;
+				}
+				if(results[0].oauth == req.body.oauth) {
+					// True login
+					var payload = {
+						email : results[0].email,
+						userType : results[0].user_type,
+						generatedAt : (new Date).getTime()
+					};
+					var token = jwt.sign(payload,superSecret);
+					res.send({
+						status : 'Success',
+						message : 'Logged in successfully',
+						token : token
+					});
+				} else {
+					// Invalid login
+					res.send({
+						status : 'Failed',
+						message : 'Invalid combination'
+					});
+				}
+			});
+		}
+	}
+});
+
 memberRoutes.use(function(req,res,next) {
 	var token = req.headers['x-access-token'] || req.query.token || req.body.token;
 	if(token) {
 		jwt.verify(token, superSecret, function(err,decoded) {
 			if(err) {
 				res.json({
-					success : false,
+					status : 'Failed',
 					message : 'Invalid token detected'
 				});
 			} else {
-				/* Redis token check needs to go here */
-				/* Analytics grabs data here */
-				req.decoded = decoded;
-				next();
+				if(decoded.userType == 'member') {
+					next();
+				} else {
+					res.send({
+						status : 'Failed',
+						message : 'Forbidden endpoint'
+					});
+				}
 			}
 		});
 	} else {
 		return res.status(403).send({
-			success : false,
+			status : 'Failed',
 			message : 'No token detected'
 		});
 	}
