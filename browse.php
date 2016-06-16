@@ -313,10 +313,11 @@
             });
 
             $(".loginButton").click(function () {
-                if (!loginPanelState)
-                    loginPanelOpen();
-                else
-                    loginPanelClose();
+                window.location = "http://homeluxe.in/accounts"
+//                if (!loginPanelState)
+//                    loginPanelOpen();
+//                else
+//                    loginPanelClose();
             });
 
             $(".menuContainer").click(function () {

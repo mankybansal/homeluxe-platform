@@ -131,7 +131,7 @@ html, body {
     float: right;
     margin-right: 10px;
     height: 40px;
-    width: 300px;
+    display: inline-block;
     color: #000;
     box-sizing: border-box;
     padding-top: 10px;
