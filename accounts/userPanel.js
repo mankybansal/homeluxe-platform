@@ -44,6 +44,48 @@ var apiToken;
 
 var myUser;
 
+var myLikes;
+
+function getLikes(){
+    $.ajax({
+        type: "POST",
+        dataType: "json",
+        data: {
+            "token": myUser.token,
+        },
+        url: "http://homeluxe.in:3000/member/likes",
+        success: function (data) {
+            if(data.success != "false"){
+                myLikes = data;
+                updateLikes();
+            }
+        },
+        error: function (data) {
+            console.log("An unknown error occurred.");
+        }
+    });
+}
+
+function updateLikes(){
+    $(".dataLikeCount").html(myLikes.length);
+
+    $("#viewMyLikes").empty();
+    if(myLikes.length > 0){
+        $.each(myLikes, function(index,item){
+            if(item.catalogueKey){
+                //$("#viewMyLikes").append("<div id='"+item.catalogueKey+"' class='likeBox'><div class='likeBoxImageBox'><img src='../images/styles/"+item.name+"/"+item.images[0]+"' class='likeBoxImage'></div><div class='likeBoxStyleTitle'></div><div class='likeBoxDescription'></div><div class='likeBoxPrice'></div></div>");
+                $("#viewMyLikes").append("<div id='"+item.catalogueKey+"' class='likeBox'><div class='likeBoxImageBox'><img src='../images/NOIMAGE.png' class='likeBoxImage'></div><div class='likeBoxStyleTitle'>"+item.name+"</div><div class='likeBoxDescription'>"+item.description+"</div><div class='likeBoxPrice'><i class='fa fa-rupee'></i>&nbsp;"+item.price+"</div></div>");
+            }else{
+                $("#viewMyLikes").append("<div class='likeBoxRoom'><div class='likeBoxImageBox'><img src='../images/NOIMAGE.png' class='likeBoxImage'></div><div class='likeBoxStyleTitle'>"+item.name+"</div><div class='likeBoxDescription'>"+item.desc+"</div></div>");
+
+            }
+            
+        });
+    }
+
+}
+
+
 
 $(document).ready(function () {
 
@@ -77,21 +119,31 @@ $(document).ready(function () {
     });
 
     $(".menuOption").click(function () {
-        var menuGroupSelected = $(this).parent().find('.menuGroupLabel').text();
-        var menuOptionSelected = $(this).find('.menuOptionText').text();
+        var menuGroupSelected = $(this).parent().find(".menuGroupLabel").text();
+        var menuOptionSelected = $(this).find(".menuOptionText").text();
 
         $('.menuGroupSelected').html(menuGroupSelected);
         $('.menuOptionSelected').html(menuOptionSelected);
 
         $(".menuLeft").find(".optionSelected").removeClass("optionSelected");
         $(this).addClass("optionSelected");
-
-    })
+        
+        $(".viewPanel").hide();
+        
+        $("#"+ $(this).find(".menuOptionSelect").attr('class').split(' ')[1]).fadeIn(500);
+    });
 
 
     getToken();
 
 });
+
+function viewLikes(){
+    $(".viewPanel").hide();
+    $(".menuLeft").find(".optionSelected").removeClass("optionSelected");
+    $(".menuLeft").find(".viewMyLikes").parent().addClass("optionSelected");
+    $("#viewMyLikes").fadeIn(500);
+}
 
 function isTokenSet() {
     if (apiToken) {
@@ -166,14 +218,23 @@ function userRegister() {
     $(".loginSpacer").animate({"height": spacerHeight - 65}, 500);
 }
 
+var fbConnected = false;
+
 function showDashboard() {
 
     $.cookie('myUser-name', myUser.name, {expires: 3, path: '/'});
     $.cookie('myUser-email', myUser.email, {expires: 3, path: '/'});
-    $.cookie('myUser-phone', myUser.phone, {expires: 3, path: '/'});
+    $.cookie('myUser-phone', myUser.mobile, {expires: 3, path: '/'});
     $.cookie('myUser-token', myUser.token, {expires: 3, path: '/'});
     $.cookie('myUser-dp', myUser.profile_pic, {expires: 3, path: '/'});
 
+    $(".viewPanel").hide();
+    $(".menuLeft").find(".optionSelected").removeClass("optionSelected");
+    $(".menuLeft").find(".viewOverview").parent().addClass("optionSelected");
+    $("#viewOverview").fadeIn(500);
+    
+    getLikes();
+    
     setTimeout(function () {
         $('.loginOverlay').fadeOut(1000);
     }, 2000);
@@ -188,6 +249,18 @@ function showDashboard() {
     } else {
         $(".avatarBox").empty().append("<i class='fa fa-user' style='font-size: 25px; margin-top: 7.5px; margin-left: 10px; color: rgba(0,0,0,0.2);'></i>");
     }
+    
+    $(".myDP").append("<img src='"+myUser.profile_pic+"' class='myDPimage'>");
+    $(".myName").html(myUser.name);
+    $(".myEmail").html(myUser.email);
+    $(".myPhone").html(myUser.mobile);
+    
+    if(fbConnected){
+        $(".connectedTo").html("Connected to Facebook");
+    }else{
+        $(".connectedTo").html("Not Connected"); 
+    }
+    
 }
 
 function hideDashboard() {
@@ -247,8 +320,10 @@ function FBLogin() {
 }
 
 
-function getUserInfo() {
 
+function getUserInfo() {
+    
+    fbConnected = true;
 
     showAlert("Please wait... &nbsp; <i class='fa fa-circle-o-notch fa-spin'></i>");
 
