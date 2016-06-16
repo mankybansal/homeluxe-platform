@@ -51,11 +51,6 @@ html, body {
     font-size: 17px;
 }
 
-.loginLoader {
-    display: none;
-    color: white !important;
-}
-
 .mainUnderlay {
     width: 100%;
     height: 100%;
@@ -412,7 +407,7 @@ html, body {
     font-family: RobotoLight;
 }
 
-.loginButton, .registerButton, .fbRegisterButton , .faceBookLogin {
+.loginButton, .registerButton, .fbContButton, .fbRegisterButton , .faceBookLogin {
     cursor: pointer;
     background: #468fde;
     vertical-align: top;
@@ -431,7 +426,7 @@ html, body {
     font-family: RobotoLight;
 }
 
-.fbRegisterButton {
+.fbContButton, .fbRegisterButton {
     width: 200px;
     background: #3b5998;
 }
