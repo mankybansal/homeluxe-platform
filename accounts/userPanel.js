@@ -184,9 +184,9 @@ function showDashboard() {
 
     $(".dataName").html(myUser.name);
     if (myUser.profile_pic) {
-        $(".avatarBox").append("<img class='profilePic' src='" + myUser.profile_pic + "'/>");
+        $(".avatarBox").empty().append("<img class='profilePic' src='" + myUser.profile_pic + "'/>");
     } else {
-        $(".avatarBox").append("<i class='fa fa-user' style='font-size: 25px; margin-top: 7.5px; margin-left: 10px; color: rgba(0,0,0,0.2);'></i>");
+        $(".avatarBox").empty().append("<i class='fa fa-user' style='font-size: 25px; margin-top: 7.5px; margin-left: 10px; color: rgba(0,0,0,0.2);'></i>");
     }
 }
 
