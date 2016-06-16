@@ -1,0 +1,472 @@
+html, body {
+    width: 100%;
+    height: 100%;
+    min-width: 600px;
+    min-height: 300px;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    background: #EEE;
+    font-family: RobotoLight;
+    overflow: hidden;
+}
+
+@font-face {
+    font-family: RobotoLight;
+    src: url('../fonts/roboto/Roboto-Light.ttf');
+}
+
+@font-face {
+    font-family: RobotoMedium;
+    src: url('../fonts/roboto/Roboto-Medium.ttf');
+}
+
+@font-face {
+    font-family: RobotoRegular;
+    src: url('../fonts/roboto/Roboto-Regular.ttf');
+}
+
+@font-face {
+    font-family: RobotoBlack;
+    src: url('../fonts/roboto/Roboto-Black.ttf');
+}
+
+::-webkit-input-placeholder {
+    color: #BBB;
+    font-size: 17px;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+    color: #BBB;
+    font-size: 17px;
+}
+
+::-moz-placeholder { /* Firefox 19+ */
+    color: #BBB;
+    font-size: 17px;
+}
+
+:-ms-input-placeholder {
+    color: #BBB;
+    font-size: 17px;
+}
+
+.loginLoader {
+    display: none;
+    color: white !important;
+}
+
+.mainUnderlay {
+    width: 100%;
+    height: 100%;
+    min-width: 600px;
+    min-height: 300px;
+    background: url('../images/artwork.png') #FFF;
+    background-size: 1200px 1200px;
+    position: fixed;
+    z-index: 0;
+}
+
+.contentOverlay {
+    width: 100%;
+    height: 100%;
+    min-width: 600px;
+    min-height: 300px;
+    background: rgba(255, 255, 255, 0.7);
+    position: relative;
+    z-index: 100;
+    display: none;
+}
+
+.menuTop {
+    height: 80px;
+    box-sizing: border-box;
+    padding: 20px;
+    width: 100%;
+    background: #fff;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.15);
+}
+
+.menuLogo {
+    float: left;
+    margin-left: 20px;
+    height: 40px;
+}
+
+.menuLeft {
+    height: 100%;
+    float: left;
+    width: 250px;
+    background: #333;  overflow-y: scroll;
+}
+
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.menuTitle {
+    float: left;
+    height: 100%;
+    font-size: 25px;
+    margin-left: 20px;
+    color: #000;
+    box-sizing: border-box;
+    padding-top: 7.5px;
+}
+
+.avatarBox {
+    float: right;
+    margin-right: 30px;
+    height: 40px;
+    width: 40px;
+    background: #EEE;
+}
+
+.profilePic {
+    width: 40px;
+    height: 40px;
+}
+
+.profileBox {
+    float: right;
+    margin-right: 10px;
+    height: 40px;
+    width: 300px;
+    color: #000;
+    box-sizing: border-box;
+    padding-top: 10px;
+    font-size: 20px;
+    text-align: right;
+}
+
+.mainContent {
+    width: calc(100% - 250px);
+    height: 100%;
+    float: left;
+    background: #f8f8f8;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 1);
+}
+
+
+.menuOptionGroup{
+    background: rgba(255,255,255,0.05);
+    width: 100%;
+    display: inline-block;
+    padding: 20px 0px 20px 0px;
+    box-sizing: border-box;
+    text-align: center;
+    margin-bottom: 2px;
+}
+
+.menuGroupLabel {
+    text-align: left;
+    width: 100%;
+    padding-left: 30px;
+    font-size: 15px;
+    color: #777;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+
+.menuOption {
+    float: top;
+    height: 40px;
+    width: 100%;
+    color: #777;
+    cursor: pointer;
+    transition:  all ease .5s;
+}
+
+.menuOption:hover {
+    background: rgba(255,255,255,0.05);
+    color: #CCC;
+}
+
+.menuOptionSelect {
+    height: 100%;
+    width: 5px;
+    float: left;
+}
+
+.optionSelected > .menuOptionSelect {
+    background: yellowgreen;
+}
+
+.optionSelected {
+    color: white;
+}
+
+.menuOptionIcon {
+    height: 100%;
+    width: 40px;
+    float: left;
+    text-align: center;
+    font-size: 20px;
+    box-sizing: border-box;
+    padding: 10px 0px 10px 20px;
+}
+
+.menuOptionText {
+    float: left;
+    height: 100%;
+    width: 200px;
+    padding: 11.5px 20px 11.5px 20px;
+    box-sizing: border-box;
+    font-size: 17px;
+    text-align: left;
+}
+
+.menuHeaderLogo {
+    height: 35px;
+    margin: 0 auto;
+}
+
+.menuSection {
+    float: left;
+    height: 100%;
+    font-size: 20px;
+    margin-left: 10px;
+    color: #CCC;
+    box-sizing: border-box;
+    padding-top: 10px;
+}
+
+.fillContent {
+    width: 100%;
+    min-width: 1050px;
+    overflow-y: auto;
+    height: calc(100% - 80px);
+    text-align: center;
+    box-sizing: border-box;
+    padding-top: 20px;
+}
+
+.majorBoxes {
+    display: inline-block;
+    width: 465px;
+    height: 300px;
+    background: #FFF;
+    margin: 15px;
+    vertical-align: top;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.15);
+}
+
+.fullBoxes {
+    display: inline-block;
+    width: 960px;
+    height: 300px;
+    background: #FFF;
+    margin: 15px;
+    vertical-align: top;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.15);
+}
+
+.statsBoxes {
+    display: inline-block;
+    width: 300px;
+    height: 300px;
+    background: #FFF;
+    margin: 15px;
+    vertical-align: top;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.15);
+    transition: all ease .5s;
+    pointer-events: none;
+}
+
+.actionButton {
+    display: inline-block;
+    cursor: pointer;
+    background: #468fde;
+    height: 40px;
+    margin: 0 auto;
+    margin-top: 15px;
+    border-radius: 2px;
+    padding: 12.5px 15px 12.5px 15px;
+    box-sizing: border-box;
+    text-align: center;
+    color: #FFF;
+    font-size: 15px;
+    font-family: RobotoLight;
+    text-transform: uppercase;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+.statsBoxes:hover {
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+}
+
+.statsDesc {
+    width: 80%;
+    font-size: 15px;
+    color: #666;
+    margin: 0 auto;
+    margin-top: 15px;
+}
+
+.tintRed {
+    background: rgba(255, 0, 0, 0.2);
+}
+
+.tintBlue {
+    background: rgba(70, 143, 222, 0.2);
+}
+
+.tintGreen {
+    background: rgba(154, 205, 50, 0.2);
+}
+
+.tintGrey {
+    background: rgba(50, 50, 50, 0.2);
+}
+
+.statsTint {
+    height: 175px;
+    width: 100%;
+}
+
+.statsTintText {
+    width: 100%;
+    color: #000;
+    font-size: 25px;
+    text-align: center;
+}
+
+.statsIcon {
+    height: 120px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 20px;
+    color: rgba(0,0,0,0.05);
+    font-size: 80px;
+    text-align: center;
+}
+
+.statsContent {
+    height: 125px;
+    width: 100%;
+}
+
+.loginOverlay {
+    width: 100%;
+    height: 100%;
+    min-width: 600px;
+    min-height: 300px;
+    background: rgba(0, 0, 0, 0.7);
+    position: relative;
+    z-index: 200;
+}
+
+.loginSpacer {
+    width: 100%;
+    height: calc((100% - 440px) / 2);
+}
+
+.loginContainer {
+    width: 400px;
+    height: 440px;
+    border-radius: 2px;
+    background: #FFF;
+    float: top;
+    margin: 0 auto;
+    overflow: hidden;
+    text-align: center;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
+}
+
+.loginLogoContainer {
+    width: 100%;
+    height: 120px;
+    background: #FFF;
+}
+
+.loginTitleContainer {
+    height: 60px;
+    float: top;
+    width: 100%;
+    background: #FFF;
+    font-family: RobotoLight;
+    color: #333;
+    text-align: center;
+    font-size: 25px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    padding-top: 20px;
+    box-sizing: border-box;
+}
+
+.inputBox {
+    width: 340px;
+    margin: 0 auto;
+    margin-top: 10px;
+    outline: none;
+    border: 0px;
+    background: #F8F8F8;
+    color: black;
+    height: 60px;
+    box-sizing: border-box;
+    padding: 10px 20px 10px 20px;
+    font-size: 20px;
+    border-radius: 2px;
+    font-family: RobotoLight;
+}
+
+.loginButton, .registerButton, .fbRegisterButton , .faceBookLogin {
+    cursor: pointer;
+    background: #468fde;
+    vertical-align: top;
+    display: inline-block;
+    height: 60px;
+    width: 120px;
+    margin-top: 20px;
+    margin-left: 5px;
+    margin-right: 5px;
+    border-radius: 2px;
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center;
+    color: #FFF;
+    font-size: 20px;
+    font-family: RobotoLight;
+}
+
+.fbRegisterButton {
+    width: 200px;
+    background: #3b5998;
+}
+
+.loginButton {
+    background: #468fde;
+}
+
+.registerButton {
+    background: yellowgreen;
+}
+
+.faceBookLogin {
+    padding: 10px;
+    width: 60px;
+    background: #3b5998;
+    padding-top: 20px;
+}
+
+.loginLogo {
+    height: 90px;
+    margin: 0 auto;
+    margin-top: 30px;
+}
+
+.alertMessage {
+    margin: 0 auto;
+    padding: 16.5px 15px 16.5px 15px;
+    width: 400px;
+    box-sizing: border-box;
+    height: 50px;
+    background: #333;
+    font-size: 17px;
+    text-align: center;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
+    display: none;
+    color: white;
+}
