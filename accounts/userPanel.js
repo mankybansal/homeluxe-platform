@@ -47,6 +47,27 @@ var myUser;
 
 $(document).ready(function () {
 
+    $(".signOutButton").click(function(){
+        $.removeCookie('myUser-token', { path: '/' });
+        hideDashboard();
+    });
+    
+    if ($.cookie('myUser-token')) {
+
+        showAlert("Signing in as <b>"+$.cookie('myUser-name')+"</b> &nbsp; <i class='fa fa-circle-o-notch fa-spin'></i>");
+        
+        myUser = {
+            "token": $.cookie('myUser-token'),
+            "email": $.cookie('myUser-email'),
+            "name": $.cookie('myUser-name'),
+            "profile_pic": $.cookie('myUser-dp'),
+            "mobile": $.cookie("myUser-phone")
+        };
+        
+        setTimeout(showDashboard(),3000);
+    }
+    
+
 
     $(".loginButton").click(function () {
         var username = $('#username').val();
@@ -146,6 +167,13 @@ function userRegister() {
 }
 
 function showDashboard() {
+
+    $.cookie('myUser-name', myUser.name, {expires: 3, path: '/'});
+    $.cookie('myUser-email', myUser.email, {expires: 3, path: '/'});
+    $.cookie('myUser-phone', myUser.phone, {expires: 3, path: '/'});
+    $.cookie('myUser-token', myUser.token, {expires: 3, path: '/'});
+    $.cookie('myUser-dp', myUser.profile_pic, {expires: 3, path: '/'});
+
     setTimeout(function () {
         $('.loginOverlay').fadeOut(1000);
     }, 2000);
@@ -160,6 +188,19 @@ function showDashboard() {
     } else {
         $(".avatarBox").append("<i class='fa fa-user' style='font-size: 25px; margin-top: 7.5px; margin-left: 10px; color: rgba(0,0,0,0.2);'></i>");
     }
+}
+
+function hideDashboard() {
+
+   
+    setTimeout(function () {
+        $('.contentOverlay').fadeOut(1000);
+    }, 2000);
+
+    setTimeout(function () {
+        $('.loginOverlay').fadeIn(1000);
+        showAlert("Successfully logged out.");
+    }, 3000);
 }
 
 function getToken() {
@@ -215,7 +256,6 @@ function getUserInfo() {
         console.log(response.name);
         console.log(response.id);
         console.log(response.email);
-
 
 
         $.ajax({
@@ -336,6 +376,8 @@ function fbsubmitRegister() {
         showAlert('Please fill the form correctly.');
     }
 }
+
+
 
 
 // Load the SDK asynchronously
