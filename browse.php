@@ -56,7 +56,7 @@
             if ($result[$i]["catalogueKey"] == $myStyle) {
 
 
-                $imgURL = str_replace(" ", "%20", "http://homeluxe.in/images/styles/" . $result[$i]['name'] . "/" . $result[$i]['images'][0]['name']);
+                $imgURL = str_replace(" ", "%20", "http://homeluxe.in/images/styles/" . $result[$i]['name'] . "/" . $result[$i]['images'][0]['file']);
                 $imgURL = str_replace(".jpg", "thumb.jpg", $imgURL);
                 echo "
                     <meta property='og:url' content='http://www.homeluxe.in/browse.php?style=" . $myStyle . "&token=" . $randomString . "'/>
@@ -145,7 +145,7 @@
                         method: 'feed',
                         name: styles[currentStyle].name+' on HomeLuxe.in',
                         link: window.location.href,
-                        picture: 'http://www.homeluxe.in/images/styles/' + styles[currentStyle].name + '/' + styles[currentStyle].images[0].name,
+                        picture: 'http://www.homeluxe.in/images/styles/' + styles[currentStyle].name + '/' + styles[currentStyle].images[0].file,
                         caption: 'This style is available on HomeLuxe.in',
                         description: styles[currentStyle].description,
                         message: 'Check out this style. It looks absolutely beautiful! :)'
@@ -199,10 +199,10 @@
 
             if (styles[styleNum].images.length != 0) {
                 for (var i = 0; i < styles[styleNum].images.length; i++) {
-                    images[i] = styles[styleNum].name + '/' + styles[styleNum].images[i].name;
+                    images[i] = styles[styleNum].name + '/' + styles[styleNum].images[i].file;
                 }
                 console.log(images);
-                console.log("url('images/styles/" + styles[styleNum].name + '/' + styles[styleNum].images[0].name + "') no-repeat;");
+                console.log("url('images/styles/" + styles[styleNum].name + '/' + styles[styleNum].images[0].file + "') no-repeat;");
                 $(".styleContainer").css("background", "url('images/styles/" + images[currentImage] + "')");
                 $(".viewStyleTitle").html("<b>" + styles[styleNum].name + "</b>");
                 $(".viewStyleTitle2").html(styles[styleNum].name);
@@ -406,7 +406,7 @@
 
                                 $('.diamondContainer').append("<div class='diamond' id='styleDia" + index + "'><a href='javascript:viewStyle(" + index + ");'><div  data-adaptive-background data-ab-css-background data-ab-parent='#styleDia" + index + "' class='diamondText' id='style" + index + "' ><div class='textHighlight'>" + item.name + "</div></div></a></div>");
 
-                                var str = item.images[0].name;
+                                var str = item.images[0].file;
                                 var res = str.split(".");
 
                                 $("#style" + index).css("background", "url('images/styles/" + item.name + "/" + res[0] + "thumb." + res[1] + "')");
@@ -416,7 +416,7 @@
 
                             } else {
                                 $('.diamondContainer').append("<div class='diamond'><a href='javascript:viewStyle(" + index + ");'><div  class='diamondText' id='style" + index + "' ><div class='textHighlight'>" + item.name + "</div></div></a></div>");
-                                $("#style" + index).css("background", "url('images/styles/" + item.name + "/" + item.images[0].name + "')");
+                                $("#style" + index).css("background", "url('images/styles/" + item.name + "/" + item.images[0].file + "')");
                                 $("#style" + index).css("background-size", "auto 100%");
                                 $("#style" + index).css("background-repeat", "no-repeat");
                                 $("#style" + index).css("background-position", "center");

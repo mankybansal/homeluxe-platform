@@ -96,6 +96,8 @@ html, body {
 }
 
 
+
+
 ::-webkit-scrollbar {
     display: none;
 }
@@ -116,6 +118,8 @@ html, body {
     height: 40px;
     width: 40px;
     background: #EEE;
+    border-radius: 20px;
+    overflow: hidden;
 }
 
 .profilePic {
@@ -227,6 +231,19 @@ html, body {
     padding-top: 10px;
 }
 
+
+
+
+.viewPanel {
+    display: none;
+}
+
+.viewSelected {
+    display: inline-block;
+}
+
+
+
 .fillContent {
     width: 100%;
     min-width: 1050px;
@@ -237,7 +254,7 @@ html, body {
     padding-top: 20px;
 }
 
-.majorBoxes {
+.majorBoxes, .comingSoonBox, .logoutBox {
     display: inline-block;
     width: 465px;
     height: 300px;
@@ -245,6 +262,17 @@ html, body {
     margin: 15px;
     vertical-align: top;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.15);
+}
+
+.comingSoonBox, .logoutBox {
+    font-size: 25px;
+    box-sizing: border-box;
+    padding: 100px 30px 100px 30px;
+    color: #555;
+}
+
+.logoutBox {
+    padding: 135px 30px 135px 30px;
 }
 
 .fullBoxes {
@@ -257,7 +285,7 @@ html, body {
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.15);
 }
 
-.statsBoxes {
+.statsBoxes, .likeBox, .likeBoxRoom {
     display: inline-block;
     width: 300px;
     height: 300px;
@@ -267,6 +295,134 @@ html, body {
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.15);
     transition: all ease .5s;
     pointer-events: none;
+    overflow: hidden;
+}
+
+
+.likeBox:hover {
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+}
+
+.likeBoxRoom {
+    width: 400px;
+    height: auto;
+    padding-bottom: 20px;
+}
+
+.likeBox {
+    width: 400px;
+    height: auto;
+    padding-bottom: 20px;
+}
+
+.likeBoxImageBox {
+    height: 200px;
+    width: 100%;
+    background: #AAA;
+}
+
+.likeBoxImage {
+    height: 100%;
+    margin: 0 auto;
+}
+
+
+.likeBoxStyleTitle {
+    height: 30px;
+    width: 100%;
+    margin-top: 20px;
+    box-sizing: border-box;
+    padding: 0px 20px 0px 20px;
+    font-size: 30px;
+    color: #000;
+    text-align: left;
+}
+
+.likeBoxDescription {
+    text-align: left;
+    display: inline-block;
+    width: 100%;
+    margin-top: 15px;
+    box-sizing: border-box;
+    padding: 0px 20px 0px 20px;
+    font-size: 17px;
+    color: #777;
+}
+
+
+.likeBoxPrice {
+    text-align: left;
+    height: 20px;
+    width: 100%;
+    margin-top: 15px;
+    box-sizing: border-box;
+    padding: 0px 20px 0px 20px;
+    font-size: 20px;
+    color: #444;
+}
+
+.myProfileBox {
+    display: inline-block;
+    width: 500px;
+    height: 500px;
+    background: #FFF;
+    margin: 15px;
+    vertical-align: top;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.15);
+    transition: all ease .5s;
+    pointer-events: none;
+}
+
+.myInfo {
+    width: 70%;
+    margin: 0 auto;
+    height: 20px;
+    box-sizing: border-box;
+    padding: 0px 35px 0px 35px;
+    font-size: 20px;
+    color: #444;
+    text-align: left;
+    margin-top: 25px;
+}
+
+.myInfoIcon {
+    width: 60px;
+    text-align: left;
+    float: left;
+    height: 100%;
+    color: #BBB;
+}
+
+.myDP {
+    width: 150px;
+    height: 150px;
+    border-radius: 75px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    background: #CCC;
+    overflow: hidden;
+}
+
+.myDPimage {
+    width: 150px;
+    height: 150px;
+}
+
+.myInfoText {
+    width: calc(100% - 60px);
+    height: 100%;
+    float: left;
+    text-align: left;
+}
+
+
+.boxHeader {
+    width: 100%;
+    height: 100px;
+    box-sizing: border-box;
+    padding: 35px;
+    font-size: 30px;
+    color: #777;
 }
 
 .actionButton {
