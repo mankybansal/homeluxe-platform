@@ -119,5 +119,6 @@ for node in z:
         print room
         r = Node("Rooms",name=room['name'])
         r['file'] = room['file']
+        r['desc'] = 'N/A'
         rel = Relationship(node,"HAS_ROOM",r)
         graph.create(rel)

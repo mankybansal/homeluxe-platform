@@ -14,7 +14,7 @@ var jwt = require('jsonwebtoken');
 var bodyParser = require('body-parser');
 var sendgrid = require('sendgrid')('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');
 var db = require('seraph')({
-	server: "http://homeluxe.in:7474",
+	server: "http://localhost:7474",
 	user: "neo4j",
 	pass: "homeluxe@123"
 });
@@ -35,6 +35,7 @@ app.use(bodyParser.json());
 *****************/
 var publicRoutes = express.Router();
 var memberRoutes = express.Router();
+var adminRoutes = express.Router();
 
 /********************
 * Support Functions *
@@ -67,66 +68,6 @@ publicRoutes.post('/getToken', function(req,res) {
 	res.json({
 		success : true,
 		token : token
-	});
-});
-
-publicRoutes.post('/login', function(req,res) {
-	/* Check for login details */
-	var predicate = {
-		email : req.body.email
-	};
-	db.find(predicate, function(err,results) {
-		if(err) {
-			console.log(err);
-			res.send(err);
-		} else {
-			res.send(results);
-		}
-	});
-});
-
-publicRoutes.post('/register', function(req,res) {
-	/* Check if user exists using email */
-	var predicate = {
-		email : req.body.email
-	};
-	db.find(predicate, function(err,results) {
-		if(err) {
-			console.log(err);
-			res.json(err);
-		} else {
-			/* Check if result array has length greater than 0 */
-			if(results.length == 0) {
-				/* Create user object */
-				newUser = {
-					name : req.body.username,
-					password : req.body.password,
-					email : req.body.email,
-					mobile : req.body.mobile
-				};
-
-				/* Save object to database */
-				db.save(newUser,'User',function(err,node) {
-					if(err) {
-						console.log(err);
-						res.send(err);
-					} else {
-						console.log(node);
-						res.json({
-							status : 'Success',
-							message : 'Successful Registeration'
-						});
-					}
-				});
-			} else {
-				/* User already exists */
-				var responseObject = {
-					status : 'Failed',
-					message : 'User exists'
-				}
-				res.send(responseObject);
-			}
-		}
 	});
 });
 
@@ -245,26 +186,29 @@ publicRoutes.post('/quiz', function(req,res) {
 				});
 			} else {
 				/* incomplete answer_set, send error */
-				res.send('Incomplete Answer set')
+				res.send({
+					success : false,
+					message : 'Incomplete Answer set'
+				});
 			}
 
 		}
 });
 
 publicRoutes.post('/browse', function(req,res) {
-	query = 'MATCH (p:Profiles) RETURN p';
+	query = 'MATCH (p:Profiles)-[:HAS_ROOM]->(r) RETURN p.name AS name,p.price AS price,p.description AS description,p.catalogueKey as catalogueKey,ID(p) AS id,collect(r) AS images;';
 	db.query(query, function(err,results) {
 		if(err) {
 			throw err;
 		}
-
+		/*
 		// Format image structure and parse JSON objects
 		results.forEach(function(item) {
 			for(i = 0; i < item.images.length ; i++) {
 				item.images[i] = JSON.parse(item.images[i]);
 			}
 		});
-
+		*/
 		res.send(results);
 	});
 });
@@ -274,25 +218,191 @@ app.use('/', publicRoutes);
 /*****************
 * Member Routes *
 *****************/
+memberRoutes.post('/register', function(req,res) {
+	// Check if minimal data is available
+	if(typeof req.body.name == 'undefined' || typeof req.body.email == 'undefined' || typeof req.body.mobile == 'undefined') {
+		res.send({
+			status : 'Failed',
+			message : 'Undefined data variables'
+		});
+		return;
+	}
+
+	// Check if user exists in database
+	var query = 'MATCH (u:User) WHERE u.email = {email} RETURN u;';
+	db.query(query, {email : req.body.email},function(err,results) {
+		if(err) {
+			throw err;
+		}
+		if(results.length == 0) {
+			// User doesn't exist. Create and insert.
+			// Create user object
+			var user = {
+				name : req.body.name,
+				email : req.body.email,
+				mobile : req.body.mobile,
+				oauth : req.body.oauth,
+				password : req.body.password,
+				profile_pic : req.body.profile_pic,
+				user_type : 'member'
+			};
+			db.save(user, 'User', function(err,node) {
+				if(err) {
+					throw err;
+				}
+				console.log('[USER CREATION] ' + node.name);
+				res.send({
+					status : 'Success',
+					message : 'User created successfully'
+				});
+			});
+		} else {
+			// User exists
+			res.send({
+				status : 'Failed',
+				message : 'User already exists'
+			});
+		}
+	});
+});
+
+memberRoutes.post('/login', function(req,res) {
+	// Check request for oAuth or password
+	if(typeof req.body.email == 'undefined') {
+		res.send({
+			status : 'Failed',
+			message : 'Invalid data'
+		});
+	} else {
+		// Check if oAuth exists in request
+		if(typeof req.body.oauth == 'undefined') {
+			// Check for password
+			var query = 'MATCH (u:User) WHERE u.email = {email} RETURN u LIMIT 1;';
+			db.query(query, {email : req.body.email}, function(err,results) {
+				if(err) {
+					console.log(err);
+				}
+				if(results.length == 0) {
+					// User does not exist
+					res.send({
+						status : 'Failed',
+						message : 'User does not exist'
+					});
+					return;
+				}
+				if(typeof results[0].password == 'undefined') {
+					// Wrong method of authentication
+					res.send({
+						status : 'Failed',
+						message : 'Wrong method of authentication'
+					});
+					return;
+				}
+				if(results[0].password == req.body.password) {
+					// True login
+					var payload = {
+						id : results[0].id,
+						email : results[0].email,
+						userType : results[0].user_type,
+						generatedAt : (new Date).getTime()
+					};
+					var token = jwt.sign(payload,superSecret);
+					res.send({
+						status : 'Success',
+						message : 'Logged in successfully',
+						name : results[0].name,
+						email : results[0].email,
+						profile_pic : results[0].profile_pic,
+						mobile : results[0].mobile,
+						user_type : results[0].user_type,
+						token : token
+					});
+					console.log(results[0]);
+				} else {
+					// Invalid login
+					res.send({
+						status : 'Failed',
+						message : 'Invalid combination'
+					});
+				}
+			});
+		} else {
+			// Check for oauth
+			var query = 'MATCH (u:User) WHERE u.email = {email} RETURN u LIMIT 1;';
+			db.query(query, {email : req.body.email}, function(err,results) {
+				if(err) {
+					console.log(err);
+				}
+				if(results.length == 0) {
+					// User does not exist
+					res.send({
+						status : 'Failed',
+						message : 'User does not exist'
+					});
+					return;
+				}
+				if(typeof results[0].oauth == 'undefined') {
+					// Wrong method of authentication
+					res.send({
+						status : 'Failed',
+						message : 'Wrong method of authentication'
+					});
+					return;
+				}
+				if(results[0].oauth == req.body.oauth) {
+					// True login
+					var payload = {
+						email : results[0].email,
+						userType : results[0].user_type,
+						generatedAt : (new Date).getTime()
+					};
+					var token = jwt.sign(payload,superSecret);
+					res.send({
+						status : 'Success',
+						message : 'Logged in successfully',
+						name : results[0].name,
+						email : results[0].email,
+						profile_pic : results[0].profile_pic,
+						mobile : results[0].mobile,
+						user_type : results[0].user_type,
+						token : token
+					});
+				} else {
+					// Invalid login
+					res.send({
+						status : 'Failed',
+						message : 'Invalid combination'
+					});
+				}
+			});
+		}
+	}
+});
+
 memberRoutes.use(function(req,res,next) {
 	var token = req.headers['x-access-token'] || req.query.token || req.body.token;
 	if(token) {
 		jwt.verify(token, superSecret, function(err,decoded) {
 			if(err) {
 				res.json({
-					success : false,
+					status : 'Failed',
 					message : 'Invalid token detected'
 				});
 			} else {
-				/* Redis token check needs to go here */
-				/* Analytics grabs data here */
-				req.decoded = decoded;
-				next();
+				if(decoded.userType == 'member') {
+					req.decoded = decoded;
+					next();
+				} else {
+					res.send({
+						status : 'Failed',
+						message : 'Forbidden endpoint'
+					});
+				}
 			}
 		});
 	} else {
 		return res.status(403).send({
-			success : false,
+			status : 'Failed',
 			message : 'No token detected'
 		});
 	}
@@ -302,8 +412,52 @@ memberRoutes.use(function(req,res,next) {
 * Member Utility Functions *
 ***************************/
 memberRoutes.post('/like', function(req,res) {
-	var style = req.body.style;
-	var room = req.body.room;
+	var exists = 0;
+	db.relationships(req.decoded.id, 'out', 'LIKES', function(err, rels) {
+		// Portential bottleneck for performance since forEach is blocking.
+		rels.forEach(function(item) {
+			if(item.end == req.body.like_node) {
+				exists = 1;
+			}
+		});
+		if(!exists) {
+			db.relate(req.decoded.id, 'LIKES', req.body.like_node, function(err, relationship) {
+				if(err) {
+					res.send({
+						status : 'Failed',
+						message : 'Internal error'
+					});
+					console.log(err);
+				}
+				res.send({
+					status : 'Success',
+					message : 'Operation completed'
+				})
+			});
+		} else {
+			res.send({
+				status : 'Warning',
+				message : 'Operation ignored'
+			});
+		}
+	});
+});
+
+memberRoutes.post('/unlike', function(req,res) {
+
+});
+
+memberRoutes.post('/likes', function(req,res) {
+	var query = 'MATCH (u:User)-[:LIKES]->(r) WHERE ID(u) = {id} RETURN r;';
+	db.query(query, {id : req.decoded.id}, function(err, results) {
+		if(err) {
+			res.send({
+				status : 'Failed',
+				message : 'Internal Error'
+			});
+		}
+		res.send(results);
+	});
 });
 
 memberRoutes.post('/dashboard', function(req,res) {
@@ -311,6 +465,15 @@ memberRoutes.post('/dashboard', function(req,res) {
 });
 
 app.use('/member', memberRoutes);
+
+/***************
+* Admin Routes *
+***************/
+adminRoutes.post('/login', function(req,res) {
+	// Login logic
+});
+
+app.use('/admin', adminRoutes);
 
 /**************
 * Start Server *
