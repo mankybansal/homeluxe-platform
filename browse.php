@@ -94,7 +94,6 @@
     ?>
 
 
-
     <link rel="stylesheet" href="default.css" type="text/css">
     <link rel="stylesheet" href="animate.css" type="text/css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -104,6 +103,7 @@
     <title>Browse Styles | HomeLuxe</title>
 
     <script src="jquery.min.js"></script>
+    <script src="jquery.cookie.js"></script>
 
     <script type="text/javascript" src="jquery.adaptive-backgrounds.js"></script>
 
@@ -135,17 +135,45 @@
         var images = [];
         var currentImage = 0;
         var currentStyle;
+        var myUser;
 
+        function checkCookie() {
+            if ($.cookie('myUser-token')) {
+
+                myUser = {
+                    "token": $.cookie('myUser-token'),
+                    "email": $.cookie('myUser-email'),
+                    "name": $.cookie('myUser-name'),
+                    "profile_pic": $.cookie('myUser-dp'),
+                    "mobile": $.cookie("myUser-phone")
+                };
+
+                $(".myAccount").html(myUser.name + "&nbsp;&nbsp;<i class='fa fa-user'></i>");
+
+            } else {
+                $(".myAccount").html("LOGIN/SIGNUP");
+                $(".changeHeartStyle").removeClass("fa-heart").addClass("fa-heart-o")
+                $(".changeHeartRoom").removeClass("fa-heart").addClass("fa-heart-o")
+            }
+        }
+
+        setInterval(function () {
+            checkCookie();
+        }, 3000);
 
         $(document).ready(function () {
+
+            checkCookie();
+
+
             $('.facebookStyle').click(function (e) {
                 e.preventDefault();
                 FB.ui(
                     {
                         method: 'feed',
-                        name: styles[currentStyle].name+' on HomeLuxe.in',
+                        name: styles[currentStyle].name + ' on HomeLuxe.in',
                         link: window.location.href,
-                        picture: 'http://www.homeluxe.in/images/styles/' + styles[currentStyle].name + '/' + styles[currentStyle].images[0].file,
+                        picture: 'http://www.homeluxe.in/images/styles/' + styles[currentStyle].name + '/' + styles[currentStyle].images[0].file.img,
                         caption: 'This style is available on HomeLuxe.in',
                         description: styles[currentStyle].description,
                         message: 'Check out this style. It looks absolutely beautiful! :)'
@@ -182,11 +210,76 @@
             }
         }
 
+
+        var currentStyleNode;
+        var currentImageNode;
+
+        function updateLikes(styleNode, imageNode) {
+
+            if ($.cookie("myUser-token")) {
+                $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        "token": myUser.token,
+                    },
+                    url: "http://homeluxe.in:3000/member/likes",
+                    success: function (data) {
+                        if (data.success != "false") {
+
+                            var flag1 = false, flag2 = false;
+
+                            $.each(data, function (index, item) {
+                                if (item.id == styleNode) {
+                                    $(".changeHeartStyle").removeClass("fa-heart-o").addClass("fa-heart");
+                                    flag1 = true;
+                                }
+
+                                if (item.id == imageNode) {
+                                    $(".changeHeartRoom").removeClass("fa-heart-o").addClass("fa-heart");
+                                    flag2 = true;
+                                }
+                            });
+
+                            if (!flag1) {
+                                $(".changeHeartStyle").removeClass("fa-heart").addClass("fa-heart-o")
+                            }
+
+                            if (!flag2) {
+                                ;
+                                $(".changeHeartRoom").removeClass("fa-heart").addClass("fa-heart-o");
+                            }
+                        }
+                    },
+                    error: function (data) {
+                        console.log("An unknown error occurred.");
+                    }
+                });
+            }
+        }
+
         function viewStyle(styleNum) {
+
+            
+            $('.coverContainer').fadeIn(500);
+            
+            
+            
             currentStyle = styleNum;
             $('.resultCard').fadeIn(500);
             $('.centerDesc').fadeIn(500);
 
+            currentStyleNode = styles[styleNum].id;
+
+
+            $('.coverBG').css("background", "url('images/styles/covers/blurred-images/" + styles[styleNum].cover_pic + "')");
+            $('.coverImage').empty().append("<img src='images/styles/covers/clear-images/" + styles[styleNum].cover_pic + "' class='coverPic'>");
+
+            $(".coverBG").css("background-size", "100% 100%");
+            $(".coverBG").css("background-repeat", "no-repeat");
+            $(".coverBG").css("background-position", "center");
+            $('.coverTitle').html("This style is called <b>" + styles[styleNum].name + "</b>!");
+            $('.coverTextBox').html(styles[styleNum].description);
 
             changeUrlParam('style', styles[styleNum].catalogueKey);
             changeUrlParam('token', myRandomToken);
@@ -199,11 +292,19 @@
 
             if (styles[styleNum].images.length != 0) {
                 for (var i = 0; i < styles[styleNum].images.length; i++) {
-                    images[i] = styles[styleNum].name + '/' + styles[styleNum].images[i].file;
+                    images[i] = {
+                        "img": styles[styleNum].name + '/' + styles[styleNum].images[i].file,
+                        "id": styles[styleNum].images[i].id
+                    };
                 }
+
+                currentImageNode = images[currentImage].id;
+
+                updateLikes(currentStyleNode, currentImageNode);
+                console.log("current" + currentImageNode);
                 console.log(images);
                 console.log("url('images/styles/" + styles[styleNum].name + '/' + styles[styleNum].images[0].file + "') no-repeat;");
-                $(".styleContainer").css("background", "url('images/styles/" + images[currentImage] + "')");
+                $(".styleContainer").css("background", "url('images/styles/" + images[currentImage].img + "')");
                 $(".viewStyleTitle").html("<b>" + styles[styleNum].name + "</b>");
                 $(".viewStyleTitle2").html(styles[styleNum].name);
                 $(".viewStyleDesc").html(styles[styleNum].description);
@@ -231,8 +332,60 @@
             return true;
         }
 
+
         $(document).ready(function () {
 
+            $(".likeStyle").click(function () {
+                if ($.cookie("myUser-token")) {
+                    $.ajax({
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            "token": myUser.token,
+                            "like_node": currentStyleNode
+                        },
+                        url: "http://homeluxe.in:3000/member/like",
+                        success: function (data) {
+                            if (data.status == "Success") {
+                                $(".changeHeartStyle").removeClass("fa-heart-o").addClass("fa-heart");
+                            } else {
+                                console.log("Some Error Occured");
+                            }
+                        },
+                        error: function (data) {
+                            console.log("Some Error Occured");
+                        }
+                    });
+                } else {
+                    window.open("http://www.homeluxe.in/accounts");
+                }
+            });
+
+            $(".likeRoom").click(function () {
+                if ($.cookie("myUser-token")) {
+                    $.ajax({
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            "token": myUser.token,
+                            "like_node": currentImageNode
+                        },
+                        url: "http://homeluxe.in:3000/member/like",
+                        success: function (data) {
+                            if (data.status == "Success") {
+                                $(".changeHeartRoom").removeClass("fa-heart-o").addClass("fa-heart");
+                            } else {
+                                console.log("Some Error Occured");
+                            }
+                        },
+                        error: function (data) {
+                            console.log("Some Error Occured");
+                        }
+                    });
+                } else {
+                    window.open("http://www.homeluxe.in/accounts");
+                }
+            });
 
             $('.browseLooks').click(function () {
                 $('.resultCard').fadeOut(500);
@@ -245,6 +398,10 @@
             $('.callDesigner').click(function () {
                 window.location = 'index.html#contactUsX';
             });
+            
+            $('.coverContainer').click(function(){
+                $('.coverContainer').hide();
+            });
 
 
             $('.leftNav').click(function () {
@@ -254,7 +411,13 @@
                     currentImage = images.length - 1;
                 }
                 console.log("LEFT" + currentImage);
-                $(".styleContainer").css("background", "url('images/styles/" + images[currentImage] + "')");
+
+
+                currentImageNode = images[currentImage].id;
+                console.log("currentNode" + currentImageNode);
+                updateLikes(currentStyleNode, currentImageNode);
+
+                $(".styleContainer").css("background", "url('images/styles/" + images[currentImage].img + "')");
                 $(".styleContainer").css("background-size", "contain");
                 $(".styleContainer").css("background-repeat", "no-repeat");
                 $(".styleContainer").css("background-position", "center");
@@ -262,11 +425,19 @@
             });
 
             $('.rightNav').click(function () {
+
                 console.log("Current" + currentImage);
                 currentImage++;
                 currentImage = (currentImage) % images.length;
                 console.log("RIGHT " + currentImage);
-                $(".styleContainer").css("background", "url('images/styles/" + images[currentImage] + "')");
+
+
+                currentImageNode = images[currentImage].id;
+
+                console.log("currentNode" + currentImageNode);
+                updateLikes(currentStyleNode, currentImageNode);
+
+                $(".styleContainer").css("background", "url('images/styles/" + images[currentImage].img + "')");
                 $(".styleContainer").css("background-size", "contain");
                 $(".styleContainer").css("background-repeat", "no-repeat");
                 $(".styleContainer").css("background-position", "center");
@@ -287,11 +458,11 @@
             });
 
             $('.homeButton').click(function () {
-                 window.location = 'index.html';
+                window.location = 'index.html';
             });
 
             $('.resultLogo').click(function () {
-                 window.location = 'index.html';
+                window.location = 'index.html';
             });
 
             $('.browseOurStylesButton').click(function () {
@@ -313,10 +484,11 @@
             });
 
             $(".loginButton").click(function () {
-                if (!loginPanelState)
-                    loginPanelOpen();
-                else
-                    loginPanelClose();
+                window.open("http://homeluxe.in/accounts");
+//                if (!loginPanelState)
+//                    loginPanelOpen();
+//                else
+//                    loginPanelClose();
             });
 
             $(".menuContainer").click(function () {
@@ -406,7 +578,7 @@
 
                                 $('.diamondContainer').append("<div class='diamond' id='styleDia" + index + "'><a href='javascript:viewStyle(" + index + ");'><div  data-adaptive-background data-ab-css-background data-ab-parent='#styleDia" + index + "' class='diamondText' id='style" + index + "' ><div class='textHighlight'>" + item.name + "</div></div></a></div>");
 
-                                var str = item.images[0].file;
+                                var str = item.images[2].file;
                                 var res = str.split(".");
 
                                 $("#style" + index).css("background", "url('images/styles/" + item.name + "/" + res[0] + "thumb." + res[1] + "')");
@@ -416,7 +588,7 @@
 
                             } else {
                                 $('.diamondContainer').append("<div class='diamond'><a href='javascript:viewStyle(" + index + ");'><div  class='diamondText' id='style" + index + "' ><div class='textHighlight'>" + item.name + "</div></div></a></div>");
-                                $("#style" + index).css("background", "url('images/styles/" + item.name + "/" + item.images[0].file + "')");
+                                $("#style" + index).css("background", "url('images/styles/" + item.name + "/" + item.images[2].file + "')");
                                 $("#style" + index).css("background-size", "auto 100%");
                                 $("#style" + index).css("background-repeat", "no-repeat");
                                 $("#style" + index).css("background-position", "center");
@@ -449,6 +621,10 @@
     </script>
 
     <style>
+
+        .myAccount {
+            text-transform: uppercase;
+        }
 
         @font-face {
             font-family: SergoeLight;
@@ -536,6 +712,18 @@
             top: 0;
             width: 100%;
             height: 100%;
+            z-index: 999;
+            background: #EEE;
+            text-align: center;
+        }
+
+        .coverContainer {
+            display: none;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
             z-index: 9999;
             background: #EEE;
             text-align: center;
@@ -581,7 +769,7 @@
 
         .headerSpacer {
             height: 100%;
-            width: 300px;
+            width: 400px;
         }
 
         .spacerLeft {
@@ -617,7 +805,7 @@
 
     <div class="headerSpacer spacerRight ">
         <div class="menuBox menuLogin hideMobile loginButton">
-            <div class="menuTriggerText">
+            <div class="menuTriggerText myAccount">
                 LOGIN/SIGNUP
             </div>
         </div>
@@ -668,6 +856,20 @@
 </div>
 
 <style>
+
+    .likeButton {
+        margin-top: 14px;
+        float: left;
+        box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.2);
+        margin-left: 12px;
+        font-size: 18px;
+        padding: 12px 20px 12px 20px;
+        background: white;
+        display: inline-block;
+        cursor: pointer;
+        color: #333;
+        text-transform: uppercase;
+    }
 
     .styleContainer {
         width: 100%;
@@ -756,7 +958,6 @@
         overflow: hidden;
         height: 100%;
     }
-
 
     .imageNav {
         width: 100%;
@@ -1211,6 +1412,82 @@
             font-size: 40px;
         }
     }
+    
+    .coverBG {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+    }
+    
+    .coverFG {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+    }
+    
+    .coverTop {
+        width: 100%;
+        height: 170px;
+        float: top;
+        box-sizing: border-box;
+        padding-top: 90px;
+    }
+    
+    .coverBottom {
+        width: 100%;
+        height: calc(100% - 170px);
+        float: top;
+    }
+    
+    .coverTitle {
+        font-size: 40px;
+        color: #000;
+        width: 100%;
+        height: 40px;
+        box-sizing: border-box;
+        padding: 0px 100px 0px 100px;
+        text-align: left;
+        font-family: RobotoLight;
+    }
+    
+    .coverSubtitle {
+        font-size: 30px;
+        color: #222;
+        width: 100%;
+        height: 20px;
+        margin-top: 10px;
+        box-sizing: border-box;
+        padding: 0px 100px 0px 100px;
+        text-align: left;
+        font-family: RobotoLight;
+    }
+    
+    .coverText {
+        font-size: 20px;
+        color: #222;
+        width: 40%;
+        height: 100%;
+        box-sizing: border-box;
+        padding: 100px 50px 50px 100px;
+        text-align: left;
+        font-family: RobotoLight;
+        float: left;
+    }
+    
+    .coverImage {
+        height: 100%;
+        width: 60%;
+        float: right;
+    }
+    
+    .coverPic {
+        width: 70%;
+        float: left;
+        margin-left: 70px;
+        margin-top: 30px;
+    }
 </style>
 
 
@@ -1218,6 +1495,27 @@
     <div class="mainCard">
         <div class="introPanel" style="width: 100%;">
             <div class="diamondContainer clear"></div>
+        </div>
+    </div>
+</div>
+
+<div class="coverContainer">
+    <div class="coverBG">
+
+    </div>
+    <div class="coverFG">
+        <div class="coverTop">
+            <div class="coverTitle"></div>
+            <div class="coverSubtitle">We hope you love it.</div>
+        </div>
+        <div class="coverBottom">
+            <div class="coverText">
+                <span class="coverTextBox"></span><br><br><br><br>
+                <div class="actionButton" style="margin: 0 auto;">VIEW ROOMS</div>
+            </div>
+            <div class="coverImage">
+                
+            </div>
         </div>
     </div>
 </div>
@@ -1236,7 +1534,7 @@
                 <div style="height:calc((100% - 100px)/2); width:100%;"></div>
                 <i class="fa fa-angle-left navAngles"></i>
             </div>
-
+            <!--
             <div class="centerDesc">
                 <div class="styleDescBox">
                     <span class="aligner">
@@ -1245,17 +1543,21 @@
                         <div class="actionButton hideInfo">HIDE</div>
                     </span>
                 </div>
-
             </div>
+            -->
             <div class="rightNav">
                 <div style="height:calc((100% - 100px)/2); width:100%;"></div>
                 <i class="fa fa-angle-right navAngles"></i>
             </div>
         </div>
         <div class="optionBar">
+            <div class='likeButton likeStyle'><i class="changeHeartStyle fa fa-heart-o"
+                                                 style="color: darkred !important;"></i>&nbsp;&nbsp;Style
+            </div>
+            <div class='likeButton likeRoom'><i class="changeHeartRoom fa fa-heart-o"
+                                                style="color: yellowgreen !important;"></i>&nbsp;&nbsp;Room
+            </div>
             <div class="iconContainer">
-                <i class="fa fa-heart shareStyle loveStyle"></i>
-                <i class="fa fa-pinterest-square shareStyle pinterestStyle"></i>
                 <i class="fa fa-facebook-square shareStyle facebookStyle"></i>
             </div>
 

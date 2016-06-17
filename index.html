@@ -21,8 +21,34 @@
     <script type="text/javascript" src="jquery.cookie.js"></script>
 
     <script type="text/javascript">
+        var myUser;
+
+        function checkCookie(){
+            if ($.cookie('myUser-token')) {
+
+                myUser = {
+                    "token": $.cookie('myUser-token'),
+                    "email": $.cookie('myUser-email'),
+                    "name": $.cookie('myUser-name'),
+                    "profile_pic": $.cookie('myUser-dp'),
+                    "mobile": $.cookie("myUser-phone")
+                };
+
+                $(".myAccount").html(myUser.name + "&nbsp;&nbsp;<i class='fa fa-user'></i>");
+
+            }else {
+                $(".myAccount").html("LOGIN/SIGNUP");
+            }
+        }
+
+        setInterval(function(){
+            checkCookie();
+        },3000);
 
         $(document).ready(function () {
+
+            checkCookie();
+
 
             $('#fullpage').fullpage({
                 anchors: ['introductionX', 'howItWorksX', 'styleMatchX', 'whoWeAreX', 'contactUsX'],
@@ -76,10 +102,11 @@
 
 
             $(".loginButton").click(function () {
-                if (!loginPanelState)
-                    loginPanelOpen();
-                else
-                    loginPanelClose();
+                window.open("http://homeluxe.in/accounts");
+//                if (!loginPanelState)
+//                    loginPanelOpen();
+//                else
+//                    loginPanelClose();
             });
 
             $(".menuContainer").click(function () {
@@ -177,6 +204,10 @@
     </script>
 
     <style>
+
+        .myAccount {
+            text-transform: uppercase;
+        }
 
         .introSection {
             overflow: hidden !important;
@@ -669,7 +700,7 @@
 
     <div class="headerSpacer spacerRight ">
         <div class="menuBox menuLogin hideMobile loginButton">
-            <div class="menuTriggerText">
+            <div class="menuTriggerText myAccount">
                 LOGIN/SIGNUP
             </div>
         </div>
