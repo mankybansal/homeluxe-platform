@@ -23,6 +23,8 @@
 
     <script type="text/javascript">
 
+
+
         var images = [];
         var currentImage = 0;
 
@@ -66,6 +68,20 @@
         }
 
         $(document).ready(function () {
+
+            if ($.cookie('myUser-token')) {
+
+                myUser = {
+                    "token": $.cookie('myUser-token'),
+                    "email": $.cookie('myUser-email'),
+                    "name": $.cookie('myUser-name'),
+                    "profile_pic": $.cookie('myUser-dp'),
+                    "mobile": $.cookie("myUser-phone")
+                };
+
+                $(".myAccount").html(myUser.name + "&nbsp;&nbsp;<i class='fa fa-user'></i>");
+
+            }
 
 
             $('.browseLooks').click(function () {
@@ -381,6 +397,10 @@
 
     <style>
 
+        .myAccount {
+            text-transform: uppercase;
+        }
+
         @font-face {
             font-family: SergoeLight;
             src: url('fonts/SergoeLight.ttf');
@@ -640,7 +660,7 @@
 
         .headerSpacer {
             height: 100%;
-            width: 300px;
+            width: 400px;
         }
 
         .spacerLeft {
@@ -1027,7 +1047,7 @@
 
     <div class="headerSpacer spacerRight ">
         <div class="menuBox menuLogin hideMobile loginButton">
-            <div class="menuTriggerText">
+            <div class="menuTriggerText myAccount">
                 LOGIN/SIGNUP
             </div>
         </div>
