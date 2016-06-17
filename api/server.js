@@ -465,7 +465,50 @@ app.use('/member', memberRoutes);
 * Admin Routes *
 ***************/
 adminRoutes.post('/login', function(req,res) {
-	// Login logic
+	// Check for invalid data
+	if(typeof req.body.email == 'undefined' || typeof req.body.password == 'undefined') {
+		res.send({
+			status : 'Failed',
+			message : 'Invalid data'
+		});
+		return;
+	}
+	// Query database with credentials
+	var query = 'MATCH (u:User) WHERE u.email = {email} RETURN u;';
+	db.query(query, {email : req.body.email}, function(err, result) {
+		if(err) {
+			res.send({
+				status : 'Failed',
+				message : 'Internal Error'
+			});
+			console.log(err);
+			return;
+		}
+		if(result[0].password == req.body.password) {
+			// Successful login. Generate admin token
+			var payload = {
+				id : results[0].id,
+				email : results[0].email,
+				userType : results[0].user_type
+			};
+			var token = jwt.sign(payload,superSecret);
+			res.send({
+				status : 'Success',
+				message : 'Logged in successfully',
+				name : result[0].name,
+				email : result[0].email,
+				mobile : result[0].mobile,
+				user_type : result[0].user_type,
+				token : token
+			});
+		} else {
+			// Failed login
+			res.send({
+				status : 'Failed',
+				message : 'Invalid combination'
+			});
+		}
+	});
 });
 
 app.use('/admin', adminRoutes);
