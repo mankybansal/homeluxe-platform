@@ -3,6 +3,22 @@
  */
 
 
+var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : sParameterName[1];
+        }
+    }
+};
+
+
 function login(username, password) {
 
     console.log(username, password);
@@ -73,8 +89,8 @@ function updateLikes(){
     if(myLikes.length > 0){
         $.each(myLikes, function(index,item){
             if(item.catalogueKey){
-                //$("#viewMyLikes").append("<div id='"+item.catalogueKey+"' class='likeBox'><div class='likeBoxImageBox'><img src='../images/styles/"+item.name+"/"+item.images[0]+"' class='likeBoxImage'></div><div class='likeBoxStyleTitle'></div><div class='likeBoxDescription'></div><div class='likeBoxPrice'></div></div>");
-                $("#viewMyLikes").append("<div id='"+item.catalogueKey+"' class='likeBox'><div class='likeBoxImageBox'><img src='../images/NOIMAGE.png' class='likeBoxImage'></div><div class='likeBoxStyleTitle'>"+item.name+"</div><div class='likeBoxDescription'>"+item.description+"</div><div class='likeBoxPrice'><i class='fa fa-rupee'></i>&nbsp;"+item.price+"</div></div>");
+                $("#viewMyLikes").append("<div id='"+item.catalogueKey+"' class='likeBox'><div class='likeBoxImageBox'><img src='../images/styles/covers/clear-images/"+item.cover_pic+"' class='likeBoxImage'></div><div class='likeBoxStyleTitle'>"+item.name+"</div><div class='likeBoxDescription'>"+item.description+"</div><div class='likeBoxPrice'><i class='fa fa-rupee'></i>&nbsp;"+item.price+"</div></div>");
+                //$("#viewMyLikes").append("<div id='"+item.catalogueKey+"' class='likeBox'><div class='likeBoxImageBox'><img src='../images/NOIMAGE.png' class='likeBoxImage'></div><div class='likeBoxStyleTitle'>"+item.name+"</div><div class='likeBoxDescription'>"+item.description+"</div><div class='likeBoxPrice'><i class='fa fa-rupee'></i>&nbsp;"+item.price+"</div></div>");
             }else{
                 $("#viewMyLikes").append("<div class='likeBoxRoom'><div class='likeBoxImageBox'><img src='../images/NOIMAGE.png' class='likeBoxImage'></div><div class='likeBoxStyleTitle'>"+item.name+"</div><div class='likeBoxDescription'>"+item.desc+"</div></div>");
 
@@ -85,7 +101,7 @@ function updateLikes(){
 
 }
 
-
+var nodeID;
 
 $(document).ready(function () {
 
@@ -93,7 +109,11 @@ $(document).ready(function () {
         $.removeCookie('myUser-token', { path: '/' });
         hideDashboard();
     });
+
+
+    nodeID = getUrlParameter("nodeID");
     
+
     if ($.cookie('myUser-token')) {
 
         showAlert("Signing in as <b>"+$.cookie('myUser-name')+"</b> &nbsp; <i class='fa fa-circle-o-notch fa-spin'></i>");
@@ -228,6 +248,7 @@ function showDashboard() {
     $.cookie('myUser-token', myUser.token, {expires: 3, path: '/'});
     $.cookie('myUser-dp', myUser.profile_pic, {expires: 3, path: '/'});
 
+    
     $(".viewPanel").hide();
     $(".menuLeft").find(".optionSelected").removeClass("optionSelected");
     $(".menuLeft").find(".viewOverview").parent().addClass("optionSelected");

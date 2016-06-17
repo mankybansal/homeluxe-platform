@@ -23,8 +23,7 @@
     <script type="text/javascript">
         var myUser;
 
-        $(document).ready(function () {
-
+        function checkCookie(){
             if ($.cookie('myUser-token')) {
 
                 myUser = {
@@ -37,8 +36,18 @@
 
                 $(".myAccount").html(myUser.name + "&nbsp;&nbsp;<i class='fa fa-user'></i>");
 
+            }else {
+                $(".myAccount").html("LOGIN/SIGNUP");
             }
+        }
 
+        setInterval(function(){
+            checkCookie();
+        },3000);
+
+        $(document).ready(function () {
+
+            checkCookie();
 
 
             $('#fullpage').fullpage({
@@ -93,7 +102,7 @@
 
 
             $(".loginButton").click(function () {
-                window.location = "http://homeluxe.in/accounts"
+                window.open("http://homeluxe.in/accounts");
 //                if (!loginPanelState)
 //                    loginPanelOpen();
 //                else
