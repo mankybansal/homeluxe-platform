@@ -196,19 +196,11 @@ publicRoutes.post('/quiz', function(req,res) {
 });
 
 publicRoutes.post('/browse', function(req,res) {
-	query = 'MATCH (p:Profiles)-[:HAS_ROOM]->(r) RETURN p.name AS name,p.price AS price,p.description AS description,p.catalogueKey as catalogueKey,ID(p) AS id,collect(r) AS images;';
+	query = 'MATCH (p:Profiles)-[:HAS_ROOM]->(r) WITH p,r ORDER BY r.order RETURN p.name AS name,p.price AS price,p.description AS description,p.catalogueKey AS catalogueKey,p.cover_pic AS cover_pic,ID(p) AS id,collect(r) AS images;';
 	db.query(query, function(err,results) {
 		if(err) {
 			throw err;
 		}
-		/*
-		// Format image structure and parse JSON objects
-		results.forEach(function(item) {
-			for(i = 0; i < item.images.length ; i++) {
-				item.images[i] = JSON.parse(item.images[i]);
-			}
-		});
-		*/
 		res.send(results);
 	});
 });
@@ -352,6 +344,7 @@ memberRoutes.post('/login', function(req,res) {
 				if(results[0].oauth == req.body.oauth) {
 					// True login
 					var payload = {
+						id : results[0].id,
 						email : results[0].email,
 						userType : results[0].user_type,
 						generatedAt : (new Date).getTime()
@@ -415,11 +408,13 @@ memberRoutes.post('/like', function(req,res) {
 	var exists = 0;
 	db.relationships(req.decoded.id, 'out', 'LIKES', function(err, rels) {
 		// Portential bottleneck for performance since forEach is blocking.
-		rels.forEach(function(item) {
-			if(item.end == req.body.like_node) {
-				exists = 1;
-			}
-		});
+		if(rels.length > 0) {
+			rels.forEach(function(item) {
+				if(item.end == req.body.like_node) {
+					exists = 1;
+				}
+			});
+		}
 		if(!exists) {
 			db.relate(req.decoded.id, 'LIKES', req.body.like_node, function(err, relationship) {
 				if(err) {
