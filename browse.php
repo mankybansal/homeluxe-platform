@@ -261,6 +261,7 @@
         function viewStyle(styleNum) {
 
             
+            currentImage = 0;
             $('.coverContainer').fadeIn(500);
             
             
@@ -303,7 +304,6 @@
                 updateLikes(currentStyleNode, currentImageNode);
                 console.log("current" + currentImageNode);
                 console.log(images);
-                console.log("url('images/styles/" + styles[styleNum].name + '/' + styles[styleNum].images[0].file + "') no-repeat;");
                 $(".styleContainer").css("background", "url('images/styles/" + images[currentImage].img + "')");
                 $(".viewStyleTitle").html("<b>" + styles[styleNum].name + "</b>");
                 $(".viewStyleTitle2").html(styles[styleNum].name);
