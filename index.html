@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <title>Welcome to HomeLuxe.in</title>
     <link rel="stylesheet" href="default.css" type="text/css">
+    <link rel="stylesheet" href="accountsDefault.css" type="text/css">
+    <link rel="stylesheet" href="headerMenu.css" type="text/css">
 
     <meta name=viewport content="width=device-width, initial-scale=1">
-
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="fullPageJS/jquery.fullPage.css"/>
@@ -19,36 +20,14 @@
     <script type="text/javascript" src="fullPageJS/jquery.slimscroll.min.js"></script>
     <script type="text/javascript" src="fullPageJS/jquery.fullPage.min.js"></script>
     <script type="text/javascript" src="jquery.cookie.js"></script>
+    <script type="text/javascript" src="headerMenu.js"></script>
+    <script type="text/javascript" src="accounts.js"></script>
 
     <script type="text/javascript">
-        var myUser;
-
-        function checkCookie(){
-            if ($.cookie('myUser-token')) {
-
-                myUser = {
-                    "token": $.cookie('myUser-token'),
-                    "email": $.cookie('myUser-email'),
-                    "name": $.cookie('myUser-name'),
-                    "profile_pic": $.cookie('myUser-dp'),
-                    "mobile": $.cookie("myUser-phone")
-                };
-
-                $(".myAccount").html(myUser.name + "&nbsp;&nbsp;<i class='fa fa-user'></i>");
-
-            }else {
-                $(".myAccount").html("LOGIN/SIGNUP");
-            }
-        }
-
-        setInterval(function(){
-            checkCookie();
-        },3000);
 
         $(document).ready(function () {
 
-            checkCookie();
-
+            homepage = true;
 
             $('#fullpage').fullpage({
                 anchors: ['introductionX', 'howItWorksX', 'styleMatchX', 'whoWeAreX', 'contactUsX'],
@@ -59,7 +38,6 @@
                 normalScrollElements: ['#stepBox', '.footer'],
                 autoScrolling: false,
                 fitToSection: false
-
             });
 
             $(".contactSubmit").click(function (event) {
@@ -89,151 +67,23 @@
                 return false;
             });
 
-
-            var menuState = false;
-            var loginPanelState = false;
-
-            $(".menuTrigger").click(function () {
-                if (!menuState)
-                    menuOpen();
-                else
-                    menuClose();
-            });
-
-
-            $(".loginButton").click(function () {
-                window.open("http://homeluxe.in/accounts");
-//                if (!loginPanelState)
-//                    loginPanelOpen();
-//                else
-//                    loginPanelClose();
-            });
-
-            $(".menuContainer").click(function () {
-                if (menuState) {
-                    menuClose();
-                }
-            });
-
-
-            function loginPanelClose() {
-                loginPanelState = false;
-                $(".loginPanel").stop(true, true).fadeOut(200);
-            }
-
-            function loginPanelOpen() {
-                loginPanelState = true;
-                $(".loginPanel").stop(true, true).fadeIn(200);
-            }
-
-            $(".loginPanel").on('click', function (e) {
-                if (e.target !== this)
-                    return;
-                loginPanelClose();
-            });
-
-            function menuClose() {
-                menuState = false;
-
-                $(".menuCloseFeedback").stop(true, true).animate({opacity: 0}, 175);
-                $(".menuContainer").stop(true, true).fadeOut(175);
-                $(".menu").stop(true, true).animate({left: '-270px'}, 175);
-                $("#fullpage").stop(true, true).animate({left: '0px'}, 175);
-            }
-
-            function menuOpen() {
-                menuState = true;
-                $(".menuCloseFeedback").stop(true, true).animate({opacity: 1}, 250);
-                $(".menuContainer").stop(true, true).fadeIn(250);
-                $(".menu").stop(true, true).animate({left: '0px'}, 250);
-                $("#fullpage").stop(true, true).animate({left: '100px'}, 250);
-            }
-
             $('.bounce').click(function () {
                 menuClose();
                 $("html, body").delay(500).animate({
                     scrollTop: $('.howItWorksSection').offset().top - 40
                 }, 1000);
             });
-
-
-            $('.homeButton').click(function () {
-                menuClose();
-                $("html, body").delay(500).animate({
-                    scrollTop: $('.introSection').offset().top - 40
-                }, 1000);
-            });
-
-            $('.howItWorksButton').click(function () {
-                menuClose();
-                $("html, body").delay(500).animate({
-                    scrollTop: $('.howItWorksSection').offset().top - 40
-                }, 1000);
-            });
-            $('.whoWeAreButton').click(function () {
-                menuClose();
-                $("html, body").delay(500).animate({
-                    scrollTop: $('.whoWeAreSection').offset().top - 40
-                }, 1000);
-            });
-            $('.contactUsButton').click(function () {
-                menuClose();
-                $("html, body").delay(500).animate({
-                    scrollTop: $('.contactUsSection').offset().top - 40
-                }, 1000);
-            });
-            $('.logoButton').click(function () {
-                menuClose();
-
-                $("html, body").delay(500).animate({
-                    scrollTop: $('.introSection').offset().top - 40
-                }, 1000);
-            });
-
-            $('.browseOurStylesButton').click(function () {
-                window.location = 'browse.php';
-            });
-
-            $('.findYourStyleButton').click(function () {
-                window.location = 'quiz.html';
-            });
-
         });
-
 
     </script>
 
     <style>
-
-        .myAccount {
-            text-transform: uppercase;
-        }
 
         .introSection {
             overflow: hidden !important;
             max-height: 700px !important;
             background: url('images/SLIDE1.jpg') no-repeat;
             background-size: 100% auto;
-        }
-
-        .logoButton {
-            margin: 0 auto;
-            margin-top: 12.5px;
-            height: 35px;
-            cursor: pointer;
-        }
-
-        .headerSpacer {
-            height: 100%;
-            width: 38%;
-        }
-
-        .spacerLeft {
-            float: left;
-        }
-
-        .spacerRight {
-            float: right;
         }
 
         .introGetStarted {
@@ -603,18 +453,9 @@
                 vertical-align: middle;
             }
 
-            .headerSpacer {
-                width: 150px;
-            }
-
             .introSection {
                 background: url('images/SLIDE1.jpg') no-repeat;
                 background-size: auto 100%;
-            }
-
-            .logoButton {
-                height: 25px;
-                margin-top: 19.5px;
             }
 
             .introGetStarted {
@@ -678,78 +519,11 @@
 
 </head>
 
-
 <body>
 
-<div class="header">
+<div class="loginOverlay"></div>
 
-    <div class="headerSpacer spacerLeft">
-
-        <div class="menuBox menuTrigger">
-            <i class="fa fa-caret-left menuButton menuCloseFeedback" style="margin-right: 5px; opacity: 0;"></i>
-
-            <img src="images/MENU.png" style="height: 30px; width: 30px; float: left; margin-top: 15px;">
-            <div class="menuTriggerText">
-                MENU
-            </div>
-        </div>
-    </div>
-
-
-    <img class='logoButton' src="images/logo.png">
-
-    <div class="headerSpacer spacerRight ">
-        <div class="menuBox menuLogin hideMobile loginButton">
-            <div class="menuTriggerText myAccount">
-                LOGIN/SIGNUP
-            </div>
-        </div>
-        <div class="menuBox hideMobile menuLogin" style="text-align: center; padding-left: 0px; padding-right: 0px;">
-            <div class="skewMe" style=" height: 100%;
-            width: 80px; background: #878787 ;
-            opacity: 0.1;
-             transform: skew(-30deg, 0deg);  position: absolute; margin-left: 30px;"></div>
-            <div class="menuTriggerText boxMe contactUsButton"
-                 style="position: relative; z-index: 100; font-family: RobotoRegular;">
-                CONTACT US
-            </div>
-        </div>
-    </div>
-
-
-</div>
-
-
-<div class="menuContainer"></div>
-
-<div class="menu">
-    <div class="menuOption homeButton">Home</div>
-    <div class="menuOption findYourStyleButton">Find Your Style</div>
-    <div class="menuOption browseOurStylesButton">Browse Our Styles</div>
-    <div class="menuOption howItWorksButton">How It Works</div>
-    <div class="menuOption whoWeAreButton">Who We Are</div>
-    <div class="menuOption contactUsButton">Contact Us</div>
-</div>
-
-<div class="loginPanel">
-    <div class="loginContainer">
-        <div class="loginSelect">LOGIN</div>
-        <div class="loginSelect" style="font-size: 17px; margin-top: 15px; margin-bottom: 15px; ">Sign in to see
-            information about your project and to communicate with us.<br><br><br><br><b>COMING SOON!</b>
-        </div>
-
-        <div class="loginTab" style='display: none;'>
-            <input type='text' class="loginInput" placeholder="EMAIL ADDRESS">
-            <input type='password' class="loginInput" placeholder="PASSWORD">
-
-            <div class="getStartedButton" style="">SIGN IN
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div id="left-menu"></div>
+<div class="headerMenu"></div>
 
 <div id="fullpage">
     <div class="section introSection" id="section0">
@@ -818,9 +592,11 @@
                 <img src="images/HIW1.png" class="HIWImage">
                 <div class="HIWStepTitle">Find your style</div>
                 <div class="HIWText">
-                    Take our fun style quiz with 6 simple, visual questions that matches you to what we think your style
+                    Take our fun style quiz with 6 simple, visual questions that matches you to what we think your
+                    style
                     fit
-                    is. With 20 current styles, and many more coming to you from our designers across the globe, we are
+                    is. With 20 current styles, and many more coming to you from our designers across the globe, we
+                    are
                     pretty sure we will find you a style match.
                     Or browse our styles and talk to our designer to find the perfect fit.
                 </div>
@@ -831,10 +607,12 @@
                 <img src="images/HIW2.png" class="HIWImage">
                 <div class="HIWStepTitle">Personalize your look</div>
                 <div class="HIWText">
-                    Interact with our designers to bring in the elements that make this your own, unique space. Whether
+                    Interact with our designers to bring in the elements that make this your own, unique space.
+                    Whether
                     it is incorporating your old sari, kids awards, or ensuring the space is safe for your elderly
                     parents.
-                    With wood and brand options for different budgets, we are confident of creating your home without
+                    With wood and brand options for different budgets, we are confident of creating your home
+                    without
                     compromising on quality or material.
                 </div>
 
@@ -846,7 +624,8 @@
                 <div class="HIWText">
                     We order your products, begin works on site and keep you informed with weekly reports and photo
                     updates.
-                    Coming soon - a user friendly customer portal. So while the anticipation builds up, there will be no
+                    Coming soon - a user friendly customer portal. So while the anticipation builds up, there will
+                    be no
                     surprises. We offer a 30 days snag fix period, to fix the little snags that crop up after we
                     handover
                     your home.
@@ -856,7 +635,8 @@
 
     </div>
 
-    <div class="section" style="background: url('images/artwork.png') #FFF; background-size: 1200px 1200px;" id="section2">
+    <div class="section" style="background: url('images/artwork.png') #FFF; background-size: 1200px 1200px;"
+         id="section2">
         <br>
         <br>
         <div class="sectionTitle">UNSURE WHAT YOUR STYLE IS?</div>
@@ -886,12 +666,15 @@
                     Stuthi. She has worked on
                     three
                     continents, managed teams of 2-350 and strongly believes that mainstream businesses need to be
-                    socially responsible while providing customer wow. She dabbles in languages, speaking 7 badly till
+                    socially responsible while providing customer wow. She dabbles in languages, speaking 7 badly
+                    till
                     date.DuoLingo and Lumosity are her new best friends.
                     <br><br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;Stuthi has spent 20 years alternating between consulting with the likes of
+                    &nbsp;&nbsp;&nbsp;&nbsp;Stuthi has spent 20 years alternating between consulting with the likes
+                    of
                     Mckinsey, and building
-                    great P&Ls with firms like Lodha and LexisNexis. An alum of IIMB and Carnegie Mellon, with way too
+                    great P&Ls with firms like Lodha and LexisNexis. An alum of IIMB and Carnegie Mellon, with way
+                    too
                     many
                     degrees to be of real use.
                     <br><br>
@@ -907,21 +690,26 @@
                 <div style="font-size: 30px;"><b>What We Believe</b></div>
                 <br>
                 <div style="width: 100%; text-align: justify !important;">
-                    &nbsp;&nbsp;&nbsp;&nbsp;<b>Great design makes people happy</b>; happy people do great things! The
+                    &nbsp;&nbsp;&nbsp;&nbsp;<b>Great design makes people happy</b>; happy people do great things!
+                    The
                     stunning
                     optimization of form and
-                    functionality lies somewhere between science and art. When you sit on the chair, sleep on the bed,
+                    functionality lies somewhere between science and art. When you sit on the chair, sleep on the
+                    bed,
                     look
                     on the artwork, you will feel the balance. Enjoy it!
                     <br><br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;<b>Homes and spaces will evolve with you</b>; let them tell your story, bear
+                    &nbsp;&nbsp;&nbsp;&nbsp;<b>Homes and spaces will evolve with you</b>; let them tell your story,
+                    bear
                     your
                     scars, celebrate
                     your
                     memories; not look like another model flat with cheap imports
                     <br><br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;Sustainability is not a buzzword; we keep experimenting to make products and
-                    find <b>solutions that don't destroy the planet</b>. Plantation/recycled timber, solar, rain water
+                    &nbsp;&nbsp;&nbsp;&nbsp;Sustainability is not a buzzword; we keep experimenting to make products
+                    and
+                    find <b>solutions that don't destroy the planet</b>. Plantation/recycled timber, solar, rain
+                    water
                     harvesting, vertical
                     gardens.
                     You will see us trying elements of these with all our design.
@@ -943,7 +731,8 @@
                     sketch at his drawing board. He has traveled 158 countries at last count and remains a South
                     Bangalore guy
                     who cant live without great saaru.
-                    <br><br>&nbsp;&nbsp;&nbsp;&nbsp;The principal architect at Venkataraman Associates, the founder of
+                    <br><br>&nbsp;&nbsp;&nbsp;&nbsp;The principal architect at Venkataraman Associates, the founder
+                    of
                     Pragrup,
                     an activist with RUST.
                     <br><br><a href="https://www.linkedin.com/in/ravindra-kumar-b31897b" target="_blank">Find on
@@ -957,7 +746,8 @@
         <br>
 
     </div>
-    <div class="section contactUsSection" style="background: url('images/artwork.png') #FFF; background-size: 1200px 1200px;" id="section4" >
+    <div class="section contactUsSection"
+         style="background: url('images/artwork.png') #FFF; background-size: 1200px 1200px;" id="section4">
         <br>
         <div class="sectionTitle">CONTACT US</div>
 
@@ -974,7 +764,8 @@
                 <input class="contactInput" id="PHONE" name="PHONE" type="textbox" placeholder="Phone Number">
                 <textarea class="textInput" id="MESSAGE" name="MESSAGE" rows="3"
                           placeholder="Type your message here"></textarea>
-                <div class="contactSuccess" style="display: none; margin-top: 20px; font-size: 20px;">We will contact
+                <div class="contactSuccess" style="display: none; margin-top: 20px; font-size: 20px;">We will
+                    contact
                     you!
                 </div>
                 <div style="width: 100%; height: 10px;"></div>
@@ -1016,7 +807,8 @@
                 <div class="footerBox">
                     <img src="images/logoWhite.png" style="height: 50px; margin-top: 70px;">
                 </div>
-                <div class="footerBox" style="font-size: 30px; color: #666; box-sizing: border-box; padding-top: 80px;">
+                <div class="footerBox"
+                     style="font-size: 30px; color: #666; box-sizing: border-box; padding-top: 80px;">
 
                     <i class="fa fa-facebook-square"></i>
                     <i class="fa fa-pinterest-square"></i>
@@ -1057,8 +849,8 @@
             </div>
         </div>
     </div>
-
 </div>
 
 </body>
+
 </html>

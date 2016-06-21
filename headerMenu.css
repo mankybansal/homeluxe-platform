@@ -1,0 +1,149 @@
+.header {
+    text-align: center;
+    position: fixed;
+    float: top;
+    z-index: 999;
+    background: rgba(255, 255, 255, .97);
+    height: 60px;
+    border-bottom: 1px solid #DDDFE0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.logoButton {
+    margin: 0 auto;
+    margin-top: 12.5px;
+    height: 35px;
+    cursor: pointer;
+}
+
+.headerSpacer {
+    height: 100%;
+    width: 38%;
+}
+
+.spacerLeft {
+    float: left;
+}
+
+.spacerRight {
+    float: right;
+}
+
+.myAccount {
+    text-transform: uppercase;
+}
+
+.menuBox {
+    height: 100%;
+    display: inline-block;
+    padding-left: 20px;
+    padding-right: 20px;
+    transition: all ease .5s;
+    cursor: pointer;
+    text-align: center;
+    float: left;
+}
+
+.menuBox:hover {
+    background: rgba(0, 0, 0, 0.03);
+}
+
+
+
+.menuButton {
+    font-size: 20px !important;
+    margin-top: 20px;
+    color: #333;
+    float: left;
+}
+
+.menuLogin {
+    float: right;
+}
+
+.menuTriggerText {
+    font-family: RobotoMedium;
+    font-size: 15px;
+    float: left;
+    margin-top: 21.5px !important;
+    margin-left: 10px;
+    margin-right: 10px;
+    color: #333;
+    transition: all ease .5s;
+}
+
+.menuTriggerTextLink {
+    font-family: RobotoLight;
+    font-size: 15px;
+    float: left;
+    margin-top: 21.5px !important;
+    margin-left: 10px;
+    margin-right: 10px;
+    color: #666;
+    transition: all ease .5s;
+}
+
+.menuOption {
+    width: 90%;
+    margin: 0 auto;
+    text-align: center;
+    height: 60px;
+    border-bottom: 1.5px solid #eee;
+    box-sizing: border-box;
+    padding: 21.5px;
+    text-transform: uppercase;
+    font-size: 17px;
+    font-family: "RobotoRegular";
+    color: #333;
+    float: top;
+    transition: all ease .5s;
+    cursor: pointer;
+}
+
+.menuOption:hover {
+    background: #eee;
+    color: #000;
+}
+
+.menuContainer {
+    display: none;
+    position: fixed;
+    top: 60px;
+    float: left;
+    z-index: 99;
+    height: calc(100% - 60px);
+    background: rgba(0, 0, 0, 0.7);
+    width: 100%;
+}
+
+.menu {
+    position: fixed;
+    top: 60px;
+    float: left;
+    z-index: 100;
+    height: calc(100% - 60px);
+    width: 270px;
+    background: white;
+    left: -270px;
+    box-sizing: border-box;
+    padding-top: 50px;
+}
+
+.boxMe {
+    padding: 10px;
+    margin-top: 11px !important;
+    background: #468FDE;;
+    color: white;
+}
+
+@media only screen and (max-width: 800px) {
+    .headerSpacer {
+        width: 150px;
+    }
+
+    .logoButton {
+        height: 25px;
+        margin-top: 19.5px;
+    }
+}
