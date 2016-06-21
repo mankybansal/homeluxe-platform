@@ -2,6 +2,23 @@ var apiToken;
 var myUser;
 var regFBID, regFBDP, regFBName, regFBEmail;
 
+
+function deleteAllCookies() {
+    var cookies = document.cookie.split(";");
+
+    for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i];
+        var eqPos = cookie.indexOf("=");
+        var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    }
+}
+
+//Hide Overlay
+function hideLoginOverlay(){
+    $('.loginOverlay').fadeOut(500);
+}
+
 // Show Alert Message
 function showAlert(message) {
     $('.alertMessage').fadeIn(300);
@@ -62,6 +79,7 @@ function login(username, password) {
                 }
                 else if (data.message == "Invalid token detected") {
                     $.removeCookie('myUser-token', {path: '/'});
+                    deleteAllCookies();
                 }
                 else {
                     showAlert('Wrong username or password.');
