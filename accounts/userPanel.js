@@ -165,13 +165,6 @@ function viewLikes(){
     $("#viewMyLikes").fadeIn(500);
 }
 
-function isTokenSet() {
-    if (apiToken) {
-        return true;
-    } else {
-        return false;
-    }
-}
 
 function submitRegister() {
     var rname = $('#regName').val();
@@ -221,9 +214,6 @@ function showLogin() {
     $(".loginSpacer").animate({"height": spacerHeight + 65}, 500);
 }
 
-function facebookRegister() {
-
-}
 
 function userRegister() {
     $(".loginContainer").animate({"height": "570px"}, 500);

@@ -1,3 +1,11 @@
+
+
+
+
+
+
+
+
 a {
     text-decoration: none;
     color: #000;
@@ -56,17 +64,6 @@ html, body {
     overflow-x: hidden !important;
 }
 
-.header {
-    text-align: center;
-    position: fixed;
-    float: top;
-    z-index: 999;
-    background: rgba(255, 255, 255, .97);
-    height: 60px;
-    border-bottom: 1px solid #DDDFE0;
-    width: 100%;
-    box-sizing: border-box;
-}
 
 .stepBox {
     width: 100%;
@@ -160,85 +157,6 @@ html, body {
     font-size: 40px;
 }
 
-.menuContainer {
-    display: none;
-    position: fixed;
-    top: 60px;
-    float: left;
-    z-index: 99;
-    height: calc(100% - 60px);
-    background: rgba(0, 0, 0, 0.7);
-    width: 100%;
-}
-
-.menu {
-    position: fixed;
-    top: 60px;
-    float: left;
-    z-index: 100;
-    height: calc(100% - 60px);
-    width: 270px;
-    background: white;
-    left: -270px;
-    box-sizing: border-box;
-    padding-top: 50px;
-}
-
-.menuBox {
-    height: 100%;
-    display: inline-block;
-    padding-left: 20px;
-    padding-right: 20px;
-    transition: all ease .5s;
-    cursor: pointer;
-    text-align: center;
-    float: left;
-}
-
-.menuBox:hover {
-    background: rgba(0, 0, 0, 0.03);
-}
-
-.menuButton {
-    font-size: 20px !important;
-    margin-top: 20px;
-    color: #333;
-    float: left;
-}
-
-.menuLogin {
-    float: right;
-}
-
-.menuTriggerText {
-    font-family: RobotoMedium;
-    font-size: 15px;
-    float: left;
-    margin-top: 21.5px !important;
-    margin-left: 10px;
-    margin-right: 10px;
-    color: #333;
-    transition: all ease .5s;
-}
-
-.menuTriggerTextLink {
-    font-family: RobotoLight;
-    font-size: 15px;
-    float: left;
-    margin-top: 21.5px !important;
-    margin-left: 10px;
-    margin-right: 10px;
-    color: #666;
-    transition: all ease .5s;
-}
-
-.boxMe {
-    padding: 10px;
-    margin-top: 11px !important;
-    background: #468FDE;;
-    color: white;
-}
-
 .slideTitle {
 
     font-family: RobotoLight;
@@ -275,19 +193,6 @@ html, body {
     box-shadow: 0px 0px 30px rgba(255, 255, 255, 0.5);
     cursor: pointer;
 }
-
-.loginPanel {
-    display: none;
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 9999;
-    background: rgba(0, 0, 0, 0.7);
-    text-align: center;
-}
-
 .imagePanel {
     display: none;
     position: fixed;
@@ -300,42 +205,6 @@ html, body {
     text-align: center;
 }
 
-.loginTab {
-    width: 100%;
-    height: 250px;
-}
-
-.signupTab {
-    display: none;
-}
-
-.loginInput {
-    width: 90%;
-    height: 50px;
-    margin-top: 15px;
-    outline: none;
-    border: 0px;
-    background: #EEE;
-    box-sizing: border-box;
-    padding: 15px 20px 15px 20px;
-    font-size: 20px;
-    color: black;
-    font-family: RobotoLight;
-}
-
-.loginContainer {
-    width: 400px;
-    min-height: 10px;
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-    background: white;
-    display: inline-block;
-    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.4);
-    box-sizing: border-box;
-    padding: 20px;
-}
-
 
 .imageContainer {
     width: 90%;
@@ -346,46 +215,6 @@ html, body {
     box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.4);
     box-sizing: border-box;
     padding: 20px;
-}
-
-.tabContent {
-    height: 40px;
-    width: 100%;
-    border-bottom: 2px solid #eee;
-    margin: 0 auto;
-}
-
-.loginSelect {
-    height: 100%;
-    font-family: RobotoRegular;
-    color: #333;
-    font-size: 25px;
-    width: 100%;
-    text-align: center;
-    margin: 0 auto;
-    margin-top: 40px;
-}
-
-.menuOption {
-    width: 90%;
-    margin: 0 auto;
-    text-align: center;
-    height: 60px;
-    border-bottom: 1.5px solid #eee;
-    box-sizing: border-box;
-    padding: 21.5px;
-    text-transform: uppercase;
-    font-size: 17px;
-    font-family: "RobotoRegular";
-    color: #333;
-    float: top;
-    transition: all ease .5s;
-    cursor: pointer;
-}
-
-.menuOption:hover {
-    background: #eee;
-    color: #000;
 }
 
 .triangle-down {

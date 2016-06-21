@@ -1,0 +1,48 @@
+<div class="header">
+
+    <div class="headerSpacer spacerLeft">
+
+        <div class="menuBox" onclick="menuClicked()">
+            <i class="fa fa-caret-left menuButton menuCloseFeedback" style="margin-right: 5px; opacity: 0;"></i>
+
+            <img src="images/MENU.png" style="height: 30px; width: 30px; float: left; margin-top: 15px;">
+            <div class="menuTriggerText">
+                MENU
+            </div>
+        </div>
+    </div>
+
+    <img class='logoButton' src="images/logo.png" onclick="menuHomeClick()">
+
+    <div class="headerSpacer spacerRight ">
+        <div class="menuBox menuLogin hideMobile loginTrigger" onclick="loginButtonClick()">
+            <div class="menuTriggerText myAccount">
+                LOGIN/SIGN-UP
+            </div>
+        </div>
+        <div class="menuBox hideMobile menuLogin"
+             style="text-align: center; padding-left: 0px; padding-right: 0px;" onclick="menuContactClick()">
+            <div class="skewMe" style=" height: 100%;
+            width: 80px; background: #878787 ;
+            opacity: 0.1;
+             transform: skew(-30deg, 0deg);  position: absolute; margin-left: 30px;"></div>
+            <div class="menuTriggerText boxMe"
+                 style="position: relative; z-index: 100; font-family: RobotoRegular;">
+                CONTACT US
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="menuContainer" onclick="menuContainerClicked()"></div>
+
+<div class="menu">
+    <div class="menuOption" onclick="menuHomeClick()">Home</div>
+    <div class="menuOption" onclick="menuQuizClick()">Find Your Style</div>
+    <div class="menuOption" onclick="menuBrowseClick()">Browse Our Styles</div>
+    <div class="menuOption" onclick="menuHowItWorksClick()">How It Works</div>
+    <div class="menuOption" onclick="menuWhoWeAreClick()">Who We Are</div>
+    <div class="menuOption" onclick="menuContactClick()">Contact Us</div>
+</div>
+
+<div id="left-menu"></div>
