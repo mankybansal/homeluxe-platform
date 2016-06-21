@@ -86,6 +86,8 @@ function updateLikes(styleNode, imageNode) {
 function viewStyle(styleNum) {
 
 
+    $('.leftNav').hide();
+
     currentImage = 0;
     $('.coverContainer').fadeIn(500);
 
@@ -216,8 +218,11 @@ function coverContainerClose() {
 function leftNavClick() {
     console.log("Current" + currentImage);
     currentImage -= 1;
+    $('.leftNav').show();
+    $('.rightNav').show();
     if (currentImage < 0) {
-        currentImage = images.length - 1;
+        currentImage = 0;
+        $('.leftNav').hide();
     }
     console.log("LEFT" + currentImage);
 
@@ -236,7 +241,12 @@ function leftNavClick() {
 function rightNavClick() {
     console.log("Current" + currentImage);
     currentImage++;
-    currentImage = (currentImage) % images.length;
+    $('.leftNav').show();
+    $('.rightNav').show();
+    if(currentImage > (images.length - 1)){
+        currentImage = images.length - 1;
+        $('.rightNav').hide();
+    }
     console.log("RIGHT " + currentImage);
 
 
