@@ -3,22 +3,36 @@
  */
 
 // GLOBAL guestToken used for making API requests
-var guestToken;
+var guestToken = false;
 
 // Server Request Function with callback
 function serverRequest(url, data, callback) {
-    $.ajax({
-        type: "POST",
-        dataType: "json",
-        contentType: "application/x-www-form-urlencoded",
-        url: "http://homeluxe.in:3000/" + url,
-        data: data,
-        timeout: 25000 // sets timeout
-    }).done(function (response) {
-        callback && callback(response);
-    }).fail(function () {
-        console.log("SERVER REQUEST ERROR");
-    });
+    if (!guestToken) {
+        guestToken = true;
+        getGuestToken(function () {
+            // Update passed data with new token
+            data.token = guestToken;
+            // Make request again
+            serverRequest(url, data, callback)
+        });
+    } else {
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            contentType: "application/x-www-form-urlencoded",
+            url: "http://homeluxe.in:3000/" + url,
+            data: data,
+            timeout: 25000, // sets timeout
+            success: function (response) {
+                console.log(response);
+                callback && callback(response);
+            },
+            error: function (response) {
+                console.log(response);
+                console.log("SERVER REQUEST ERROR");
+            }
+        });
+    }
 }
 
 var requests = {
@@ -61,9 +75,9 @@ var requests = {
 
     getStyles: function (callback) {
         var myObject = {
-            "token": guestToken
+            'token': guestToken
         };
-        serverRequest("styles", myObject, callback);
+        serverRequest("browse", myObject, callback);
     },
 
     getQuiz: function (callback) {
@@ -74,23 +88,23 @@ var requests = {
         serverRequest("quiz", myObject, callback);
     },
 
-    submitQuiz: function (answerSet,callback) {
+    submitQuiz: function (answerSet, callback) {
         var myObject = {
             "submit": 1,
-            "token": quizToken,
+            "token": guestToken,
             "answer_set": answerSet
         };
-        serverRequest("quiz",myObject,callback);
+        serverRequest("quiz", myObject, callback);
     },
-    
-    getLikes: function (userToken, callback){
+
+    getLikes: function (userToken, callback) {
         var myObject = {
             "token": userToken
         };
         serverRequest("member/likes", myObject, callback);
     },
-    
-    likeNode: function (userToken, nodeID, callback){
+
+    likeNode: function (userToken, nodeID, callback) {
         var myObject = {
             "token": userToken,
             "like_node": nodeID
@@ -100,14 +114,11 @@ var requests = {
 };
 
 // GLOBAL function for getting a guestToken
-function getGuestToken() {
+function getGuestToken(callback) {
     requests.getGuestToken(function (response) {
-        if (response.success)
+        if (response.success) {
             guestToken = response.token;
+            callback && callback();
+        }
     });
 }
-
-// Get guestToken on page load
-$(document).ready(function () {
-    getGuestToken();
-});

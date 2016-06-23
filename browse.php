@@ -1,9 +1,3 @@
-<?php
-
-include("session.php");
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -114,6 +108,7 @@ include("session.php");
 
     <script src="jquery.min.js"></script>
     <script src="jquery.cookie.js"></script>
+    <script src="serverRequest.js"></script>
     <script src="accounts.js"></script>
     <script src="headerMenu.js"></script>
     <script src="styleViewer.js"></script>
@@ -122,96 +117,61 @@ include("session.php");
 
 
     <script type="text/javascript">
-        $(document).ready(function () {
 
+
+        var styles = [];
+        
+        function getStyles() {
+            requests.getStyles(function (response) {
+                
+                styles = response;
+
+                $.each(styles, function (index, item) {
+
+                    if (item.images[0].name != 'NOIMAGE.png') {
+                        $('.diamondContainer').append("<div class='diamond' id='styleDia" + index + "'><a href='javascript:viewStyle(" + index + ");'><div  data-adaptive-background data-ab-css-background data-ab-parent='#styleDia" + index + "' class='diamondText' id='style" + index + "' ><div class='textHighlight'>" + item.name + "</div></div></a></div>");
+
+                        var str = item.images[2].file;
+                        var res = str.split(".");
+
+                        $("#style" + index).css({
+                            "background": "url('images/styles/" + item.name + "/" + res[0] + "thumb." + res[1] + "')",
+                            "background-size": "auto 160%",
+                            "background-repeat": "no-repeat",
+                            "background-position": "center"
+                        });
+                    } else {
+                        $('.diamondContainer').append("<div class='diamond'><a href='javascript:viewStyle(" + index + ");'><div  class='diamondText' id='style" + index + "' ><div class='textHighlight'>" + item.name + "</div></div></a></div>");
+                        $("#style" + index).css({
+                            "background": "url('images/styles/" + item.name + "/" + item.images[2].file + "')",
+                            "background-size": "auto 100%",
+                            "background-repeat": "no-repeat",
+                            "background-position": "center"
+                        });
+                    }
+                });
+                
+                $('.mainCard').fadeIn(1000).animate({marginTop: '0px'}, 500);
+
+                if (urlStyle != null) {
+                    var styleNumber;
+                    for (var i = 0; i < styles.length; i++)
+                        if (styles[i].catalogueKey == urlStyle)
+                            styleNumber = i;
+                    viewStyle(styleNumber);
+                }
+            });
+        }
+
+        $(document).ready(function () {
             $('.browseLooks').click(function () {
                 $('.resultCard').fadeOut(500);
             });
-
             $('.resultLogo').click(function () {
                 window.location = 'index.html';
             });
-
-            function getToken() {
-                $.ajax({
-                    type: "POST",
-                    dataType: "json",
-                    url: "http://homeluxe.in:3000/getToken",
-                    success: function (data) {
-
-                        if (data.success == true) {
-                            console.log("TOKEN: " + data.token);
-                            myToken = data.token;
-                            getStyles();
-                        } else {
-                            console.log("ERROR RECEIVING TOKEN");
-                        }
-
-                    }
-                });
-            }
-
-            getToken();
-
-            function getStyles() {
-                $.ajax({
-                    type: "POST",
-                    contentType: "application/x-www-form-urlencoded",
-                    data: {
-                        'token': myToken
-                    },
-                    url: "http://homeluxe.in:3000/browse",
-                    success: function (data) {
-                        console.log(data);
-                        console.log(data.length);
-                        styles = data;
-
-                        $.each(styles, function (index, item) {
-
-                            if (item.images[0].name != 'NOIMAGE.png') {
-
-                                $('.diamondContainer').append("<div class='diamond' id='styleDia" + index + "'><a href='javascript:viewStyle(" + index + ");'><div  data-adaptive-background data-ab-css-background data-ab-parent='#styleDia" + index + "' class='diamondText' id='style" + index + "' ><div class='textHighlight'>" + item.name + "</div></div></a></div>");
-
-                                var str = item.images[2].file;
-                                var res = str.split(".");
-
-                                $("#style" + index).css("background", "url('images/styles/" + item.name + "/" + res[0] + "thumb." + res[1] + "')");
-                                $("#style" + index).css("background-size", "auto 160%");
-                                $("#style" + index).css("background-repeat", "no-repeat");
-                                $("#style" + index).css("background-position", "center");
-
-                            } else {
-                                $('.diamondContainer').append("<div class='diamond'><a href='javascript:viewStyle(" + index + ");'><div  class='diamondText' id='style" + index + "' ><div class='textHighlight'>" + item.name + "</div></div></a></div>");
-                                $("#style" + index).css("background", "url('images/styles/" + item.name + "/" + item.images[2].file + "')");
-                                $("#style" + index).css("background-size", "auto 100%");
-                                $("#style" + index).css("background-repeat", "no-repeat");
-                                $("#style" + index).css("background-position", "center");
-                            }
-                        });
-                        $('.mainCard').fadeIn(1000);
-                        $('.mainCard').animate({marginTop: '0px'}, 500, function () {
-                            setTimeout(function () {
-                                //$.adaptiveBackground.run();
-                            }, 2000);
-                        });
-
-                        if (urlStyle != null) {
-                            var styleNumber;
-                            for (var i = 0; i < styles.length; i++) {
-                                if (styles[i].catalogueKey == urlStyle) {
-                                    styleNumber = i;
-                                }
-                            }
-                            viewStyle(styleNumber);
-                        }
-                    }
-                });
-
-
-            }
+            getStyles();
         });
-        var styles = [];
-        var myToken;
     </script>
 
     <style>

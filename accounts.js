@@ -1,18 +1,5 @@
-var apiToken;
 var myUser;
 var regFBID, regFBDP, regFBName, regFBEmail;
-
-
-function deleteAllCookies() {
-    var cookies = document.cookie.split(";");
-
-    for (var i = 0; i < cookies.length; i++) {
-        var cookie = cookies[i];
-        var eqPos = cookie.indexOf("=");
-        var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-    }
-}
 
 //Hide Overlay
 function hideLoginOverlay() {
@@ -21,8 +8,7 @@ function hideLoginOverlay() {
 
 // Show Alert Message
 function showAlert(message) {
-    $('.alertMessage').fadeIn(300);
-    $('.alertMessage').html(message);
+    $(".alertMessage").fadeIn(300).html(message);
 }
 
 // Function for Checking if User is logged in & valid
@@ -63,35 +49,15 @@ function loginSuccess() {
 // Login to HomeLuxe (NOT oAUTH)
 function login(username, password) {
     if (username != "" && password != "") {
-        $.ajax({
-            type: "POST",
-            dataType: "json",
-            data: {
-                "token": apiToken,
-                "email": username,
-                "password": password
-            },
-            url: "http://homeluxe.in:3000/member/login",
-            success: function (data) {
-                if (data.status == "Success") {
-                    myUser = data;
-                    loginSuccess();
-                }
-                else if (data.message == "Invalid token detected") {
-                    $.removeCookie('myUser-token', {path: '/'});
-                    deleteAllCookies();
-                }
-                else {
-                    showAlert('Wrong username or password.');
-                }
-            },
-            error: function (data) {
-                showAlert("An unknown error occurred.");
+        requests.userLogin(username, password, function (response) {
+            if (response.status == "Success") {
+                myUser = response;
+                loginSuccess();
             }
+            else showAlert('Wrong username or password.');
         });
-    } else {
-        showAlert('Please enter a username & password.');
     }
+    else showAlert('Please enter a username & password.');
 }
 
 // Submit Registration Form (NOT oAUTH)
@@ -102,35 +68,14 @@ function submitRegister() {
     var rpassword = $('#regPassword').val();
 
     if (rname != "" && remail != "" && rpassword != "" && rphone != "") {
-        $.ajax({
-            type: "POST",
-            dataType: "json",
-            data: {
-                "token": apiToken,
-                "name": rname,
-                "email": remail,
-                "mobile": rphone,
-                "password": rpassword
-            },
-            url: "http://homeluxe.in:3000/member/register",
-            success: function (data) {
-                if (data.status == "Success") {
-                    showLogin();
-                    showAlert('Account Created. Please Sign-in.');
-                } else if (data.status == "Failed" && data.message == "User already exists") {
-                    showAlert('You already have an account.');
-                }
-                else {
-                    showAlert('Please fill the form correctly.');
-                }
-            },
-            error: function (data) {
-                showAlert("An unknown error occurred.");
-            }
+        requests.userRegiserForm(rname, remail, rphone, rpassword, function (response) {
+            if (response.status == "Success")
+                login(remail, rpassword);
+            else if (response.status == "Failed" && response.message == "User already exists")
+                showAlert('You already have an account.');
+            else showAlert('Please fill the form correctly.');
         });
-    } else {
-        showAlert('Please fill the form correctly.');
-    }
+    } else showAlert('Please fill the form correctly.');
 }
 
 
@@ -140,10 +85,8 @@ function showLogin() {
     $(".registerPanel").hide();
     setTimeout(function () {
         $(".loginPanel").fadeIn(500);
-    }, 200)
-
+    }, 200);
     var spacerHeight = $(".loginSpacer").height();
-
     $(".loginSpacer").animate({"height": spacerHeight + 65}, 500);
 }
 
@@ -154,33 +97,9 @@ function userRegister() {
     $(".loginPanel").hide();
     setTimeout(function () {
         $(".registerPanel").fadeIn(500);
-    }, 200)
-
-
+    }, 200);
     var spacerHeight = $(".loginSpacer").height();
-
     $(".loginSpacer").animate({"height": spacerHeight - 65}, 500);
-}
-
-
-// GET HomeLuxe API Token for making requests
-function getToken() {
-    $.ajax({
-        type: "POST",
-        dataType: "json",
-        url: "http://homeluxe.in:3000/getToken",
-        success: function (data) {
-
-            if (data.success == true) {
-                apiToken = data.token;
-                console.log(apiToken);
-
-            } else {
-                console.log("ERROR RECEIVING TOKEN");
-            }
-
-        }
-    });
 }
 
 // INITIALIZE Facebook App Access
@@ -194,25 +113,9 @@ window.fbAsyncInit = function () {
 };
 
 function facebookRegister() {
-    $.ajax({
-        type: "POST",
-        dataType: "json",
-        data: {
-            "token": apiToken,
-            "name": regFBName,
-            "email": regFBEmail,
-            "password": regFBID,
-            "oauth": regFBID,
-            "profile_pic": regFBDP
-        },
-        url: "http://homeluxe.in:3000/member/register",
-        success: function (data) {
-            console.log(data);
-            login(regFBEmail, regFBID);
-        },
-        error: function (data) {
-            showAlert("An unknown error occurred.");
-        }
+    requests.userRegisterFacebook(regFBName, regFBEmail, regFBID, regFBDP, function () {
+        console.log(data);
+        login(regFBEmail, regFBID);
     });
 }
 
@@ -235,41 +138,19 @@ function facebookLogin() {
                 regFBEmail = response.email;
                 regFBID = response.id;
 
-                console.log(response.name);
-                console.log(response.id);
-                console.log(response.email);
+                console.log(response);
 
-                $.ajax({
-                    type: "POST",
-                    dataType: "json",
-                    data: {
-                        "token": apiToken,
-                        "email": response.email,
-                        "oauth": response.id
-                    },
-                    url: "http://homeluxe.in:3000/member/login",
-                    success: function (data) {
-                        if (data.status == "Success") {
-                            myUser = data;
-                            loginSuccess();
-                        } else {
-                            facebookRegister();
-                        }
-                    },
-                    error: function (data) {
-                        showAlert("An unknown error occurred.");
+                requests.userLogin(response.email, response.id, function (response) {
+                    if (response.status == "Success") {
+                        myUser = response;
+                        loginSuccess();
                     }
+                    else facebookRegister();
                 });
             });
-
-
-        } else {
-            console.log('User cancelled login or did not fully authorize.');
         }
-    }, {
-        scope: 'email,public_profile',
-        return_scopes: true
-    });
+        else console.log('User cancelled login or did not fully authorize.');
+    }, {scope: 'email,public_profile'});
 }
 
 // Load Facebook SDK
@@ -286,10 +167,7 @@ function facebookLogin() {
 }(document));
 
 $(document).ready(function () {
-
-    getToken();
     checkCookie();
-
     setInterval(function () {
         checkCookie();
     }, 3000);
@@ -299,5 +177,4 @@ $(document).ready(function () {
     });
 
     $(".loginOverlay").load("loginOverlay.html");
-
 });
