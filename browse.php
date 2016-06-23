@@ -158,7 +158,7 @@ include("session.php");
                     type: "POST",
                     contentType: "application/x-www-form-urlencoded",
                     data: {
-                        'token': myToken,
+                        'token': myToken
                     },
                     url: "http://homeluxe.in:3000/browse",
                     success: function (data) {

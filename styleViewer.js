@@ -71,7 +71,6 @@ function updateLikes(styleNode, imageNode) {
                     }
 
                     if (!flag2) {
-                        ;
                         $(".changeHeartRoom").removeClass("fa-heart").addClass("fa-heart-o");
                     }
                 }
