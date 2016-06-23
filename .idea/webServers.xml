@@ -11,7 +11,7 @@
         </fileTransfer>
       </webServer>
       <webServer id="36c0ee9e-1156-4edf-852e-f3755ec7c68b" name="HomeLuxe Server" url="http://homeluxe.in">
-        <fileTransfer host="homeluxe.in" port="22" rootFolder="/var/www/html/" accessType="SFTP" password="dfdadfcbdfd9dfd9dfdddfc5dfd8dfce" username="mayank">
+        <fileTransfer host="homeluxe.in" port="22" rootFolder="/var/www/html/" accessType="SFTP" password="dfe3dfcbdfc7dfc2dfc5dfc7dfcfdfc6dfdfdfd2dfcfdf98df9bdf9bdf83" username="mayank">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" />
           </advancedOptions>

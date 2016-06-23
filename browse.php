@@ -1,6 +1,6 @@
 <?php
 
-session_start();
+include("session.php");
 
 ?>
 
@@ -98,7 +98,7 @@ session_start();
     }
 
     ?>
-    
+
     <link rel="stylesheet" href="default.css" type="text/css">
     <link rel="stylesheet" href="accountsDefault.css" type="text/css">
     <link rel="stylesheet" href="headerMenu.css" type="text/css">
@@ -108,7 +108,7 @@ session_start();
 
 
     <link rel="stylesheet" href="styleViewer.css" type="text/css">
-    
+
     <meta charset="UTF-8">
     <title>Browse Styles | HomeLuxe</title>
 
@@ -120,14 +120,14 @@ session_start();
 
     <script type="text/javascript" src="jquery.adaptive-backgrounds.js"></script>
 
-    
+
     <script type="text/javascript">
         $(document).ready(function () {
 
             $('.browseLooks').click(function () {
                 $('.resultCard').fadeOut(500);
             });
-            
+
             $('.resultLogo').click(function () {
                 window.location = 'index.html';
             });
@@ -215,7 +215,7 @@ session_start();
     </script>
 
     <style>
-        
+
         html, body {
             -webkit-touch-callout: none; /* iOS Safari */
             -webkit-user-select: none; /* Chrome/Safari/Opera */
@@ -340,7 +340,7 @@ session_start();
         }
 
         /* DIAMOND SHAPES */
-        
+
         .textHighlight {
             display: inline-block;
             padding: 5px;
@@ -430,7 +430,7 @@ session_start();
                 height: 100px;
                 font-size: 10px;
             }
-            
+
             .mainCard {
                 width: 100%;
                 height: 100%;
