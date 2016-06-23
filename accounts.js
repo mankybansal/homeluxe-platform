@@ -15,7 +15,7 @@ function deleteAllCookies() {
 }
 
 //Hide Overlay
-function hideLoginOverlay(){
+function hideLoginOverlay() {
     $('.loginOverlay').fadeOut(500);
 }
 
