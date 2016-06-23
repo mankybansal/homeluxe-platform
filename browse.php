@@ -93,27 +93,27 @@
 
     ?>
 
-    <link rel="stylesheet" href="default.css" type="text/css">
-    <link rel="stylesheet" href="accountsDefault.css" type="text/css">
-    <link rel="stylesheet" href="headerMenu.css" type="text/css">
-    <link rel="stylesheet" href="animate.css" type="text/css">
+    <link rel="stylesheet" href="css/default.css" type="text/css">
+    <link rel="stylesheet" href="css/accountsDefault.css" type="text/css">
+    <link rel="stylesheet" href="css/headerMenu.css" type="text/css">
+    <link rel="stylesheet" href="css/animate.css" type="text/css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="fontAwesome/css/font-awesome.css"/>
 
 
-    <link rel="stylesheet" href="styleViewer.css" type="text/css">
+    <link rel="stylesheet" href="css/styleViewer.css" type="text/css">
 
     <meta charset="UTF-8">
     <title>Browse Styles | HomeLuxe</title>
 
-    <script src="jquery.min.js"></script>
-    <script src="jquery.cookie.js"></script>
-    <script src="serverRequest.js"></script>
-    <script src="accounts.js"></script>
-    <script src="headerMenu.js"></script>
-    <script src="styleViewer.js"></script>
+    <script src="javascript/jquery.min.js"></script>
+    <script src="javascript/jquery.cookie.js"></script>
+    <script src="javascript/serverRequest.js"></script>
+    <script src="javascript/accounts.js"></script>
+    <script src="javascript/headerMenu.js"></script>
+    <script src="javascript/styleViewer.js"></script>
 
-    <script type="text/javascript" src="jquery.adaptive-backgrounds.js"></script>
+    <script type="text/javascript" src="javascript/jquery.adaptive-backgrounds.js"></script>
 
 
     <script type="text/javascript">
