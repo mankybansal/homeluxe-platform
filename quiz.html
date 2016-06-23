@@ -5,14 +5,14 @@
     <meta name=viewport content="width=device-width, initial-scale=1">
 
 
-    <link rel="stylesheet" href="default.css" type="text/css">
-    <link rel="stylesheet" href="animate.css" type="text/css">
-    <link rel="stylesheet" href="headerMenu.css" type="text/css">
-    <link rel="stylesheet" href="accountsDefault.css" type="text/css">
-    <link rel="stylesheet" href="styleViewer.css" type="text/css">
+    <link rel="stylesheet" href="css/default.css" type="text/css">
+    <link rel="stylesheet" href="css/animate.css" type="text/css">
+    <link rel="stylesheet" href="css/headerMenu.css" type="text/css">
+    <link rel="stylesheet" href="css/accountsDefault.css" type="text/css">
+    <link rel="stylesheet" href="css/styleViewer.css" type="text/css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="fontAwesome/css/font-awesome.css"/>
-    <link rel="stylesheet" href="styleViewer.css" type="text/css">
+    <link rel="stylesheet" href="css/styleViewer.css" type="text/css">
 
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 
@@ -20,12 +20,13 @@
     <meta charset="UTF-8">
     <title>HomeLuxe | Style Quiz - Find Your Style</title>
 
-    <script src="jquery.min.js"></script>
-    <script type="text/javascript" src="jquery.adaptive-backgrounds.js"></script>
-    <script type="text/javascript" src="jquery.cookie.js"></script>
-    <script type="text/javascript" src="accounts.js"></script>
-    <script type="text/javascript" src="headerMenu.js"></script>
-    <script type="text/javascript" src="styleViewer.js"></script>
+    <script src="javascript/jquery.min.js"></script>
+    <script type="text/javascript" src="javascript/jquery.adaptive-backgrounds.js"></script>
+    <script type="text/javascript" src="javascript/serverRequest.js"></script>
+    <script type="text/javascript" src="javascript/jquery.cookie.js"></script>
+    <script type="text/javascript" src="javascript/accounts.js"></script>
+    <script type="text/javascript" src="javascript/headerMenu.js"></script>
+    <script type="text/javascript" src="javascript/styleViewer.js"></script>
 
 
     <script type="text/javascript">
@@ -33,8 +34,7 @@
 
             $('.continueButton').click(function () {
                 $('.introPanel').fadeOut(500);
-                $('.questionCard').fadeIn(500);
-                $('.questionCard').animate({marginTop: '0px'}, 500);
+                $('.questionCard').fadeIn(500).animate({marginTop: '0px'}, 500);
             });
 
             $('.option').click(function () {
@@ -44,133 +44,86 @@
                 loadQuestion();
             });
 
-            var answer_set = new Array();
+            answer_set = new Array();
+            getQuestions();
 
-            function saveAnswers(ID) {
-                answer_set.push(ID);
-            }
-
-            function loadQuestion() {
-                myProgress += 14.28;
-                $('.quizProgress').css('width', myProgress + '%');
-                if (currentQuestion + 1 < 6) {
-                    var newQuestion = questionSet[++currentQuestion].question;
-                    $('#questionText').text(newQuestion);
-                    $('#option1-text').text(questionSet[currentQuestion].options[0].optionText);
-                    $('#option1-img').html("<img  onerror='imgError(this);' src='images/optionPictures/" + questionSet[currentQuestion].images[0] + "' class='optionImage'>");
-                    $('#option2-text').text(questionSet[currentQuestion].options[1].optionText);
-                    $('#option2-img').html("<img onerror='imgError(this);' src='images/optionPictures/" + questionSet[currentQuestion].images[1] + "' class='optionImage'>");
-                    $('#option3-text').text(questionSet[currentQuestion].options[2].optionText);
-                    $('#option3-img').html("<img onerror='imgError(this);' src='images/optionPictures/" + questionSet[currentQuestion].images[2] + "' class='optionImage'>");
-                    $('#option4-text').text(questionSet[currentQuestion].options[3].optionText);
-                    $('#option4-img').html("<img onerror='imgError(this);' src='images/optionPictures/" + questionSet[currentQuestion].images[3] + "' class='optionImage'>");
-                } else {
-                    stopQuestions();
-                }
-            }
-
-            getToken();
-
-            function getToken() {
-                $.ajax({
-                    type: "POST",
-                    dataType: "json",
-                    url: "http://homeluxe.in:3000/getToken",
-                    success: function (data) {
-
-                        if (data.success == true) {
-                            console.log("TOKEN: " + data.token);
-                            quizToken = data.token;
-                            getQuestions();
-                        } else {
-                            console.log("ERROR RECEIVING TOKEN");
-                        }
-
-                    }
-                });
-            }
-
-            function getQuestions() {
-                $.ajax({
-                    type: "POST",
-                    contentType: "application/x-www-form-urlencoded",
-                    data: {
-                        'submit': 0,
-                        'token': quizToken
-                    },
-                    url: "http://homeluxe.in:3000/quiz",
-                    success: function (data) {
-                        $.each(data, function (i, item) {
-                            questionSet[i] = {
-                                "questionID": item.Questions.id,
-                                "question": item.Questions.name,
-                                "options": [
-                                    {
-                                        'optionID': item.Options[0].id,
-                                        'optionText': item.Options[0].name
-                                    },
-                                    {
-                                        'optionID': item.Options[1].id,
-                                        'optionText': item.Options[1].name
-                                    },
-                                    {
-                                        'optionID': item.Options[2].id,
-                                        'optionText': item.Options[2].name
-                                    },
-                                    {
-                                        'optionID': item.Options[3].id,
-                                        'optionText': item.Options[3].name
-                                    }
-                                ],
-                                "images": [
-                                    item.Options[0].image,
-                                    item.Options[1].image,
-                                    item.Options[2].image,
-                                    item.Options[3].image
-                                ]
-                            };
-                        });
-                        console.log(questionSet);
-                        loadQuestion();
-                    }
-
-                });
-            }
-
-            function stopQuestions() {
-                $('.questionCard').fadeOut(500);
-                $('.questionCard').animate({marginTop: '1000px'}, 500);
-                $('.resultCard').delay(500).fadeIn(1000);
-
-                $.cookie('myAnswers', answer_set, {expires: 30, path: '/'});
-
-                $.ajax({
-                    type: "POST",
-                    contentType: "application/x-www-form-urlencoded",
-                    data: {
-                        'submit': 1,
-                        'token': quizToken,
-                        'answer_set': answer_set.join()
-                    },
-                    url: "http://homeluxe.in:3000/quiz",
-                    success: function (data) {
-                        console.log(data);
-                        styles[0] = data.primary;
-                        console.log(styles);
-                        viewStyle(0);
-
-                    }
-                });
-
-
-            }
         });
 
+        function saveAnswers(ID) {
+            answer_set.push(ID);
+        }
+
+        function loadQuestion() {
+            myProgress += 14.28;
+            $('.quizProgress').css('width', myProgress + '%');
+            if (currentQuestion + 1 < 6) {
+                var newQuestion = questionSet[++currentQuestion].question;
+                $('#questionText').text(newQuestion);
+                $('#option1-text').text(questionSet[currentQuestion].options[0].optionText);
+                $('#option1-img').html("<img src='images/optionPictures/" + questionSet[currentQuestion].images[0] + "' class='optionImage'>");
+                $('#option2-text').text(questionSet[currentQuestion].options[1].optionText);
+                $('#option2-img').html("<img src='images/optionPictures/" + questionSet[currentQuestion].images[1] + "' class='optionImage'>");
+                $('#option3-text').text(questionSet[currentQuestion].options[2].optionText);
+                $('#option3-img').html("<img src='images/optionPictures/" + questionSet[currentQuestion].images[2] + "' class='optionImage'>");
+                $('#option4-text').text(questionSet[currentQuestion].options[3].optionText);
+                $('#option4-img').html("<img src='images/optionPictures/" + questionSet[currentQuestion].images[3] + "' class='optionImage'>");
+            } else {
+                stopQuestions();
+            }
+        }
+
+        function getQuestions() {
+            requests.getQuiz(function (response) {
+                $.each(response, function (i, item) {
+                    questionSet[i] = {
+                        "questionID": item.Questions.id,
+                        "question": item.Questions.name,
+                        "options": [
+                            {
+                                'optionID': item.Options[0].id,
+                                'optionText': item.Options[0].name
+                            },
+                            {
+                                'optionID': item.Options[1].id,
+                                'optionText': item.Options[1].name
+                            },
+                            {
+                                'optionID': item.Options[2].id,
+                                'optionText': item.Options[2].name
+                            },
+                            {
+                                'optionID': item.Options[3].id,
+                                'optionText': item.Options[3].name
+                            }
+                        ],
+                        "images": [
+                            item.Options[0].image,
+                            item.Options[1].image,
+                            item.Options[2].image,
+                            item.Options[3].image
+                        ]
+                    };
+                });
+                loadQuestion();
+            });
+        }
+
+        function stopQuestions() {
+            $('.questionCard').fadeOut(500).animate({marginTop: '1000px'}, 500);
+            $('.resultCard').delay(500).fadeIn(1000);
+
+            $.cookie('myAnswers', answer_set, {expires: 30, path: '/'});
+
+            requests.submitQuiz(answer_set.join(), function (response) {
+                styles = response;
+                viewStyle(0);
+            });
+        }
+        var answer_set;
         var styles = [];
         var currentQuestion = -1;
         var myProgress = 0;
         var questionSet = [];
-        var quizToken;
     </script>
 
     <style>
@@ -470,8 +423,7 @@
     <span class="aligner">
     <div class="introTitle">Ready to find your style?</div>
     <div class="introSubTitle">
-        We'll be asking you a few simple questions.
-        <br>
+        We'll be asking you a few simple questions. <br>
         All you have to do is pick an option that suits you the most.
     </div>
 
@@ -490,27 +442,19 @@
 
         <div class="questionOptions">
             <div class="option animated fadeInUp" id="option0">
-                <div class="optionImageContainer" id="option1-img">
-
-                </div>
+                <div class="optionImageContainer" id="option1-img"></div>
                 <div class="optionText" id="option1-text"></div>
             </div>
             <div class="option animated fadeInUp" id="option1">
-                <div class="optionImageContainer" id="option2-img">
-
-                </div>
+                <div class="optionImageContainer" id="option2-img"></div>
                 <div class="optionText" id="option2-text"></div>
             </div>
             <div class="option animated fadeInUp" id="option2">
-                <div class="optionImageContainer" id="option3-img">
-
-                </div>
+                <div class="optionImageContainer" id="option3-img"></div>
                 <div class="optionText" id="option3-text"></div>
             </div>
             <div class="option animated fadeInUp" id="option3">
-                <div class="optionImageContainer" id="option4-img">
-
-                </div>
+                <div class="optionImageContainer" id="option4-img"></div>
                 <div class="optionText" id="option4-text"></div>
             </div>
         </div>

@@ -2,10 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+
     <title>Welcome to HomeLuxe.in</title>
-    <link rel="stylesheet" href="default.css" type="text/css">
-    <link rel="stylesheet" href="accountsDefault.css" type="text/css">
-    <link rel="stylesheet" href="headerMenu.css" type="text/css">
+    <link rel="stylesheet" href="css/default.css" type="text/css">
+    <link rel="stylesheet" href="css/accountsDefault.css" type="text/css">
+    <link rel="stylesheet" href="css/headerMenu.css" type="text/css">
 
     <meta name=viewport content="width=device-width, initial-scale=1">
 
@@ -13,15 +17,14 @@
     <link rel="stylesheet" type="text/css" href="fullPageJS/jquery.fullPage.css"/>
     <link rel="stylesheet" type="text/css" href="fontAwesome/css/font-awesome.css"/>
 
-    <script src="jquery.min.js"></script>
-    <script src="jquery-ui.min.js"></script>
-
-
+    <script src="javascript/jquery.min.js"></script>
+    <script src="javascript/jquery-ui.min.js"></script>
     <script type="text/javascript" src="fullPageJS/jquery.slimscroll.min.js"></script>
     <script type="text/javascript" src="fullPageJS/jquery.fullPage.min.js"></script>
-    <script type="text/javascript" src="jquery.cookie.js"></script>
-    <script type="text/javascript" src="headerMenu.js"></script>
-    <script type="text/javascript" src="accounts.js"></script>
+    <script type="text/javascript" src="javascript/jquery.cookie.js"></script>
+    <script type="text/javascript" src="javascript/serverRequest.js"></script>
+    <script type="text/javascript" src="javascript/headerMenu.js"></script>
+    <script type="text/javascript" src="javascript/accounts.js"></script>
 
     <script type="text/javascript">
 
@@ -545,7 +548,7 @@
             </div>
         </div>
 
-        <div class="getStartedButton introGetStarted findYourStyleButton hideMobile">
+        <div class="getStartedButton introGetStarted findYourStyleButton hideMobile" onclick="menuQuizClick()">
             FIND YOUR STYLE
         </div>
 
@@ -573,9 +576,6 @@
                     Amazing Homes. Designed. Delivered.
                 </div>
 
-                <div class="getStartedButton introGetStarted findYourStyleButton showMobile">
-                    FIND YOUR STYLE
-                </div>
 
 
                 <div class="bounce">
@@ -641,9 +641,9 @@
         <br>
         <div class="sectionTitle">UNSURE WHAT YOUR STYLE IS?</div>
         <div class="sectionLine" style="margin-top: 10px;">LET US HELP YOU FIND A MATCH</div>
-        <div class="getStartedButton findYourStyleButton">TAKE OUR STYLE QUIZ</div>
+        <div class="getStartedButton findYourStyleButton" onclick="menuQuizClick()">TAKE OUR STYLE QUIZ</div>
         <div class="sectionLine">OR</div>
-        <div class="getStartedButton browseOurStylesButton" style="margin-top: 0px">BROWSE OUR STYLES</div>
+        <div class="getStartedButton browseOurStylesButton" onclick="menuBrowseClick()" style="margin-top: 0px">BROWSE OUR STYLES</div>
         <br>
         <br>
     </div>

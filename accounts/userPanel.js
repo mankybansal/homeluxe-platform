@@ -2,18 +2,20 @@
  * Created by mayankbansal on 6/14/16.
  */
 
+function deleteAllCookies(name) {
+    // This function will attempt to remove a cookie from all paths.
+    var pathBits = location.pathname.split('/');
+    var pathCurrent = ' path=';
 
+    // do a simple pathless delete first.
+    document.cookie = name + '=; expires=Thu, 01-Jan-1970 00:00:01 GMT;';
 
-function deleteAllCookies() {
-    var cookies = document.cookie.split(";");
-
-    for (var i = 0; i < cookies.length; i++) {
-        var cookie = cookies[i];
-        var eqPos = cookie.indexOf("=");
-        var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    for (var i = 0; i < pathBits.length; i++) {
+        pathCurrent += ((pathCurrent.substr(-1) != '/') ? '/' : '') + pathBits[i];
+        document.cookie = name + '=; expires=Thu, 01-Jan-1970 00:00:01 GMT;' + pathCurrent + ';';
     }
 }
+
 
 var getUrlParameter = function getUrlParameter(sParam) {
     var sPageURL = decodeURIComponent(window.location.search.substring(1)),
@@ -119,7 +121,7 @@ $(document).ready(function () {
 
     $(".signOutButton").click(function(){
         $.removeCookie('myUser-token', { path: '/' });
-        deleteAllCookies();
+        deleteAllCookies('myUser-token');
         hideDashboard();
     });
 

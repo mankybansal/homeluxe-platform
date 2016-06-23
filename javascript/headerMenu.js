@@ -38,7 +38,7 @@ function menuHomeClick() {
             scrollTop: $('.introSection').offset().top - 40
         }, 1000);
     } else {
-        window.location = 'index.html';
+        window.location = '../../index.html';
     }
 }
 
@@ -74,11 +74,11 @@ function menuContactClick() {
 }
 
 function menuBrowseClick() {
-    window.location = 'browse.php';
+    window.location = '../browse.php';
 }
 
 function menuQuizClick() {
-    window.location = 'quiz.html';
+    window.location = '../quiz.html';
 }
 
 function loginButtonClick() {

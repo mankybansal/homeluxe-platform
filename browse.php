@@ -92,124 +92,90 @@
     }
 
     ?>
-    
-    <link rel="stylesheet" href="default.css" type="text/css">
-    <link rel="stylesheet" href="accountsDefault.css" type="text/css">
-    <link rel="stylesheet" href="headerMenu.css" type="text/css">
-    <link rel="stylesheet" href="animate.css" type="text/css">
+
+    <link rel="stylesheet" href="css/default.css" type="text/css">
+    <link rel="stylesheet" href="css/accountsDefault.css" type="text/css">
+    <link rel="stylesheet" href="css/headerMenu.css" type="text/css">
+    <link rel="stylesheet" href="css/animate.css" type="text/css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="fontAwesome/css/font-awesome.css"/>
 
 
-    <link rel="stylesheet" href="styleViewer.css" type="text/css">
-    
+    <link rel="stylesheet" href="css/styleViewer.css" type="text/css">
+
     <meta charset="UTF-8">
     <title>Browse Styles | HomeLuxe</title>
 
-    <script src="jquery.min.js"></script>
-    <script src="jquery.cookie.js"></script>
-    <script src="accounts.js"></script>
-    <script src="headerMenu.js"></script>
-    <script src="styleViewer.js"></script>
+    <script src="javascript/jquery.min.js"></script>
+    <script src="javascript/jquery.cookie.js"></script>
+    <script src="javascript/serverRequest.js"></script>
+    <script src="javascript/accounts.js"></script>
+    <script src="javascript/headerMenu.js"></script>
+    <script src="javascript/styleViewer.js"></script>
 
-    <script type="text/javascript" src="jquery.adaptive-backgrounds.js"></script>
+    <script type="text/javascript" src="javascript/jquery.adaptive-backgrounds.js"></script>
 
-    
+
     <script type="text/javascript">
-        $(document).ready(function () {
 
+
+        var styles = [];
+        
+        function getStyles() {
+            requests.getStyles(function (response) {
+                
+                styles = response;
+
+                $.each(styles, function (index, item) {
+
+                    if (item.images[0].name != 'NOIMAGE.png') {
+                        $('.diamondContainer').append("<div class='diamond' id='styleDia" + index + "'><a href='javascript:viewStyle(" + index + ");'><div  data-adaptive-background data-ab-css-background data-ab-parent='#styleDia" + index + "' class='diamondText' id='style" + index + "' ><div class='textHighlight'>" + item.name + "</div></div></a></div>");
+
+                        var str = item.images[2].file;
+                        var res = str.split(".");
+
+                        $("#style" + index).css({
+                            "background": "url('images/styles/" + item.name + "/" + res[0] + "thumb." + res[1] + "')",
+                            "background-size": "auto 160%",
+                            "background-repeat": "no-repeat",
+                            "background-position": "center"
+                        });
+                    } else {
+                        $('.diamondContainer').append("<div class='diamond'><a href='javascript:viewStyle(" + index + ");'><div  class='diamondText' id='style" + index + "' ><div class='textHighlight'>" + item.name + "</div></div></a></div>");
+                        $("#style" + index).css({
+                            "background": "url('images/styles/" + item.name + "/" + item.images[2].file + "')",
+                            "background-size": "auto 100%",
+                            "background-repeat": "no-repeat",
+                            "background-position": "center"
+                        });
+                    }
+                });
+                
+                $('.mainCard').fadeIn(1000).animate({marginTop: '0px'}, 500);
+
+                if (urlStyle != null) {
+                    var styleNumber;
+                    for (var i = 0; i < styles.length; i++)
+                        if (styles[i].catalogueKey == urlStyle)
+                            styleNumber = i;
+                    viewStyle(styleNumber);
+                }
+            });
+        }
+
+        $(document).ready(function () {
             $('.browseLooks').click(function () {
                 $('.resultCard').fadeOut(500);
             });
-            
             $('.resultLogo').click(function () {
                 window.location = 'index.html';
             });
-
-            function getToken() {
-                $.ajax({
-                    type: "POST",
-                    dataType: "json",
-                    url: "http://homeluxe.in:3000/getToken",
-                    success: function (data) {
-
-                        if (data.success == true) {
-                            console.log("TOKEN: " + data.token);
-                            myToken = data.token;
-                            getStyles();
-                        } else {
-                            console.log("ERROR RECEIVING TOKEN");
-                        }
-
-                    }
-                });
-            }
-
-            getToken();
-
-            function getStyles() {
-                $.ajax({
-                    type: "POST",
-                    contentType: "application/x-www-form-urlencoded",
-                    data: {
-                        'token': myToken,
-                    },
-                    url: "http://homeluxe.in:3000/browse",
-                    success: function (data) {
-                        console.log(data);
-                        console.log(data.length);
-                        styles = data;
-
-                        $.each(styles, function (index, item) {
-
-                            if (item.images[0].name != 'NOIMAGE.png') {
-
-                                $('.diamondContainer').append("<div class='diamond' id='styleDia" + index + "'><a href='javascript:viewStyle(" + index + ");'><div  data-adaptive-background data-ab-css-background data-ab-parent='#styleDia" + index + "' class='diamondText' id='style" + index + "' ><div class='textHighlight'>" + item.name + "</div></div></a></div>");
-
-                                var str = item.images[2].file;
-                                var res = str.split(".");
-
-                                $("#style" + index).css("background", "url('images/styles/" + item.name + "/" + res[0] + "thumb." + res[1] + "')");
-                                $("#style" + index).css("background-size", "auto 160%");
-                                $("#style" + index).css("background-repeat", "no-repeat");
-                                $("#style" + index).css("background-position", "center");
-
-                            } else {
-                                $('.diamondContainer').append("<div class='diamond'><a href='javascript:viewStyle(" + index + ");'><div  class='diamondText' id='style" + index + "' ><div class='textHighlight'>" + item.name + "</div></div></a></div>");
-                                $("#style" + index).css("background", "url('images/styles/" + item.name + "/" + item.images[2].file + "')");
-                                $("#style" + index).css("background-size", "auto 100%");
-                                $("#style" + index).css("background-repeat", "no-repeat");
-                                $("#style" + index).css("background-position", "center");
-                            }
-                        });
-                        $('.mainCard').fadeIn(1000);
-                        $('.mainCard').animate({marginTop: '0px'}, 500, function () {
-                            setTimeout(function () {
-                                //$.adaptiveBackground.run();
-                            }, 2000);
-                        });
-
-                        if (urlStyle != null) {
-                            var styleNumber;
-                            for (var i = 0; i < styles.length; i++) {
-                                if (styles[i].catalogueKey == urlStyle) {
-                                    styleNumber = i;
-                                }
-                            }
-                            viewStyle(styleNumber);
-                        }
-                    }
-                });
-
-
-            }
+            getStyles();
         });
-        var styles = [];
-        var myToken;
     </script>
 
     <style>
-        
+
         html, body {
             -webkit-touch-callout: none; /* iOS Safari */
             -webkit-user-select: none; /* Chrome/Safari/Opera */
@@ -334,7 +300,7 @@
         }
 
         /* DIAMOND SHAPES */
-        
+
         .textHighlight {
             display: inline-block;
             padding: 5px;
@@ -424,7 +390,7 @@
                 height: 100px;
                 font-size: 10px;
             }
-            
+
             .mainCard {
                 width: 100%;
                 height: 100%;
