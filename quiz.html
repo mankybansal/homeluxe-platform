@@ -53,7 +53,6 @@
             answer_set.push(ID);
         }
 
-
         function loadQuestion() {
             myProgress += 14.28;
             $('.quizProgress').css('width', myProgress + '%');
@@ -61,13 +60,13 @@
                 var newQuestion = questionSet[++currentQuestion].question;
                 $('#questionText').text(newQuestion);
                 $('#option1-text').text(questionSet[currentQuestion].options[0].optionText);
-                $('#option1-img').html("<img  onerror='imgError(this);' src='images/optionPictures/" + questionSet[currentQuestion].images[0] + "' class='optionImage'>");
+                $('#option1-img').html("<img src='images/optionPictures/" + questionSet[currentQuestion].images[0] + "' class='optionImage'>");
                 $('#option2-text').text(questionSet[currentQuestion].options[1].optionText);
-                $('#option2-img').html("<img onerror='imgError(this);' src='images/optionPictures/" + questionSet[currentQuestion].images[1] + "' class='optionImage'>");
+                $('#option2-img').html("<img src='images/optionPictures/" + questionSet[currentQuestion].images[1] + "' class='optionImage'>");
                 $('#option3-text').text(questionSet[currentQuestion].options[2].optionText);
-                $('#option3-img').html("<img onerror='imgError(this);' src='images/optionPictures/" + questionSet[currentQuestion].images[2] + "' class='optionImage'>");
+                $('#option3-img').html("<img src='images/optionPictures/" + questionSet[currentQuestion].images[2] + "' class='optionImage'>");
                 $('#option4-text').text(questionSet[currentQuestion].options[3].optionText);
-                $('#option4-img').html("<img onerror='imgError(this);' src='images/optionPictures/" + questionSet[currentQuestion].images[3] + "' class='optionImage'>");
+                $('#option4-img').html("<img src='images/optionPictures/" + questionSet[currentQuestion].images[3] + "' class='optionImage'>");
             } else {
                 stopQuestions();
             }
