@@ -208,7 +208,7 @@ function likeRoom() {
 }
 
 function callDesigner() {
-    window.location = 'index.html#contactUsX';
+    window.location = 'index.php#contactUsX';
 }
 
 function coverContainerClose() {

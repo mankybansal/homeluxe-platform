@@ -38,7 +38,7 @@ function menuHomeClick() {
             scrollTop: $('.introSection').offset().top - 40
         }, 1000);
     } else {
-        window.location = 'index.html';
+        window.location = 'index.php';
     }
 }
 
@@ -49,7 +49,7 @@ function menuHowItWorksClick() {
             scrollTop: $('.howItWorksSection').offset().top - 40
         }, 1000);
     } else {
-        window.location = 'index.html#howItWorksX';
+        window.location = 'index.php#howItWorksX';
     }
 }
 function menuWhoWeAreClick() {
@@ -59,7 +59,7 @@ function menuWhoWeAreClick() {
             scrollTop: $('.whoWeAreSection').offset().top - 40
         }, 1000);
     } else {
-        window.location = 'index.html#whoWeAreX';
+        window.location = 'index.php#whoWeAreX';
     }
 }
 function menuContactClick() {
@@ -69,7 +69,7 @@ function menuContactClick() {
             scrollTop: $('.contactUsSection').offset().top - 40
         }, 1000);
     } else {
-        window.location = 'index.html#contactUsX';
+        window.location = 'index.php#contactUsX';
     }
 }
 
