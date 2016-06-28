@@ -1,6 +1,6 @@
 from py2neo import Graph,Node,Relationship,watch
 
-graph = Graph("http://neo4j:homeluxe@123@homeluxe.in:7474/db/data/")
+graph = Graph("http://neo4j:homeluxe@123@dev.homeluxe.in:7474/db/data/")
 
 # Enable this only if it's a new DB and this script is running for the first time.
 #graph.schema.create_uniqueness_constraint('Profiles','name')
