@@ -1,6 +1,6 @@
 from py2neo import Graph,Node,Relationship,watch
 
-graph = Graph("http://neo4j:homeluxe@123@homeluxe.in:7474/db/data")
+graph = Graph("http://neo4j:homeluxe@123@dev.homeluxe.in:7474/db/data")
 
 watch("httpstream")
 label = 'Profiles'

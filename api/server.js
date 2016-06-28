@@ -13,8 +13,9 @@ var morgan = require('morgan');
 var jwt = require('jsonwebtoken');
 var bodyParser = require('body-parser');
 var sendgrid = require('sendgrid')('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');
+var async = require('async');
 var db = require('seraph')({
-	server: "http://localhost:7474",
+	server: "http://homeluxe.in:7474",
 	user: "neo4j",
 	pass: "homeluxe@123"
 });
@@ -139,23 +140,18 @@ publicRoutes.post('/quiz', function(req,res) {
 
 		if(typeof answer_set != 'undefined' && answer_set && answer_set.length == 6) {
 			/* Complete answer_set start crunching */
-			query = "MATCH (o:Options)-[LEADS_TO_PROFILE]->(p:Profiles) WHERE ID(o) IN {nodes} RETURN collect(p)"
+			query = 'MATCH (o:Options)-[LEADS_TO_PROFILE]->(p:Profiles) WHERE ID(o) IN {nodes} WITH p,COUNT(p.name) AS count ORDER BY count DESC LIMIT 1 WITH p MATCH (p)-[:HAS_ROOM]->(r) WITH p,r,r.order AS order ORDER BY order ASC RETURN p.name AS name,p.price AS price,p.catalogueKey AS catalogueKey,p.cover_pic AS cover_pic,p.description AS description,collect(r) AS images;';
 			db.query(query, {nodes : answer_set}, function(err,results){
 				if (err)
 					console.log(err);
+
+					/*
 					// Create count structure
-					results[0].forEach(function(item){
+					results.forEach(function(item){
 						if (count_structure.hasOwnProperty(item.name)) {
 							count_structure[item.name] += 1;
 						} else {
 							count_structure[item.name] = 1;
-						}
-					});
-
-					// Format image structure and parse JSON objects
-					results[0].forEach(function(item) {
-						for(i = 0; i < item.images.length ; i++) {
-							item.images[i] = JSON.parse(item.images[i]);
 						}
 					});
 
@@ -173,16 +169,17 @@ publicRoutes.post('/quiz', function(req,res) {
 
 						// Rebuild result object
 						if(primary_switch) {
-							formatted_result['primary'] = search(primary,results[0]);
+							formatted_result['primary'] = search(primary,results);
 							formatted_result['secondary'] = [];
 							primary_switch = 0;
 							delete count_structure[primary];
 						} else {
-							formatted_result['secondary'].push(search(primary,results[0]));
+							formatted_result['secondary'].push(search(primary,results));
 							delete count_structure[primary];
 						}
 					}
-					res.send(formatted_result);
+					*/
+					res.send(results);
 				});
 			} else {
 				/* incomplete answer_set, send error */
@@ -212,7 +209,7 @@ app.use('/', publicRoutes);
 *****************/
 memberRoutes.post('/register', function(req,res) {
 	// Check if minimal data is available
-	if(typeof req.body.name == 'undefined' || typeof req.body.email == 'undefined' || typeof req.body.mobile == 'undefined') {
+	if(typeof req.body.name == 'undefined' || typeof req.body.email == 'undefined') {
 		res.send({
 			status : 'Failed',
 			message : 'Undefined data variables'
@@ -408,7 +405,7 @@ memberRoutes.post('/like', function(req,res) {
 	var exists = 0;
 	db.relationships(req.decoded.id, 'out', 'LIKES', function(err, rels) {
 		// Portential bottleneck for performance since forEach is blocking.
-		if(rels.length > 0) {
+		if(typeof rels !== 'undefined') {
 			rels.forEach(function(item) {
 				if(item.end == req.body.like_node) {
 					exists = 1;
@@ -423,11 +420,12 @@ memberRoutes.post('/like', function(req,res) {
 						message : 'Internal error'
 					});
 					console.log(err);
+				} else {
+					res.send({
+						status : 'Success',
+						message : 'Operation completed'
+					});
 				}
-				res.send({
-					status : 'Success',
-					message : 'Operation completed'
-				})
 			});
 		} else {
 			res.send({
@@ -475,7 +473,7 @@ adminRoutes.post('/login', function(req,res) {
 	}
 	// Query database with credentials
 	var query = 'MATCH (u:User) WHERE u.email = {email} RETURN u;';
-	db.query(query, {email : req.body.email}, function(err, result) {
+	db.query(query, {email : req.body.email}, function(err, results) {
 		if(err) {
 			res.send({
 				status : 'Failed',
@@ -484,7 +482,7 @@ adminRoutes.post('/login', function(req,res) {
 			console.log(err);
 			return;
 		}
-		if(result[0].password == req.body.password) {
+		if(results[0].password == req.body.password) {
 			// Successful login. Generate admin token
 			var payload = {
 				id : results[0].id,
@@ -495,10 +493,10 @@ adminRoutes.post('/login', function(req,res) {
 			res.send({
 				status : 'Success',
 				message : 'Logged in successfully',
-				name : result[0].name,
-				email : result[0].email,
-				mobile : result[0].mobile,
-				user_type : result[0].user_type,
+				name : results[0].name,
+				email : results[0].email,
+				mobile : results[0].mobile,
+				user_type : results[0].user_type,
 				token : token
 			});
 		} else {
@@ -509,6 +507,205 @@ adminRoutes.post('/login', function(req,res) {
 			});
 		}
 	});
+});
+
+adminRoutes.use(function(req,res,next) {
+	var token = req.headers['x-access-token'] || req.query.token || req.body.token;
+	if(token) {
+		jwt.verify(token, superSecret, function(err,decoded) {
+			if(err) {
+				res.json({
+					status : 'Failed',
+					message : 'Invalid token detected'
+				});
+			} else {
+				if(decoded.userType == 'admin') {
+					req.decoded = decoded;
+					next();
+				} else {
+					res.send({
+						status : 'Failed',
+						message : 'Forbidden endpoint'
+					});
+				}
+			}
+		});
+	} else {
+		return res.status(403).send({
+			status : 'Failed',
+			message : 'No token detected'
+		});
+	}
+});
+
+/**************************
+* Admin Utility Functions *
+**************************/
+adminRoutes.post('/addStyle', function(req,res) {
+	// Declare transaction object
+	var txn = db.batch();
+	var id_exists = 0;
+	// Store image nodes
+	var images = req.body.node.images;
+	// Unset images in request object
+	delete req.body.node.images;
+	// Save remainder of object as style
+	var style = req.body.node;
+	// Check style object for id
+	if(typeof style.id !== 'undefined') {
+		res.send({
+			status : 'Failed',
+			message : 'ID field present'
+		});
+		return;
+	}
+	// Check images for id
+	// Potential bottleneck since forEach is used
+	images.forEach(function(item) {
+		if(typeof item.id !== 'undefined') {
+			id_exists = 1;
+		}
+	});
+	if(id_exists) {
+		res.send({
+			status : 'Failed',
+			message : 'ID field present'
+		});
+		return;
+	}
+
+	var s = txn.save(style);
+	var r = txn.save(images);
+	txn.relate(s, 'HAS_ROOM', r);
+
+	txn.commit(function(err,results) {
+		if(err) {
+			console.log(err);
+			res.send({
+				status : 'Failed',
+				message : 'Transaction failed'
+			});
+		}
+		// Add labels to transaction nodes
+		db.label(results[0], 'Profiles', function(err) {
+			if(err) {
+				var query = 'MATCH (p)-[rel:HAS_ROOM]->(r) WHERE ID(p)={id} DELETE rel,p,r';
+				db.query(query, {id : results[0].id}, function(err,results) {
+					if(err) {
+						console.log(err);
+					}
+				});
+			} else {
+				db.label(results[1], 'Rooms', function(err) {
+					if(err) {
+						var query = 'MATCH (p)-[rel:HAS_ROOM]->(r) WHERE ID(p)={id} DELETE rel,p,r';
+						db.query(query, {id : results[0].id}, function(err,results) {
+							if(err) {
+								console.log(err);
+							}
+						});
+					}
+					res.send({
+						status : 'Successful',
+						message : 'Style Inserted'
+					});
+				});
+			}
+		});
+	});
+});
+
+adminRoutes.post('/editStyle', function(req,res) {
+	var id_exists = 0;
+	// Store image nodes
+	var images = req.body.node.images;
+	// Unset images in request object
+	delete req.body.node.images;
+	// Save remainder of object as style
+	var style = req.body.node;
+	// Check style object for id
+	if(typeof style.id == 'undefined') {
+		res.send({
+			status : 'Failed',
+			message : 'ID field absent'
+		});
+		return;
+	}
+	// Declare transaction object
+	var txn = db.batch();
+	var s = txn.save(style);
+	var r = txn.save(images);
+	txn.relate(s, 'HAS_ROOM', r);
+	txn.commit(function(err,results) {
+		if(err) {
+			console.log(err);
+			res.send({
+				status : 'Failed',
+				message : 'Transaction failed'
+			});
+		}
+		res.send(results);
+	});
+});
+
+adminRoutes.post('/removeStyle', function(req,res) {
+	if(typeof req.body.style !== 'undefined' && req.body.style == 1) {
+		// Delete entire style
+		var query = 'MATCH (p:Profiles)-[rel]-(r) WHERE ID(p)={id} DELETE rel,p,r;';
+		db.query(query,{id : req.body.nodes}, function(err,result) {
+			if(err) {
+				console.log(err);
+				res.send({
+					status : 'Failed',
+					message : 'Style deletion failed'
+				});
+			}
+			console.log(result);
+			res.send({
+				status : 'Successful',
+				message : 'Style deleted'
+			});
+		});
+	} else {
+		// Delete requested nodes
+		var txn = db.batch();
+		txn.delete(req.body.nodes, true);
+		txn.commit(function(err,results) {
+			if(err) {
+				console.log(err);
+				res.send({
+					status : 'Failed',
+					message : 'Transaction failed'
+				});
+			}
+			res.send({
+				status : 'Successful',
+				message : 'Transaction completed'
+			});
+		});
+		/*
+		async.each(req.body.nodes, function(node) {
+			db.delete(node, true, function(err) {
+				if(err) {
+					console.log(err);
+				}
+				return callback();
+			});
+		}, function(err) {
+			if(err) {
+				res.send({
+					status : 'Failed',
+					message : 'Delete failed'
+				});
+				console.log(err);
+			}
+			res.send({
+				status : 'Successful',
+				message : 'Delete completed'
+			});
+		});
+		*/
+	}
 });
 
 app.use('/admin', adminRoutes);
