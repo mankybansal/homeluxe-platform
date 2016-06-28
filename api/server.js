@@ -15,7 +15,7 @@ var bodyParser = require('body-parser');
 var sendgrid = require('sendgrid')('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');
 var async = require('async');
 var db = require('seraph')({
-	server: "http://homeluxe.in:7474",
+	server: "http://localhost:7474",
 	user: "neo4j",
 	pass: "homeluxe@123"
 });
