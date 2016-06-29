@@ -99,9 +99,6 @@
     <link rel="stylesheet" href="css/headerMenu.css" type="text/css">
     <link rel="stylesheet" href="css/animate.css" type="text/css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="fontAwesome/css/font-awesome.css"/>
-
-
     <link rel="stylesheet" href="css/styleViewer.css" type="text/css">
 
     <meta charset="UTF-8">
