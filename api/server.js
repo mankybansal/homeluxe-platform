@@ -144,42 +144,7 @@ publicRoutes.post('/quiz', function(req,res) {
 			db.query(query, {nodes : answer_set}, function(err,results){
 				if (err)
 					console.log(err);
-
-					/*
-					// Create count structure
-					results.forEach(function(item){
-						if (count_structure.hasOwnProperty(item.name)) {
-							count_structure[item.name] += 1;
-						} else {
-							count_structure[item.name] = 1;
-						}
-					});
-
-					// Iterate count structure
-					while(Object.keys(count_structure).length) {
-						// Reset high value
-						high = 0;
-
-						for(var key in count_structure) {
-							if(count_structure[key] > high) {
-								high = count_structure[key];
-								primary = key;
-							}
-						}
-
-						// Rebuild result object
-						if(primary_switch) {
-							formatted_result['primary'] = search(primary,results);
-							formatted_result['secondary'] = [];
-							primary_switch = 0;
-							delete count_structure[primary];
-						} else {
-							formatted_result['secondary'].push(search(primary,results));
-							delete count_structure[primary];
-						}
-					}
-					*/
-					res.send(results);
+				res.send(results);
 				});
 			} else {
 				/* incomplete answer_set, send error */
