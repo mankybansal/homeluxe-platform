@@ -11,8 +11,8 @@
 var fs = require('fs');
 var https = require('https');
 var options = {
-	key  : fs.readFileSync('/opt/letsencrypt/live/privkey.pem'),
-	cert : fs.readFileSync('/opt/letsencrypt/live/cert.pem')
+	key  : fs.readFileSync('/etc/letsencrypt/live/dev.homeluxe.in/privkey.pem'),
+	cert : fs.readFileSync('/etc/letsencrypt/live/dev.homeluxe.in/cert.pem')
 };
 
 
