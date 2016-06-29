@@ -11,6 +11,7 @@
 
 
     <?php
+    
 
     function generateRandomString($length = 10)
     {
@@ -106,14 +107,14 @@
     <meta charset="UTF-8">
     <title>Browse Styles | HomeLuxe</title>
 
-    <script src="javascript/jquery.min.js"></script>
-    <script src="javascript/jquery.cookie.js"></script>
-    <script src="javascript/serverRequest.js"></script>
-    <script src="javascript/accounts.js"></script>
-    <script src="javascript/headerMenu.js"></script>
-    <script src="javascript/styleViewer.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.cookie.js"></script>
+    <script src="js/serverRequest.js"></script>
+    <script src="js/accounts.js"></script>
+    <script src="js/headerMenu.js"></script>
+    <script src="js/styleViewer.js"></script>
 
-    <script type="text/javascript" src="javascript/jquery.adaptive-backgrounds.js"></script>
+    <script type="text/javascript" src="js/jquery.adaptive-backgrounds.js"></script>
 
 
     <script type="text/javascript">
