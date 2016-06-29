@@ -2,16 +2,8 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="10e5e3b8-5007-468d-93d2-75fd1f0ef087" name="Sadgi Server HOMELUXE" url="http://www.sadgi.in">
-        <fileTransfer host="www.sadgi.in" port="22" rootFolder="/var/www/private/sadgi.in/public_html/homeluxe" accessType="SFTP" password="df8bdfc6dfc7dfc4dfcedfc7df8bdf98df9adf9bdf9c" username="root">
-          <advancedOptions>
-            <advancedOptions dataProtectionLevel="Private" />
-          </advancedOptions>
-          <option name="port" value="22" />
-        </fileTransfer>
-      </webServer>
-      <webServer id="36c0ee9e-1156-4edf-852e-f3755ec7c68b" name="HomeLuxe Server" url="http://homeluxe.in">
-        <fileTransfer host="homeluxe.in" port="22" rootFolder="/var/www/html/" accessType="SFTP" password="dfe3dfcbdfc7dfc2dfc5dfc7dfcfdfc6dfdfdfd2dfcfdf98df9bdf9bdf83" username="mayank">
+      <webServer id="86407cfb-79d2-423a-8a6e-a352d28c53fc" name="HomeLuxe PRODUCTION" url="http://dev.homeluxe.in">
+        <fileTransfer host="dev.homeluxe.in" port="22" accessType="SFTP" username="root">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" />
           </advancedOptions>

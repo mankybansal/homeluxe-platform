@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" serverName="HomeLuxe Server">
+  <component name="PublishConfigData" serverName="HomeLuxe PRODUCTION">
     <serverData>
-      <paths name="HomeLuxe Server">
+      <paths name="HomeLuxe PRODUCTION">
         <serverdata>
           <mappings>
-            <mapping deploy="/" local="$PROJECT_DIR$" web="/" />
-          </mappings>
-        </serverdata>
-      </paths>
-      <paths name="Sadgi Server HOMELUXE">
-        <serverdata>
-          <mappings>
-            <mapping deploy="/" local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/var/www/html/" local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>
