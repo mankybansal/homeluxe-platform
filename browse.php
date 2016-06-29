@@ -99,9 +99,6 @@
     <link rel="stylesheet" href="css/headerMenu.css" type="text/css">
     <link rel="stylesheet" href="css/animate.css" type="text/css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="fontAwesome/css/font-awesome.css"/>
-
-
     <link rel="stylesheet" href="css/styleViewer.css" type="text/css">
 
     <meta charset="UTF-8">
@@ -113,10 +110,7 @@
     <script src="js/accounts.js"></script>
     <script src="js/headerMenu.js"></script>
     <script src="js/styleViewer.js"></script>
-
-    <script type="text/javascript" src="js/jquery.adaptive-backgrounds.js"></script>
-
-
+    
     <script type="text/javascript">
 
 
@@ -230,7 +224,7 @@
         }
 
         .diamond:hover {
-            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
             border: 4px solid yellowgreen;
             position: relative;
             z-index: 9999;
@@ -375,7 +369,7 @@
             }
 
             .introPanel {
-                padding: 0px;
+                padding: 0;
             }
 
             .diamondContainer > div:nth-child(3n+3) {
