@@ -2,8 +2,22 @@
  * Created by mayankbansal on 6/23/16.
  */
 
-// GLOBAL guestToken used for making API requests
-var guestToken = false;
+var guestToken = false; // GLOBAL guestToken used for making API requests
+var apiBaseURL; // URL for API
+var baseURL; // SERVER Base URL for loading Assets
+
+//SETS URL between Production & Dev Server
+function getServer() {
+    if (typeof location.origin != 'undefined') {
+        if (location.host === 'dev.homeluxe.in') {
+            apiBaseURL = "https://dev.homeluxe.in:3000/";
+            baseURL = "https://dev.homeluxe.in/";
+        } else {
+            apiBaseURL = "http://homeluxe.in:3000/";
+            baseURL = "http://homeluxe.in/";
+        }
+    }
+}
 
 // Server Request Function with callback
 function serverRequest(url, data, callback) {
@@ -20,7 +34,7 @@ function serverRequest(url, data, callback) {
             type: "POST",
             dataType: "json",
             contentType: "application/x-www-form-urlencoded",
-            url: "http://homeluxe.in:3000/" + url,
+            url: apiBaseURL + url,
             data: data,
             timeout: 25000, // sets timeout
             success: function (response) {
@@ -122,3 +136,8 @@ function getGuestToken(callback) {
         }
     });
 }
+
+$(document).ready(function () {
+    getServer();
+    console.log("Connected to: " + apiBaseURL);
+});
