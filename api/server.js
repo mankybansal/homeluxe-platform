@@ -7,6 +7,15 @@
 /*********************
 * Essential includes *
 *********************/
+
+var fs = require('fs');
+var https = require('https');
+var options = {
+	key  : fs.readFileSync('/opt/letsencrypt/live/privkey.pem'),
+	cert : fs.readFileSync('/opt/letsencrypt/live/cert.pem')
+};
+
+
 var express = require('express');
 var chalk = require('chalk');
 var morgan = require('morgan');
@@ -25,7 +34,6 @@ var app = express();
 /***********************
 * Server configuration *
 ***********************/
-var port = process.env.PORT || 3000;
 var superSecret = 'Evang3l!st';
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended : false}));
@@ -678,5 +686,6 @@ app.use('/admin', adminRoutes);
 /**************
 * Start Server *
 **************/
-app.listen(port);
-console.log('Server running on port ' + port);
+https.createServer(options, app).listen(3000, function () {
+	console.log('Started!');
+});
