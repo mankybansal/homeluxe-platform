@@ -3,7 +3,7 @@
         <h2 id="question">{{question}}</h2>
         <ul id="options">
             <li ng-repeat="option in options">
-                <div style='width: 300px; height: 100px; background: cadetblue; margin-top: 30px;' ng-click="saveAnswers()" my-option="{{option.id}}">
+                <div style='width: 300px; height: 100px; background: cadetblue; margin-top: 30px;' ng-click="saveAnswer()" my-option="{{option.id}}">
                    {{option.name}}
                 </div>
             </li>
