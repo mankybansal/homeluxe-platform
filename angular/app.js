@@ -1,92 +1,114 @@
 var app = angular.module('quizApp', []);
+var myAnswers;
 
-app.directive('quiz', function(quizFactory) {
+app.directive('quiz', function (quizFactory) {
     return {
         restrict: 'AE',
         scope: {},
         templateUrl: 'template.html',
-        link: function(scope, elem, attrs) {
-            scope.start = function() {
+        link: function (scope, elem, attrs) {
+            scope.start = function () {
                 scope.id = 0;
                 scope.quizOver = false;
                 scope.inProgress = true;
                 scope.getQuestion();
             };
 
-            scope.reset = function() {
+            scope.reset = function () {
                 scope.inProgress = false;
-                scope.score = 0;
-            }
+            };
 
-            scope.getQuestion = function() {
+            scope.getQuestion = function () {
                 var q = quizFactory.getQuestion(scope.id);
-                if(q) {
-                    scope.question = q.question;
-                    scope.options = q.options;
-                    scope.answer = q.answer;
-                    scope.answerMode = true;
+                if (q) {
+                    scope.question = q.Questions.name;
+                    scope.options = q.Options;
                 } else {
+                    console.log(myAnswers);
                     scope.quizOver = true;
                 }
             };
 
-            scope.checkAnswer = function() {
-                if(!$('input[name=answer]:checked').length) return;
-
-                var ans = $('input[name=answer]:checked').val();
-
-                if(ans == scope.options[scope.answer]) {
-                    scope.score++;
-                    scope.correctAns = true;
-                } else {
-                    scope.correctAns = false;
-                }
-
-                scope.answerMode = false;
+            scope.saveAnswer = function (optionID) {
+                myAnswers.push(optionID);
+                nextQuestion();
             };
 
-            scope.nextQuestion = function() {
+            scope.nextQuestion = function () {
                 scope.id++;
                 scope.getQuestion();
-            }
+            };
 
             scope.reset();
         }
     }
 });
 
-app.factory('quizFactory', function() {
+app.factory('quizFactory', function () {
     var questions = [
         {
-            question: "Which is the largest country in the world by population?",
-            options: ["India", "USA", "China", "Russia"],
-            answer: 2
+            Options: [
+                {
+                    id: 34,
+                    image: "Q104.jpg",
+                    name: "Wellness1"
+                },
+                {
+                    id: 35,
+                    image: "Q104.jpg",
+                    name: "Wellness2"
+                },
+                {
+                    id: 36,
+                    image: "Q104.jpg",
+                    name: "Wellness3"
+                },
+                {
+                    id: 37,
+                    image: "Q104.jpg",
+                    name: "Wellness4"
+                }
+            ],
+            Questions: {
+                id: 30,
+                name: "Your perfect holiday.",
+                order: 1
+            }
         },
         {
-            question: "When did the second world war end?",
-            options: ["1945", "1939", "1944", "1942"],
-            answer: 0
-        },
-        {
-            question: "Which was the first country to issue paper currency?",
-            options: ["USA", "France", "Italy", "China"],
-            answer: 3
-        },
-        {
-            question: "Which city hosted the 1996 Summer Olympics?",
-            options: ["Atlanta", "Sydney", "Athens", "Beijing"],
-            answer: 0
-        },
-        {
-            question: "Who invented telephone?",
-            options: ["Albert Einstein", "Alexander Graham Bell", "Isaac Newton", "Marie Curie"],
-            answer: 1
+            Options: [
+                {
+                    id: 38,
+                    image: "Q104.jpg",
+                    name: "Wellness5"
+                },
+                {
+                    id: 39,
+                    image: "Q104.jpg",
+                    name: "Wellness6"
+                },
+                {
+                    id: 40,
+                    image: "Q104.jpg",
+                    name: "Wellness7"
+                },
+                {
+                    id: 41,
+                    image: "Q104.jpg",
+                    name: "Wellness8"
+                }
+            ],
+            Questions: {
+                id: 31,
+                name: "Your perfect holiday1.",
+                order: 2
+            }
         }
     ];
 
     return {
-        getQuestion: function(id) {
-            if(id < questions.length) {
+        getQuestion: function (id) {
+            if (id < questions.length) {
                 return questions[id];
             } else {
                 return false;
