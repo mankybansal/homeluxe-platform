@@ -1,3 +1,4 @@
 # Created by .ignore support plugin (hsz.mobi)
 fonts/*
 images/*
+app/node_modules/*
