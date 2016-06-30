@@ -6,7 +6,7 @@
         var app = angular.module('myApp', []);
         app.controller('quizControl', function($scope, $http) {
 
-            $http.post("https://dev.homeluxe.in:3000/getToken",{}).success(function(response){
+            $http.("https://dev.homeluxe.in:3000/getToken",{}).success(function(response){
                 $scope.myToken = response;
             }).error(function(err, status, headers, config){
 
