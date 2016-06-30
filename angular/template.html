@@ -3,7 +3,7 @@
         <h2 id="question">{{question}}</h2>
         <ul id="options">
             <li ng-repeat="option in options">
-                <div ng-click="saveAnswer(option.id)">
+                <div ng-click="saveAnswers()" my-option="{{option.id}}">
                    {{option.name}}
                 </div>
             </li>

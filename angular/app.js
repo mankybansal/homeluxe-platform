@@ -6,7 +6,7 @@ app.directive('quiz', function (quizFactory) {
         restrict: 'AE',
         scope: {},
         templateUrl: 'template.html',
-        link: function (scope, elem, attrs) {
+        link: function (scope, element, attributes) {
             scope.start = function () {
                 scope.id = 0;
                 scope.quizOver = false;
@@ -29,8 +29,9 @@ app.directive('quiz', function (quizFactory) {
                 }
             };
 
-            scope.saveAnswer = function (optionID) {
-                myAnswers.push(optionID);
+            scope.saveAnswer = function () {
+
+                myAnswers.push(attributes.myOption);
                 nextQuestion();
             };
 
