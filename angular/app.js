@@ -30,8 +30,7 @@ app.directive('quiz', function (quizFactory) {
             };
 
             scope.saveAnswer = function (param) {
-
-                myAnswers.push(param);
+                console.log(param);
                 nextQuestion();
             };
 
