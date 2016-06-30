@@ -1,6 +1,6 @@
 from py2neo import Graph,Node,Relationship,watch
 
-graph = Graph("http://neo4j:homeluxe@123@dev.homeluxe.in:7474/db/data")
+graph = Graph("http://neo4j:homeluxe@123@localhost:7474/db/data")
 
 watch("httpstream")
 label = 'Profiles'
@@ -18,6 +18,7 @@ metadata = {
     'Santorini Calm' : [
             {'name' : 'Guest Bedroom', 'file' : 'Santorini_GBR_FINAL1920x1080.jpg','order':6},
             {'name' : 'Bathroom', 'file' : 'Santorini_Bathroom_FINAL1920x1080.jpg','order':5},
+            {'name' : 'Kitchen', 'file' : 'Santorini_Kitchen_FINAL1920x1080.jpg','order':3},
             {'name' : 'Living Room', 'file' : 'Santorini_Living_FINAL1920x1080.jpg','order':1},
             {'name' : 'Master Bedroom', 'file' : 'Santorini_MBR_FINAL1920x1080.jpg','order':4},
             {'name' : 'Floor Plan','file':'santorini calm.jpg','order':0}
@@ -91,6 +92,7 @@ metadata = {
     'Sindhoor Colonial' : [
             {'name' : 'Kitchen','file':'Sindhoor_Kitchen_FINAL1920x1080.jpg','order':3},
             {'name' : 'Living Room','file':'Sindhoor_Living_FINAL1920x1080.jpg','order':1},
+            {'name' : 'Master Bedroom','file':'Sindhoor_MBR_FINAL1920x1080.jpg','order':4},
             {'name' : 'Bathroom','file':'Sindhoor_Bathroom_FINAL1920x1080.jpg','order':5},
             {'name' : 'Dining Room','file':'Sindhoor_Dining_FINAL1920x1080.jpg','order':2},
             {'name' : 'Floor Plan','file':'sindhoor colonial.jpg','order':0}
@@ -98,12 +100,14 @@ metadata = {
     'Malnad Pure' : [
             {'name' : 'Guest Bedroom','file':'Malnad_GBR_Var1_FINAL1920x1080.jpg','order':6},
             {'name' : 'Living Room','file':'Malnad_Living_Var1_FINAL1920x1080.jpg','order':1},
+            {'name' : 'Master Bedroom','file':'Malnad_MBR_Var1_FINAL1920x1080.jpg','order':4},
             {'name' : 'Bathroom','file':'Malnad_Bathroom_FINAL1920x1080.jpg','order':5},
             {'name' : 'Dining Room','file':'Malnad_Dining_FINAL1920x1080.jpg','order':2},
             {'name' : 'Floor Plan','file':'MALNAD.jpg','order':0}
     ],
     'Ubud Terraces' : [
             {'name' : 'Foyer','file':'Ubud_Foyer_FINAL1920x1080.jpg','order':7},
+            {'name' : 'Living Room','file':'Ubud_Living_FINAL1920x1080.jpg','order':1},
             {'name' : 'Dining Room','file':'Ubud_Dining_FINAL1920x1080.jpg','order':2},
             {'name' : 'Master Bedroom','file':'Ubud-MBR_FINAL1920x1080_01.jpg','order':4},
             {'name' : 'Bathroom','file':'Ubud_Bathroom_FINAL1920x1080.jpg','order':5},
