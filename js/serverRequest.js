@@ -129,6 +129,7 @@ var requests = {
 
 // GLOBAL function for getting a guestToken
 function getGuestToken(callback) {
+    console.log(callback);
     requests.getGuestToken(function (response) {
         if (response.success) {
             guestToken = response.token;
