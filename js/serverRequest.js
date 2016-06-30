@@ -21,6 +21,7 @@ function getServer() {
 
 // Server Request Function with callback
 function serverRequest(url, data, callback) {
+    console.log(url);
     if (!guestToken) {
         guestToken = true;
         getGuestToken(function () {
@@ -30,6 +31,7 @@ function serverRequest(url, data, callback) {
             serverRequest(url, data, callback)
         });
     } else {
+        console.log(url);
         $.ajax({
             type: "POST",
             dataType: "json",
@@ -129,7 +131,6 @@ var requests = {
 
 // GLOBAL function for getting a guestToken
 function getGuestToken(callback) {
-    console.log(callback);
     requests.getGuestToken(function (response) {
         if (response.success) {
             guestToken = response.token;
