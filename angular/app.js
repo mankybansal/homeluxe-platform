@@ -29,9 +29,9 @@ app.directive('quiz', function (quizFactory) {
                 }
             };
 
-            scope.saveAnswer = function () {
+            scope.saveAnswer = function (param) {
 
-                myAnswers.push(attributes.myOption);
+                myAnswers.push(param);
                 nextQuestion();
             };
 
