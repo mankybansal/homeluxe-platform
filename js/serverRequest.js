@@ -21,7 +21,8 @@ function getServer() {
 
 // Server Request Function with callback
 function serverRequest(url, data, callback) {
-    console.log(url);
+
+    console.log(apiBaseURL+url);
     if (!guestToken) {
         guestToken = true;
         getGuestToken(function () {
@@ -31,7 +32,7 @@ function serverRequest(url, data, callback) {
             serverRequest(url, data, callback)
         });
     } else {
-        console.log(url);
+        console.log(apiBaseURL+url);
         $.ajax({
             type: "POST",
             dataType: "json",
