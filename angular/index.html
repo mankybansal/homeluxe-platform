@@ -10,7 +10,7 @@
     app.controller('myCtrl', function($scope, $http) {
         $http({
             method : "Post",
-            url : "https://dev.homeluxe.in/getToken"
+            url : "https://dev.homeluxe.in:3000/getToken"
         }).then(function mySucces(response) {
             $scope.myToken = response.data;
         }, function myError(response) {
