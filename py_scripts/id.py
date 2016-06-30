@@ -3,7 +3,7 @@ from py2neo import Graph,Node,Relationship,watch
 from random import randint
 
 # System wide connection object
-graph = Graph("http://neo4j:homeluxe@123@dev.homeluxe.in:7474/db/data")
+graph = Graph("http://neo4j:homeluxe@123@localhost:7474/db/data")
 
 # User defined Functions
 def stringGeneration(name):
