@@ -1,18 +1,46 @@
-<script src="../js/jquery.min.js"></script>
-<script src="../js/serverRequest.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<!DOCTYPE html>
+<html ng-app="quizApp">
+<head>
+    <meta charset="utf-8" />
+    <title>QuizApp</title>
+    <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+    <script src="../js/serverRequest.js"></script>
+    <script src="app.js"></script>
+</head>
 
-<div ng-app="myApp" ng-controller="myCtrl">
-    {{myToken}}
+<div class="quiz-area" ng-show="inProgress">
+    <div ng-show="!quizOver">
+        <h2 id="question">{{question}}</h2>
+        <ul id="options">
+            <li ng-repeat="option in options">
+                <label>
+                    <input type="radio" name="answer" value="{{option}}">
+                    {{option}}
+                </label>
+            </li>
+        </ul>
+        <button ng-click="checkAnswer()" ng-show="answerMode">Submit</button>
+
+        <div ng-show="!answerMode">
+            <button ng-click="nextQuestion()" class="next-question">Next</button>
+            <span ng-show="correctAns">That is correct!</span>
+            <span ng-show="!correctAns">Sorry, that is an incorrect answer.</span>
+        </div>
+    </div>
+
+    <div ng-show="quizOver">
+        <h2>Quiz is over</h2>
+        <button ng-click="reset()">Play again</button>
+    </div>
+
+    <div id="score">
+        Score: {{score}}
+    </div>
 </div>
 
-<script>
-    var app = angular.module('myApp', []);
-    app.controller('myCtrl', function($scope, $http) {
-        var myData;
-        requests.getQuiz(function (response) {
-            myData = response;
-            $scope.myToken = myData;
-        });
-    });
-</script>
+<div class="intro" ng-show="!inProgress">
+    <p>Welcome to the QuizApp</p>
+    <button id="startQuiz" ng-click="start()">Start the Quiz</button>
+</div>
+</html>
