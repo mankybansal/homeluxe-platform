@@ -113,8 +113,8 @@ window.fbAsyncInit = function () {
 };
 
 function facebookRegister() {
-    requests.userRegisterFacebook(regFBName, regFBEmail, regFBID, regFBDP, function () {
-        console.log(data);
+    requests.userRegisterFacebook(regFBName, regFBEmail, regFBID, regFBDP, function (response) {
+        console.log(response);
         login(regFBEmail, regFBID);
     });
 }

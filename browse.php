@@ -174,7 +174,6 @@
         html, body {
             -webkit-touch-callout: none; /* iOS Safari */
             -webkit-user-select: none; /* Chrome/Safari/Opera */
-            -khtml-user-select: none; /* Konqueror */
             -moz-user-select: none; /* Firefox */
             -ms-user-select: none; /* IE/Edge */
             user-select: none;
@@ -188,7 +187,7 @@
             min-width: 1000px;
             background: url('images/artwork.png') #E9E9EB;
             background-size: 1000px 1000px;
-            font-family: RobotoRegular;
+            font-family: RobotoRegular, sans-serif;
             color: #333;
             font-size: 20px;
         }
