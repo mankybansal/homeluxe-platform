@@ -31,7 +31,7 @@ app.directive('quiz', function (quizFactory) {
 
             scope.saveAnswer = function (param) {
                 console.log(param);
-                nextQuestion();
+                scope.nextQuestion();
             };
 
             scope.nextQuestion = function () {
