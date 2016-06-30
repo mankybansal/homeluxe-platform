@@ -1,0 +1,9 @@
+# Created by .ignore support plugin (hsz.mobi)
+<<<<<<< HEAD:.gitignore
+fonts/*
+images/*
+api/node_modules/*
+=======
+
+node_modules/*
+>>>>>>> dev:api/.gitignore

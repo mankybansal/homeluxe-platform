@@ -54,8 +54,7 @@
                         type: "GET",
                         url: "send.php",
                         data: dataString,
-                        success: function (html) {
-
+                        success: function () {
                             $('.contactSuccess').fadeIn(500);
                             $('.contactSubmit').fadeOut(500);
                         }
@@ -150,18 +149,17 @@
             border-bottom: 20vw solid rgba(255, 255, 255, .8);
             float: right;
             margin-right: -100px;
-
         }
 
         .diamond-text {
             width: 80%;
             color: #FFF;
-            font-family: RobotoLight;
+            font-family: RobotoLight, sans-serif;
             text-transform: uppercase;
             font-size: 20px;
             display: inline-block;
             margin-top: 10px;
-            text-shadow: 0px 0px 10px 10px black;
+            text-shadow: 0 0 10px 10px black;
         }
 
         .dia-huge2 {
@@ -187,7 +185,6 @@
             background: rgba(0, 0, 0, 0.05);
             margin-left: 5px;
             margin-right: 5px;
-            vertical-align: middle;
             font-size: 16px;
             padding: 30px;
             box-sizing: border-box;
@@ -234,10 +231,6 @@
             bottom: 0;
             text-align: center;
             width: 100%;
-        }
-
-        .showMobile {
-            display: none;
         }
 
         .addressContainer, .contactContainer {
@@ -397,7 +390,7 @@
             }
 
             .introContainer {
-                padding-bottom: 0px;
+                padding-bottom: 0;
             }
 
             .screen {
@@ -407,12 +400,12 @@
             .diamond-text {
                 width: 100%;
                 color: #FFF;
-                font-family: RobotoLight;
+                font-family: RobotoLight, sans-serif;
                 text-transform: uppercase;
                 font-size: 15px;
                 display: inline-block;
                 margin-top: 5px;
-                text-shadow: 0px 0px 10px 10px black;
+                text-shadow: 0 0 10px 10px black;
             }
 
             .introText {
@@ -444,7 +437,7 @@
             }
 
             .diamond-box {
-                margin: 0px;
+                margin: 0;
                 width: 100px;
                 height: 130px;
                 vertical-align: middle;
@@ -464,10 +457,6 @@
 
             .hideMobile {
                 display: none;
-            }
-
-            .showMobile {
-                display: initial;
             }
 
             .footerBlocksContainer {
@@ -637,7 +626,7 @@
         <div class="sectionLine" style="margin-top: 10px;">LET US HELP YOU FIND A MATCH</div>
         <div class="getStartedButton findYourStyleButton" onclick="menuQuizClick()">TAKE OUR STYLE QUIZ</div>
         <div class="sectionLine">OR</div>
-        <div class="getStartedButton browseOurStylesButton" onclick="menuBrowseClick()" style="margin-top: 0px">BROWSE OUR STYLES</div>
+        <div class="getStartedButton browseOurStylesButton" onclick="menuBrowseClick()" style="margin-top: 0;">BROWSE OUR STYLES</div>
         <br>
         <br>
     </div>
@@ -753,9 +742,9 @@
             </div>
 
             <form action="send.php" id="contactUs">
-                <input class="contactInput" id="NAME" name="NAME" type="textbox" placeholder="Full Name">
+                <input class="contactInput" id="NAME" name="NAME" type="text" placeholder="Full Name">
                 <input class="contactInput" id="EMAIL" name="EMAIL" type="email" placeholder="Email Address">
-                <input class="contactInput" id="PHONE" name="PHONE" type="textbox" placeholder="Phone Number">
+                <input class="contactInput" id="PHONE" name="PHONE" type="text" placeholder="Phone Number">
                 <textarea class="textInput" id="MESSAGE" name="MESSAGE" rows="3"
                           placeholder="Type your message here"></textarea>
                 <div class="contactSuccess" style="display: none; margin-top: 20px; font-size: 20px;">We will
@@ -822,22 +811,22 @@
         <div class="footerFullWidth" style="height: 60px;">
             <div class="footerFullWidthAligner">
                 <div class="footerBox">
-                    <text style="font-family: RobotoLight; color: #FFF; font-size: 16px;">
+                    <p style="font-family: RobotoLight, sans-serif; color: #FFF; font-size: 16px;">
                         © 2016 HomeLuxe.in, Inc. All rights reserved.
-                    </text>
+                    </p>
                 </div>
                 <div class="footerBox">
                     <a href="tos.html">
-                        <text style="font-family: RobotoLight; color: #BBB; font-size: 16px;">
+                        <p style="font-family: RobotoLight, sans-serif; color: #BBB; font-size: 16px;">
                             Terms Of Service
-                        </text>
+                        </p>
                     </a>
                 </div>
                 <div class="footerBox">
                     <a href="privacy.html">
-                        <text style="font-family: RobotoLight; color: #BBB; font-size: 16px;">
+                        <p style="font-family: RobotoLight, sans-serif; color: #BBB; font-size: 16px;">
                             Privacy Policy
-                        </text>
+                        </p>
                     </a>
                 </div>
             </div>

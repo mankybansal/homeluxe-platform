@@ -48,7 +48,7 @@
     float: top;
     width: 100%;
     background: #FFF;
-    font-family: RobotoLight;
+    font-family: RobotoLight, sans-serif;
     color: #333;
     text-align: center;
     font-size: 25px;
@@ -63,7 +63,7 @@
     margin: 0 auto;
     margin-top: 10px;
     outline: none;
-    border: 0px;
+    border: 0;
     background: #F8F8F8;
     color: black;
     height: 60px;
@@ -71,7 +71,7 @@
     padding: 10px 20px 10px 20px;
     font-size: 20px;
     border-radius: 2px;
-    font-family: RobotoLight;
+    font-family: RobotoLight, sans-serif;
 }
 
 .loginButton, .registerButton, .fbContButton, .fbRegisterButton , .faceBookLogin {
@@ -86,10 +86,10 @@
     border-radius: 2px;
     padding: 20px;
     box-sizing: border-box;
-    text-align: center2;
+    text-align: center;
     color: #FFF;
     font-size: 20px;
-    font-family: RobotoLight;
+    font-family: RobotoLight, sans-serif;
 }
 
 .fbContButton, .fbRegisterButton {
@@ -130,7 +130,7 @@
     box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
     display: none;
     color: white;
-    font-family: RobotoLight;
+    font-family: RobotoLight, sans-serif;
 }
 
 .loginClose {
@@ -150,7 +150,6 @@
 }
 
 
-
 @media only screen and (max-width: 800px) {
 
     .loginContainer {
@@ -159,7 +158,7 @@
     }
 
     .loginClose {
-        right: 0px;
+        right: 0;
         width: 50px;
         height: 50px;
         padding: 12.5px;
