@@ -172,7 +172,6 @@
         padding: 17px 5px 5px 5px;
     }
 
-
     @media only screen and (max-width: 800px) {
         html, body {
             width: 100%;
@@ -248,6 +247,43 @@
 <body>
 <div class="headerMenu"></div>
 <div class="loginOverlay"></div>
-<quiz></quiz>
+
+<quiz>
+
+    <div class="introPanel sectionPanel" ng-show="!inProgress">
+    <span class="aligner">
+    <div class="introTitle">Ready to find your style?</div>
+    <div class="introSubTitle">
+        We'll be asking you a few simple questions. <br>
+        All you have to do is pick an option that suits you the most.
+    </div>
+    <div class="continueButton actionButton" ng-click="start()">CONTINUE</div>
+    </span>
+    </div>
+
+    <div class="styleViewer" ng-show="quizOver"></div>
+
+    <div class="questionCardContainer" ng-show="!quizOver">
+    <span class="aligner">
+    <div class="questionCard animated fadeInUp">
+        <div class="questionText">{{question}}</div>
+        <div class="questionOptions">
+            <div class="option animated fadeInUp" ng-repeat="option in options" ng-click="saveAnswer(option.id)">
+                <div class="optionImageContainer">
+                    <img src='images/optionPictures/{{option.image}}' class='optionImage'>
+                </div>
+                <div class="optionText">{{option.name}}</div>
+            </div>
+        </div>
+    </div>
+    </span>
+    </div>
+
+    <div class="footer">
+        <div class="quizProgress"></div>
+    </div>
+
+</quiz>
+
 </body>
 </html>

@@ -1,11 +1,9 @@
 var app = angular.module('quizApp', []);
-
 var styles;
 app.directive('quiz', function (quizFactory) {
     return {
         restrict: 'AE',
         scope: {},
-        templateUrl: 'template.html',
         link: function (scope) {
             scope.start = function () {
                 scope.id = 0;
@@ -15,7 +13,6 @@ app.directive('quiz', function (quizFactory) {
                 scope.myAnswers = [];
                 scope.getQuestion();
                 $('.styleViewer').load('styleViewer.html');
-
             };
 
             scope.getQuestion = function () {
