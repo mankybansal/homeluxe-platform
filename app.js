@@ -2,23 +2,21 @@ var app = angular.module('quizApp', []);
 var styles;
 app.directive('quiz', function (quizFactory) {
     return {
-        restrict: 'AE',
         scope: {},
         link: function (scope) {
             scope.start = function () {
-                scope.id = 0;
+                scope.currentQuestion = 0;
                 scope.myProgress = 0;
                 scope.quizOver = false;
                 scope.inProgress = true;
                 scope.myAnswers = [];
                 scope.getQuestion();
-                $('.styleViewer').load('styleViewer.html');
             };
 
             scope.getQuestion = function () {
                 scope.myProgress += 100/(quizFactory.questionCount()+1);
                 $('.quizProgress').css('width', scope.myProgress + '%');
-                var q = quizFactory.getQuestion(scope.id);
+                var q = quizFactory.getQuestion(scope.currentQuestion);
                 if (q) {
                     scope.question = q.Questions.name;
                     scope.options = q.Options;
@@ -35,11 +33,7 @@ app.directive('quiz', function (quizFactory) {
 
             scope.saveAnswer = function (myAnswer) {
                 scope.myAnswers.push(myAnswer);
-                scope.nextQuestion();
-            };
-
-            scope.nextQuestion = function () {
-                scope.id++;
+                scope.currentQuestion++;
                 scope.getQuestion();
             };
         }

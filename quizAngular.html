@@ -13,9 +13,9 @@
 <title>HomeLuxe | Style Quiz - Find Your Style</title>
 
 <script type="text/javascript" src='js/jquery.min.js'></script>
+<script type="text/javascript" src="js/styleViewer.js"></script>
 <script type="text/javascript" src="js/serverRequest.js"></script>
 <script type="text/javascript" src="js/jquery.cookie.js"></script>
-<script type="text/javascript" src="js/styleViewer.js"></script>
 <script type="text/javascript" src="js/accounts.js"></script>
 <script type="text/javascript" src="js/headerMenu.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
@@ -248,6 +248,7 @@
 <body>
 <div class="headerMenu"></div>
 <div class="loginOverlay"></div>
+<div class="styleViewer" ng-show="quizOver"></div>
 
 <quiz>
 
@@ -261,8 +262,6 @@
     <div class="continueButton actionButton" ng-click="start()">CONTINUE</div>
     </span>
     </div>
-
-    <div class="styleViewer" ng-show="quizOver"></div>
 
     <div class="questionCardContainer" ng-show="!quizOver">
     <span class="aligner">
