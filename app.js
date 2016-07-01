@@ -14,6 +14,8 @@ app.directive('quiz', function (quizFactory) {
                 scope.inProgress = true;
                 scope.myAnswers = [];
                 scope.getQuestion();
+                $('.styleViewer').load('styleViewer.html');
+
             };
 
             scope.getQuestion = function () {
@@ -25,7 +27,6 @@ app.directive('quiz', function (quizFactory) {
                     scope.options = q.Options;
                 } else {
 
-                    $('.styleViewer').load('styleViewer.html');
                     console.log(scope.myAnswers);
                     scope.quizOver = true;
                     requests.submitQuiz(scope.myAnswers.join(),function(response){
