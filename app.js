@@ -16,10 +16,6 @@ app.directive('quiz', function (quizFactory) {
                 scope.getQuestion();
             };
 
-            scope.reset = function () {
-                scope.inProgress = false;
-            };
-
             scope.getQuestion = function () {
                 scope.myProgress += 100/(quizFactory.questionCount()+1);
                 $('.quizProgress').css('width', scope.myProgress + '%');
@@ -46,8 +42,6 @@ app.directive('quiz', function (quizFactory) {
                 scope.id++;
                 scope.getQuestion();
             };
-
-            scope.reset();
         }
     }
 });
