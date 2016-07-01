@@ -6,7 +6,7 @@ app.directive('quiz', function (quizFactory) {
         restrict: 'AE',
         scope: {},
         templateUrl: 'template.html',
-        link: function (scope, element, attributes) {
+        link: function (scope) {
             scope.start = function () {
                 scope.id = 0;
                 scope.quizOver = false;

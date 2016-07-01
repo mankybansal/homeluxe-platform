@@ -1,13 +1,15 @@
 <div class="quiz-area" ng-show="inProgress">
     <div ng-show="!quizOver">
-        <h2 id="question">{{question}}</h2>
-        <ul id="options">
-            <li ng-repeat="option in options">
-                <div style='width: 300px; height: 100px; background: cadetblue; margin-top: 30px;' ng-click="saveAnswer(option.id)">
-                   {{option.name}}
-                </div>
-            </li>
-        </ul>
+        <div class="questionText">
+            {{question}}
+        </div>
+
+        <div class="questionOptions" ng-repeat="option in options">
+            <div class="option animated fadeInUp"  ng-click="saveAnswer(option.id)">
+                <div class="optionImageContainer"></div>
+                <div class="optionText">{{option.name}}</div>
+            </div>
+        </div>
     </div>
 
     <div ng-show="quizOver">
