@@ -31,7 +31,6 @@ app.directive('quiz', function (quizFactory) {
                     console.log(scope.myAnswers);
                     requests.submitQuiz(scope.myAnswers.join(),function(response){
                         scope.quizOver = true;
-                        console.log(response);
                         styles = response;
                         viewStyle(0);
                     });
