@@ -49,74 +49,16 @@ app.directive('quiz', function (quizFactory) {
 });
 
 app.factory('quizFactory', function () {
-    var questions = [
-        {
-            Options: [
-                {
-                    id: 34,
-                    image: "Q104.jpg",
-                    name: "Wellness1"
-                },
-                {
-                    id: 35,
-                    image: "Q104.jpg",
-                    name: "Wellness2"
-                },
-                {
-                    id: 36,
-                    image: "Q104.jpg",
-                    name: "Wellness3"
-                },
-                {
-                    id: 37,
-                    image: "Q104.jpg",
-                    name: "Wellness4"
-                }
-            ],
-            Questions: {
-                id: 30,
-                name: "Your perfect holiday.",
-                order: 1
-            }
-        },
-        {
-            Options: [
-                {
-                    id: 38,
-                    image: "Q104.jpg",
-                    name: "Wellness5"
-                },
-                {
-                    id: 39,
-                    image: "Q104.jpg",
-                    name: "Wellness6"
-                },
-                {
-                    id: 40,
-                    image: "Q104.jpg",
-                    name: "Wellness7"
-                },
-                {
-                    id: 41,
-                    image: "Q104.jpg",
-                    name: "Wellness8"
-                }
-            ],
-            Questions: {
-                id: 31,
-                name: "Your perfect holiday1.",
-                order: 2
-            }
-        }
-    ];
+    var questions;
+
+    requests.getQuiz(function(response){
+       questions = response;
+    });
 
     return {
         getQuestion: function (id) {
-            if (id < questions.length) {
-                return questions[id];
-            } else {
-                return false;
-            }
+            if (id < questions.length) return questions[id];
+            else return false;
         }
     };
 });
