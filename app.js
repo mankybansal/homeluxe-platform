@@ -1,5 +1,4 @@
 var app = angular.module('quizApp', []);
-var myAnswers = [];
 
 app.directive('quiz', function (quizFactory) {
     return {
@@ -12,6 +11,7 @@ app.directive('quiz', function (quizFactory) {
                 scope.myProgress = 0;
                 scope.quizOver = false;
                 scope.inProgress = true;
+                scope.myAnswers = [];
                 scope.getQuestion();
             };
 
@@ -27,13 +27,16 @@ app.directive('quiz', function (quizFactory) {
                     scope.question = q.Questions.name;
                     scope.options = q.Options;
                 } else {
-                    console.log(myAnswers);
-                    scope.quizOver = true;
+                    console.log(scope.myAnswers);
+                    requests.submitQuiz(scope.myAnswers.join(),function(response){
+                        scope.quizOver = true;
+                        console.log(response);
+                    });
                 }
             };
 
             scope.saveAnswer = function (myAnswer) {
-                myAnswers.push(myAnswer);
+                scope.myAnswers.push(myAnswer);
                 scope.nextQuestion();
             };
 
