@@ -1,5 +1,6 @@
 var app = angular.module('quizApp', []);
 
+var styles;
 app.directive('quiz', function (quizFactory) {
     return {
         restrict: 'AE',
@@ -31,6 +32,8 @@ app.directive('quiz', function (quizFactory) {
                     requests.submitQuiz(scope.myAnswers.join(),function(response){
                         scope.quizOver = true;
                         console.log(response);
+                        styles = response;
+                        viewStyle(0);
                     });
                 }
             };
