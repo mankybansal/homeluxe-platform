@@ -1,13 +1,11 @@
 <html ng-app="quizApp">
 
-
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="css/default.css" type="text/css">
 <link rel="stylesheet" href="css/animate.css" type="text/css">
 <link rel="stylesheet" href="css/headerMenu.css" type="text/css">
 <link rel="stylesheet" href="css/accountsDefault.css" type="text/css">
 <link rel="stylesheet" href="css/styleViewer.css" type="text/css">
-
 
 <meta charset="UTF-8">
 <title>HomeLuxe | Style Quiz - Find Your Style</title>
@@ -20,7 +18,6 @@
 <script type="text/javascript" src="js/headerMenu.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
 <script src="app.js"></script>
-
 
 <style>
 
@@ -226,11 +223,10 @@
             width: 70%;
             margin: 0 auto;
             font-size: 18px;
-            font-family: RobotoLight;
+            font-family: RobotoLight, sans-serif;
         }
 
         .questionCard {
-
             width: 90%;
             display: inline-block;
             height: auto;
@@ -244,11 +240,71 @@
         }
     }
 
+    @media only screen
+    and (min-device-width: 768px)
+    and (max-device-width: 1024px) {
+        html, body {
+            width: 100%;
+            height: 100%;
+            min-width: 600px;
+            overflow-y: auto;
+        }
+
+        .questionCard {
+            height: 70%;
+            padding: 100px 0px 20px;
+        }
+
+        .questionOptions {
+            margin-top: 50px;
+        }
+
+        .option {
+            width: 150px;
+            height: 210px;
+        }
+
+        .optionImageContainer {
+            height: 150px;
+            width: 150px;
+        }
+
+        .optionText {
+            font-size: 18px;
+        }
+    }
+
+    @media only screen
+    and (min-device-width: 1600px)
+    and (max-device-width: 1920px) {
+
+        .questionOptions {
+            margin-top: 100px;
+        }
+
+        .option {
+            width: 200px;
+            height: 260px;
+        }
+
+        .optionImageContainer {
+            height: 200px;
+            width: 200px;
+        }
+
+        .optionText {
+            font-size: 20px;
+        }
+
+        .questionText {
+            margin-top: 100px;
+        }
+
+    }
 </style>
 <body>
 <div class="headerMenu"></div>
 <div class="loginOverlay"></div>
-
 <div class="styleViewer"></div>
 
 <quiz>
