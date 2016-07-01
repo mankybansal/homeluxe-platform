@@ -2,6 +2,7 @@ var app = angular.module('quizApp', []);
 var styles;
 app.directive('quiz', function (quizFactory) {
     return {
+        restrict: 'AE',
         scope: {},
         link: function (scope) {
             scope.start = function () {
