@@ -12,7 +12,6 @@ app.directive('quiz', function (quizFactory) {
                 scope.inProgress = true;
                 scope.myAnswers = [];
                 scope.getQuestion();
-                $('.styleViewer').load('styleViewer.html');
             };
 
             scope.getQuestion = function () {
