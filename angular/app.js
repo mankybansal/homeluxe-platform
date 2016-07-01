@@ -1,6 +1,8 @@
 var app = angular.module('quizApp', []);
 var myAnswers;
 
+var myProgress = 0;
+
 app.directive('quiz', function (quizFactory) {
     return {
         restrict: 'AE',
@@ -19,6 +21,8 @@ app.directive('quiz', function (quizFactory) {
             };
 
             scope.getQuestion = function () {
+                myProgress += 14.28;
+                $('.quizProgress').css('width', myProgress + '%');
                 var q = quizFactory.getQuestion(scope.id);
                 if (q) {
                     scope.question = q.Questions.name;

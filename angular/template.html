@@ -1,24 +1,33 @@
-<div class="quiz-area" ng-show="inProgress">
-    <div ng-show="!quizOver">
-        <div class="questionText">
-            {{question}}
-        </div>
+<div class="introPanel sectionPanel" ng-show="!inProgress" style="width: 100%; height: 100%;   padding-top: 60px;
+            padding-bottom: 20px;
+            box-sizing: border-box; display: table;">
+    <span class="aligner">
+    <div class="introTitle">Ready to find your style?</div>
+    <div class="introSubTitle">
+        We'll be asking you a few simple questions. <br>
+        All you have to do is pick an option that suits you the most.
+    </div>
 
+    <div class="continueButton actionButton">CONTINUE</div>
+    </span>
+</div>
+
+<div class="styleViewer" ng-show="!quizOver"></div>
+
+<div class="questionCardContainer" ng-show="!quizOver">
+    <span class="aligner">
+    <div class="questionCard">
+        <div class="questionText">{{question}}</div>
         <div class="questionOptions" ng-repeat="option in options">
-            <div class="option animated fadeInUp"  ng-click="saveAnswer(option.id)">
+            <div class="option animated fadeInUp" ng-click="saveAnswer(option.id)">
                 <div class="optionImageContainer"></div>
                 <div class="optionText">{{option.name}}</div>
             </div>
         </div>
     </div>
-
-    <div ng-show="quizOver">
-        <h2>Quiz is over</h2>
-        <button ng-click="reset()">Play again</button>
-    </div>
+    </span>
 </div>
 
-<div class="intro" ng-show="!inProgress">
-    <p>Welcome to the QuizApp</p>
-    <button id="startQuiz" ng-click="start()">Start the Quiz</button>
+<div class="footer">
+    <div class="quizProgress"></div>
 </div>
