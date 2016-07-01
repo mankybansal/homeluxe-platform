@@ -6,7 +6,7 @@
         All you have to do is pick an option that suits you the most.
     </div>
 
-    <div class="continueButton actionButton"  ng-click="start()">CONTINUE</div>
+    <div class="continueButton actionButton" ng-click="start()">CONTINUE</div>
     </span>
 </div>
 
@@ -16,8 +16,8 @@
     <span class="aligner">
     <div class="questionCard animated fadeInUp">
         <div class="questionText">{{question}}</div>
-        <div class="questionOptions" ng-repeat="option in options">
-            <div class="option animated fadeInUp" ng-click="saveAnswer(option.id)">
+        <div class="questionOptions">
+            <div class="option animated fadeInUp"  ng-repeat="option in options" ng-click="saveAnswer(option.id)">
                 <div class="optionImageContainer"></div>
                 <div class="optionText">{{option.name}}</div>
             </div>
