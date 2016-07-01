@@ -1,5 +1,5 @@
 var app = angular.module('quizApp', []);
-var myAnswers;
+var myAnswers = [];
 
 var myProgress = 0;
 
@@ -33,8 +33,8 @@ app.directive('quiz', function (quizFactory) {
                 }
             };
 
-            scope.saveAnswer = function (param) {
-                console.log(param);
+            scope.saveAnswer = function (myAnswer) {
+                myAnswers.push(myAnswer);
                 scope.nextQuestion();
             };
 
