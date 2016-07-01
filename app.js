@@ -1,8 +1,6 @@
 var app = angular.module('quizApp', []);
 var myAnswers = [];
 
-var myProgress = 0;
-
 app.directive('quiz', function (quizFactory) {
     return {
         restrict: 'AE',
@@ -11,6 +9,7 @@ app.directive('quiz', function (quizFactory) {
         link: function (scope) {
             scope.start = function () {
                 scope.id = 0;
+                scope.myProgress = 0;
                 scope.quizOver = false;
                 scope.inProgress = true;
                 scope.getQuestion();
@@ -21,8 +20,8 @@ app.directive('quiz', function (quizFactory) {
             };
 
             scope.getQuestion = function () {
-                myProgress += 14.28;
-                $('.quizProgress').css('width', myProgress + '%');
+                scope.myProgress += 100/(quizFactory.questionCount()+1);
+                $('.quizProgress').css('width', scope.myProgress + '%');
                 var q = quizFactory.getQuestion(scope.id);
                 if (q) {
                     scope.question = q.Questions.name;
@@ -59,6 +58,9 @@ app.factory('quizFactory', function () {
         getQuestion: function (id) {
             if (id < questions.length) return questions[id];
             else return false;
+        },
+        questionCount: function(){
+            return questions.length;
         }
     };
 });
