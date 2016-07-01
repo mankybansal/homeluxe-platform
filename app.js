@@ -1,8 +1,8 @@
 var app = angular.module('quizApp', []);
 var styles;
-
 app.directive('quiz', function (quizFactory) {
     return {
+        restrict: 'AE',
         scope: {},
         link: function (scope) {
             scope.start = function () {
@@ -15,14 +15,15 @@ app.directive('quiz', function (quizFactory) {
             };
 
             scope.getQuestion = function () {
-                scope.myProgress += 100 / (quizFactory.questionCount() + 1);
+                scope.myProgress += 100/(quizFactory.questionCount()+1);
                 $('.quizProgress').css('width', scope.myProgress + '%');
-                if (quizFactory.getQuestion(scope.currentQuestion)) {
+                var q = quizFactory.getQuestion(scope.currentQuestion);
+                if (q) {
                     scope.question = q.Questions.name;
                     scope.options = q.Options;
                 } else {
                     scope.quizOver = true;
-                    requests.submitQuiz(scope.myAnswers.join(), function (response) {
+                    requests.submitQuiz(scope.myAnswers.join(),function(response){
                         styles = response;
                         viewStyle(0);
                     });
@@ -41,8 +42,8 @@ app.directive('quiz', function (quizFactory) {
 app.factory('quizFactory', function () {
     var questions;
 
-    requests.getQuiz(function (response) {
-        questions = response;
+    requests.getQuiz(function(response){
+       questions = response;
     });
 
     return {
@@ -50,7 +51,7 @@ app.factory('quizFactory', function () {
             if (id < questions.length) return questions[id];
             else return false;
         },
-        questionCount: function () {
+        questionCount: function(){
             return questions.length;
         }
     };
