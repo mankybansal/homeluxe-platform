@@ -24,6 +24,8 @@ app.directive('quiz', function (quizFactory) {
                     scope.question = q.Questions.name;
                     scope.options = q.Options;
                 } else {
+
+                    $('.styleViewer').load('styleViewer.html');
                     console.log(scope.myAnswers);
                     scope.quizOver = true;
                     requests.submitQuiz(scope.myAnswers.join(),function(response){
