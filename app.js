@@ -29,6 +29,7 @@ app.directive('quiz', function (quizFactory) {
                     scope.options = q.Options;
                 } else {
                     console.log(scope.myAnswers);
+                    scope.quizOver = true;
                     requests.submitQuiz(scope.myAnswers.join(),function(response){
                         scope.quizOver = true;
                         styles = response;
