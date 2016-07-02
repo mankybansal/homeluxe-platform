@@ -26,6 +26,17 @@ var db = require('seraph')({
 	user: "neo4j",
 	pass: "homeluxe@123"
 });
+var mysql = require('mysql');
+var archive = mysql.createConnection({
+	host : 'localhost',
+	user : 'dev',
+	password : 'homeluxe@123',
+	database : 'homeluxe'
+});
+
+// Connect to MYSQL
+archive.connect();
+
 var mode = process.argv[2] || 0;
 var port = 3000;
 var app = express();
@@ -48,12 +59,22 @@ var adminRoutes = express.Router();
 /********************
 * Support Functions *
 ********************/
-function search(nameKey, myArray) {
-    for (var i=0; i < myArray.length; i++) {
-        if (myArray[i].name === nameKey) {
-            return myArray[i];
-        }
-    }
+function tokenBlacklisted(token, callback) {
+	var query = 'SELECT COUNT(*) as count FROM blacklist WHERE token = ?';
+	var values = [token];
+
+	archive.query(query, values, function(err,rows,fields) {
+		if(err) {
+			res.send({
+				status : 'Failed',
+				message : 'Internal Server Error'
+			});
+			console.log(err);
+			return;
+		} else {
+			callback(rows[0].count);
+		}
+	});
 }
 
 /***********************
@@ -102,21 +123,29 @@ publicRoutes.get('/sendmail', function(req,res) {
 	});
 });
 
-
 publicRoutes.use(function(req,res,next) {
 	var token = req.headers['x-access-token'] || req.query.token || req.body.token;
 	if(token) {
-		jwt.verify(token, superSecret, function(err,decoded) {
-			if(err) {
-				res.json({
-					success : false,
-					message : 'Invalid token detected'
+		// Scan token against blacklist
+		tokenBlacklisted(req.body.token, function(result) {
+			if(result) {
+				// Token is blacklisted, reject.
+				res.send({
+					status : 'Failed',
+					message : 'Token has expired'
 				});
 			} else {
-				/* Redis token check needs to go here */
-				/* Analytics grabs data here */
-				req.decoded = decoded;
-				next();
+				jwt.verify(token, superSecret, function(err,decoded) {
+					if(err) {
+						res.json({
+							success : false,
+							message : 'Invalid token detected'
+						});
+					} else {
+						req.decoded = decoded;
+						next();
+					}
+				});
 			}
 		});
 	} else {
@@ -173,6 +202,26 @@ publicRoutes.post('/browse', function(req,res) {
 			throw err;
 		}
 		res.send(results);
+	});
+});
+
+publicRoutes.post('/logout', function(req,res) {
+	var query = 'INSERT INTO blacklist VALUES (?,?);';
+	var values = [req.body.token,req.decoded.exp];
+	// Insert token into blacklist
+	archive.query(query, values, function(err,rows,fields) {
+		if(err) {
+			console.log(err);
+			res.send({
+				status : 'Failed',
+				message : 'Logout Failed'
+			});
+		} else {
+			res.send({
+				status : 'Success',
+				message : 'Logout Successful'
+			});
+		}
 	});
 });
 
@@ -350,22 +399,32 @@ memberRoutes.post('/login', function(req,res) {
 memberRoutes.use(function(req,res,next) {
 	var token = req.headers['x-access-token'] || req.query.token || req.body.token;
 	if(token) {
-		jwt.verify(token, superSecret, function(err,decoded) {
-			if(err) {
-				res.json({
+		tokenBlacklisted(req.body.token, function(result) {
+			if(result) {
+				// Token is blacklisted, reject.
+				res.send({
 					status : 'Failed',
-					message : 'Invalid token detected'
+					message : 'Token has expired'
 				});
 			} else {
-				if(decoded.userType == 'member') {
-					req.decoded = decoded;
-					next();
-				} else {
-					res.send({
-						status : 'Failed',
-						message : 'Forbidden endpoint'
-					});
-				}
+				jwt.verify(token, superSecret, function(err,decoded) {
+					if(err) {
+						res.json({
+							status : 'Failed',
+							message : 'Invalid token detected'
+						});
+					} else {
+						if(decoded.userType == 'member') {
+							req.decoded = decoded;
+							next();
+						} else {
+							res.send({
+								status : 'Failed',
+								message : 'Forbidden endpoint'
+							});
+						}
+					}
+				});
 			}
 		});
 	} else {
@@ -489,22 +548,32 @@ adminRoutes.post('/login', function(req,res) {
 adminRoutes.use(function(req,res,next) {
 	var token = req.headers['x-access-token'] || req.query.token || req.body.token;
 	if(token) {
-		jwt.verify(token, superSecret, function(err,decoded) {
-			if(err) {
-				res.json({
+		tokenBlacklisted(req.body.token, function(result) {
+			if(result) {
+				// Token is blacklisted, reject.
+				res.send({
 					status : 'Failed',
-					message : 'Invalid token detected'
+					message : 'Token has expired'
 				});
 			} else {
-				if(decoded.userType == 'admin') {
-					req.decoded = decoded;
-					next();
-				} else {
-					res.send({
-						status : 'Failed',
-						message : 'Forbidden endpoint'
-					});
-				}
+				jwt.verify(token, superSecret, function(err,decoded) {
+					if(err) {
+						res.json({
+							status : 'Failed',
+							message : 'Invalid token detected'
+						});
+					} else {
+						if(decoded.userType == 'admin') {
+							req.decoded = decoded;
+							next();
+						} else {
+							res.send({
+								status : 'Failed',
+								message : 'Forbidden endpoint'
+							});
+						}
+					}
+				});
 			}
 		});
 	} else {
