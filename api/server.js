@@ -14,8 +14,6 @@ var options = {
 	key  : fs.readFileSync('/etc/letsencrypt/live/dev.homeluxe.in/privkey.pem'),
 	cert : fs.readFileSync('/etc/letsencrypt/live/dev.homeluxe.in/cert.pem')
 };
-
-
 var express = require('express');
 var chalk = require('chalk');
 var morgan = require('morgan');
@@ -28,7 +26,8 @@ var db = require('seraph')({
 	user: "neo4j",
 	pass: "homeluxe@123"
 });
-//var moment = require('moment');
+var mode = process.argv[2] || 0;
+var port = 3000;
 var app = express();
 
 /***********************
@@ -70,10 +69,12 @@ app.use(function(req, res, next) {
 ****************/
 publicRoutes.post('/getToken', function(req,res) {
 	var payload = {
-		userType : 'guest',
-		generatedAt : (new Date).getTime()
+		userType : 'guest'
 	};
-	var token = jwt.sign(payload,superSecret);
+	var options = {
+		expiresIn : 1200
+	};
+	var token = jwt.sign(payload,superSecret,options);
 	res.json({
 		success : true,
 		token : token
@@ -265,10 +266,12 @@ memberRoutes.post('/login', function(req,res) {
 					var payload = {
 						id : results[0].id,
 						email : results[0].email,
-						userType : results[0].user_type,
-						generatedAt : (new Date).getTime()
+						userType : results[0].user_type
 					};
-					var token = jwt.sign(payload,superSecret);
+					var options = {
+						expiresIn : 604800
+					};
+					var token = jwt.sign(payload,superSecret,options);
 					res.send({
 						status : 'Success',
 						message : 'Logged in successfully',
@@ -316,10 +319,12 @@ memberRoutes.post('/login', function(req,res) {
 					var payload = {
 						id : results[0].id,
 						email : results[0].email,
-						userType : results[0].user_type,
-						generatedAt : (new Date).getTime()
+						userType : results[0].user_type
 					};
-					var token = jwt.sign(payload,superSecret);
+					var options = {
+						expiresIn : 604800
+					};
+					var token = jwt.sign(payload,superSecret,options);
 					res.send({
 						status : 'Success',
 						message : 'Logged in successfully',
@@ -409,10 +414,6 @@ memberRoutes.post('/like', function(req,res) {
 	});
 });
 
-memberRoutes.post('/unlike', function(req,res) {
-
-});
-
 memberRoutes.post('/likes', function(req,res) {
 	var query = 'MATCH (u:User)-[:LIKES]->(r) WHERE ID(u) = {id} RETURN r;';
 	db.query(query, {id : req.decoded.id}, function(err, results) {
@@ -462,7 +463,10 @@ adminRoutes.post('/login', function(req,res) {
 				email : results[0].email,
 				userType : results[0].user_type
 			};
-			var token = jwt.sign(payload,superSecret);
+			var options = {
+				expiresIn : 604800
+			};
+			var token = jwt.sign(payload,superSecret,options);
 			res.send({
 				status : 'Success',
 				message : 'Logged in successfully',
@@ -656,28 +660,6 @@ adminRoutes.post('/removeStyle', function(req,res) {
 				message : 'Transaction completed'
 			});
 		});
-		/*
-		async.each(req.body.nodes, function(node) {
-			db.delete(node, true, function(err) {
-				if(err) {
-					console.log(err);
-				}
-				return callback();
-			});
-		}, function(err) {
-			if(err) {
-				res.send({
-					status : 'Failed',
-					message : 'Delete failed'
-				});
-				console.log(err);
-			}
-			res.send({
-				status : 'Successful',
-				message : 'Delete completed'
-			});
-		});
-		*/
 	}
 });
 
@@ -686,6 +668,12 @@ app.use('/admin', adminRoutes);
 /**************
 * Start Server *
 **************/
-https.createServer(options, app).listen(3000, function () {
-	console.log('Started!');
-});
+if(mode) {
+	app.listen(port, function() {
+		console.log('[TEST MODE] Listening on port: ' + port);
+	});
+} else {
+	https.createServer(options, app).listen(port, function () {
+		console.log('[LIVE MODE] Listening on port: ' + port);
+	});
+}
