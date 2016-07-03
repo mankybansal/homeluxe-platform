@@ -8,6 +8,8 @@ quizApp.directive("quizApp", function () {
     var questions = [];
 
     return {
+        restrict: 'AE',
+        scope: {},
         link: function($scope, elem, attrs) {
             $scope.startQuiz = function () {
                 $scope.myProgress = 0;
