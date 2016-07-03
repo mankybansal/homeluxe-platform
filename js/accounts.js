@@ -25,10 +25,15 @@ homeluxeApp.factory('myUserFactory', function () {
 });
 
 homeluxeApp.controller('userController', function ($scope, myUserFactory) {
+    
+    $scope.init = function(){
+      $scope.myUser = myUserFactory.get();
+    };
+    
     $scope.checkCookie = function () {
         console.log("RUNNING...");
-        if (myUserFactory.get()) {
-            $(".myAccount").html(myUserFactory.get().name + "&nbsp;&nbsp;<i class='fa fa-user'></i>");
+        if ($scope.myUser) {
+            $(".myAccount").html($scope.myUser.name + "&nbsp;&nbsp;<i class='fa fa-user'></i>");
             $(".loginTrigger").attr("onclick", "gotoDashboard()");
         } else {
             $(".myAccount").html("LOGIN/SIGN-UP");
