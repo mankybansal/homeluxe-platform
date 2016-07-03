@@ -14,7 +14,10 @@ homeluxeApp.factory('myUserFactory', function () {
             myUser = thisUser;
         },
         get: function () {
-            if (myUser = Cookies.getJSON('myUser')) return myUser;
+            if (myUser = Cookies.getJSON('myUser')) {
+                console.log("NO USER");
+                return myUser;
+            }
             else{
                 myUser = {};
                 return false;
