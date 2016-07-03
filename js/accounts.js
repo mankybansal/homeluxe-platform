@@ -46,7 +46,7 @@ homeluxeApp.controller('userController', function ($scope, myUserFactory) {
 
 homeluxeApp.directive('headerMenu', function () {
     return {
-        restrict: 'AE',
+        restrict: 'A',
         template: '../headerMenu.html',
         replace: true,
         scope: {
