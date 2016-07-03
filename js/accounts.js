@@ -14,7 +14,7 @@ homeluxeApp.factory('myUserFactory', function () {
             myUser = thisUser;
         },
         get: function () {
-            if (myUser = Cookies.getJSON('myUser')) {
+            if(myUser = Cookies.getJSON('myUser')) {
                 console.log("NO USER");
                 return myUser;
             }
@@ -37,13 +37,16 @@ homeluxeApp.directive('headerMenu',function(myUserFactory){
         templateUrl: 'headerMenu.html',
         link: function(scope, element, attributes){
             scope.init = function () {
+                scope.myUser = false;
                 scope.checkCookie();
                 setInterval(scope.checkCookie, 3000);
             };
 
             scope.checkCookie = function () {
                 console.log("RUNNING...");
-                if (scope.myUser = myUserFactory.get()) {
+                var q = myUserFactory.get();
+                if (q) {
+                    scope.myUser = q;
                     $(".loginTrigger").attr("onclick", "gotoDashboard()");
                 } else {
                     scope.myUser = false;
