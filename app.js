@@ -38,7 +38,7 @@ app.controller("quizController",function($scope){
     };
 
     $scope.getQuestion = function (id) {
-        if (id < questions.length) return questions[id];
+        if (id < $scope.questions.length) return $scope.questions[id];
         else return false;
     }
 });
