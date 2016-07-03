@@ -17,7 +17,12 @@
     <div class="headerSpacer spacerRight ">
         <div class="menuBox menuLogin hideMobile loginTrigger" onclick="loginButtonClick()">
             <div class="menuTriggerText myAccount">
-                {{myUser.name}}
+                <span ng-show="!myUser">LOGIN/SIGN-UP</span>
+                <span ng-show="myUser">
+                    {{myUser.name}}
+                    &nbsp;&nbsp;
+                    <i class="fa fa-user"></i>
+                </span>
             </div>
         </div>
         <div class="menuBox hideMobile menuLogin"
