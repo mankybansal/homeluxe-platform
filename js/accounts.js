@@ -30,6 +30,7 @@ homeluxeApp.controller('userController', function ($scope, myUserFactory) {
         $scope.checkCookie();
         setInterval($scope.checkCookie, 3000);
         $scope.myUser = myUserFactory.get();
+        $compile($(".headerMenu").load("headerMenu.html"))($scope);
     };
 
     $scope.checkCookie = function () {
@@ -43,18 +44,18 @@ homeluxeApp.controller('userController', function ($scope, myUserFactory) {
 
     $scope.init();
 });
-
-homeluxeApp.directive('headerMenu', function () {
-    return {
-        restrict: 'AE',
-        scope: {
-            myUser: "="
-        },
-        compile: function(element, attrs){
-            element.load('headerMenu.html');
-        }
-    }
-});
+//
+// homeluxeApp.directive('headerMenu', function () {
+//     return {
+//         restrict: 'AE',
+//         scope: {
+//             myUser: "="
+//         },
+//         compile: function(element, attrs){
+//             element.load('headerMenu.html');
+//         }
+//     }
+// });
 
 //Hide Overlay
 function hideLoginOverlay() {
