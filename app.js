@@ -18,10 +18,9 @@ quizApp.controller("quizController", function ($scope) {
 
     $scope.getNextQuestion = function () {
         $scope.myProgress += 100 / ($scope.questions.length + 1);
-        if ($scope.currentQuestion < $scope.questions.length) {
-            $scope.question = $scope.questions[$scope.currentQuestion].Questions.name;
-            $scope.options = $scope.questions[$scope.currentQuestion].Options;
-        } else {
+        if ($scope.currentQuestion < $scope.questions.length)
+            $scope.question = $scope.questions[$scope.currentQuestion];
+        else {
             $scope.quizOver = true;
             requests.submitQuiz($scope.myAnswers.join(), function (response) {
                 styles = response;
