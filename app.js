@@ -10,23 +10,23 @@ quizApp.directive("quizApp", function () {
     return {
         restrict: 'AE',
         scope: {},
-        link: function($scope, elem, attrs) {
-            $scope.startQuiz = function () {
-                $scope.myProgress = 0;
-                $scope.quizOver = false;
-                $scope.inProgress = true;
+        link: function(scope, elem, attrs) {
+            scope.startQuiz = function () {
+                scope.myProgress = 0;
+                scope.quizOver = false;
+                scope.inProgress = true;
                 requests.getQuiz(function (response) {
                     questions = response;
-                    $scope.getNextQuestion();
+                    scope.getNextQuestion();
                 });
             };
 
-            $scope.getNextQuestion = function () {
-                $scope.myProgress += 100 / (questions.length + 1);
+            scope.getNextQuestion = function () {
+                scope.myProgress += 100 / (questions.length + 1);
                 if (currentQuestion < questions.length)
-                    $scope.question = questions[currentQuestion];
+                    scope.question = questions[currentQuestion];
                 else {
-                    $scope.quizOver = true;
+                    scope.quizOver = true;
                     requests.submitQuiz(myAnswers.join(), function (response) {
                         styles = response;
                         viewStyle(0);
@@ -34,10 +34,10 @@ quizApp.directive("quizApp", function () {
                 }
             };
 
-            $scope.saveAnswer = function (myAnswer) {
+            scope.saveAnswer = function (myAnswer) {
                 myAnswers.push(myAnswer);
                 currentQuestion++;
-                $scope.getNextQuestion();
+                scope.getNextQuestion();
             };
         }
     };
