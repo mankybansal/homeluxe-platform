@@ -11,5 +11,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="angular-js" level="application" />
     <orderEntry type="library" name="angular" level="application" />
+    <orderEntry type="library" name="js.cookie" level="application" />
   </component>
 </module>
