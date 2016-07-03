@@ -8,6 +8,7 @@ app.controller("quizController",function($scope){
         $scope.quizOver = false;
         $scope.inProgress = true;
         $scope.myAnswers = [];
+        $scope.questions = [];
         requests.getQuiz(function(response){
             $scope.questions = response;
             $scope.getQuestion();
