@@ -1,7 +1,7 @@
 var quizApp = angular.module('quizApp', []);
 var styles;
 
-quizApp.directive("quizApp", function () {
+quizApp.directive("quizAppLogic", function () {
 
     var currentQuestion = 0;
     var myAnswers = [];
