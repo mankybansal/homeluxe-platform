@@ -3,7 +3,7 @@ var styles;
 
 app.controller("quizController", function ($scope) {
 
-    $scope.init = function () {
+    $scope.start = function () {
         $scope.currentQuestion = 0;
         $scope.myProgress = 0;
         $scope.quizOver = false;
@@ -13,15 +13,8 @@ app.controller("quizController", function ($scope) {
         requests.getQuiz(function (response) {
             $scope.questions = response;
         });
-
-    };
-
-
-    $scope.start = function () {
         $scope.getNextQuestion();
     };
-
-    $scope.init();
 
     $scope.getNextQuestion = function () {
         $scope.myProgress += 100 / ($scope.questions.length + 1);
@@ -30,6 +23,7 @@ app.controller("quizController", function ($scope) {
         if (q) {
             $scope.question = q.Questions.name;
             $scope.options = q.Options;
+            console.log(q);
         } else {
             $scope.quizOver = true;
             requests.submitQuiz($scope.myAnswers.join(), function (response) {
