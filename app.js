@@ -2,17 +2,19 @@ var app = angular.module('quizApp', []);
 var styles;
 
 app.controller("quizController",function($scope){
+
+    $scope.currentQuestion = 0;
+    $scope.myProgress = 0;
+    $scope.quizOver = false;
+    $scope.inProgress = true;
+    $scope.myAnswers = [];
+    $scope.questions = [];
+    requests.getQuiz(function(response){
+        $scope.questions = response;
+    });
+
     $scope.start = function () {
-        $scope.currentQuestion = 0;
-        $scope.myProgress = 0;
-        $scope.quizOver = false;
-        $scope.inProgress = true;
-        $scope.myAnswers = [];
-        $scope.questions = [];
-        requests.getQuiz(function(response){
-            $scope.questions = response;
-            $scope.getNextQuestion();
-        });
+        $scope.getNextQuestion();
     };
 
     $scope.getNextQuestion = function () {
