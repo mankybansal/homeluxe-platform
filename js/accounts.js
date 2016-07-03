@@ -29,7 +29,9 @@ homeluxeApp.controller('userController', function ($scope, myUserFactory) {
     $scope.init = function () {
         $scope.checkCookie();
         setInterval($scope.checkCookie, 3000);
+        $(".headerMenu").load("headerMenu.html");
         $scope.myUser = myUserFactory.get();
+        $scope.$apply();
     };
 
     $scope.checkCookie = function () {
@@ -44,33 +46,6 @@ homeluxeApp.controller('userController', function ($scope, myUserFactory) {
     $scope.init();
 });
 
-homeluxeApp.directive('headerMenu', function ($compile) {
-    return {
-        restrict: "E",
-        transclude: true,
-        scope: true,
-        template: "headerMenu.html",
-        controller: function ($scope, myUserFactory) {
-
-            $scope.init = function () {
-                $scope.checkCookie();
-                setInterval($scope.checkCookie, 3000);
-                $scope.myUser = myUserFactory.get();
-            };
-
-            $scope.checkCookie = function () {
-                console.log("RUNNING...");
-                if ($scope.myUser) {
-                    $(".loginTrigger").attr("onclick", "gotoDashboard()");
-                } else {
-                    $(".loginTrigger").attr("onclick", "loginButtonClick()");
-                }
-            };
-
-            $scope.init();
-        }
-    };
-});
 
 //Hide Overlay
 function hideLoginOverlay() {
