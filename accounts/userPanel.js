@@ -127,23 +127,10 @@ $(document).ready(function () {
 
     nodeID = getUrlParameter("nodeID");
     
-
-    if (Cookies.get('myUser-token')) {
-
+    if (myUser = Cookies.getJSON('myUser')) {
         showAlert("Signing in as <b>"+Cookie.get('myUser-name')+"</b> &nbsp; <i class='fa fa-circle-o-notch fa-spin'></i>");
-
-        myUser = {
-            "token": Cookies.get('myUser-token'),
-            "email": Cookies.get('myUser-email'),
-            "name": Cookies.get('myUser-name'),
-            "profile_pic": Cookies.get('myUser-dp'),
-            "mobile": Cookies.get("myUser-phone")
-        };
-        
         setTimeout(showDashboard(),3000);
     }
-    
-
 
     $(".loginButton").click(function () {
         var username = $('#username').val();
