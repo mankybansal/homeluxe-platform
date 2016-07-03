@@ -5,27 +5,27 @@ var fbConnected = false;
 
 var homeluxeApp = angular.module('myApp', []);
 
-homeluxeApp.factory('myUserFactory', function() {
+homeluxeApp.factory('myUserFactory', function () {
     var myUser;
 
     return {
-        set: function(thisUser){
+        set: function (thisUser) {
             Cookies.set('myUser', thisUser);
             myUser = thisUser;
         },
-        get: function(){
-            if(myUser = Cookies.getJSON('myUser')) return myUser;
+        get: function () {
+            if (myUser = Cookies.getJSON('myUser')) return myUser;
             else return false;
         },
-        unset: function(){
+        unset: function () {
             Cookies.remove('myUser');
             myUser = {};
         }
     };
 });
 
-homeluxeApp.controller('userController', function($scope, myUserFactory){
-    $scope.checkCookie = function(){
+homeluxeApp.controller('userController', function ($scope, myUserFactory) {
+    $scope.checkCookie = function () {
         console.log("RUNNING...");
         if (myUserFactory.get()) {
             $(".myAccount").html(myUserFactory.get().name + "&nbsp;&nbsp;<i class='fa fa-user'></i>");
@@ -38,9 +38,8 @@ homeluxeApp.controller('userController', function($scope, myUserFactory){
 
     $scope.checkCookie();
 
-    $interval($scope.checkCookie, 3000);
+    setInterval($scope.checkCookie, 3000);
 });
-
 
 
 //Hide Overlay
