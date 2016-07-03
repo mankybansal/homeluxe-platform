@@ -22,7 +22,7 @@ app.directive("quizAppLogic", function() {
             scope.getNextQuestion = function () {
                 scope.myProgress += 100 / (scope.questions.length + 1);
                 if (scope.currentQuestion < scope.questions.length)
-                    scope.question = scope.questions[currentQuestion];
+                    scope.question = scope.questions[scope.currentQuestion];
                 else {
                     scope.quizOver = true;
                     requests.submitQuiz(scope.myAnswers.join(), function (response) {
