@@ -11,11 +11,11 @@ app.controller("quizController",function($scope){
         $scope.questions = [];
         requests.getQuiz(function(response){
             $scope.questions = response;
-            $scope.getQuestion();
+            $scope.getNextQuestion();
         });
     };
 
-    $scope.getQuestion = function () {
+    $scope.getNextQuestion = function () {
         $scope.myProgress += 100/($scope.questions.length+1);
         $('.quizProgress').css('width', $scope.myProgress + '%');
         var q = $scope.getQuestion($scope.currentQuestion);
@@ -34,7 +34,7 @@ app.controller("quizController",function($scope){
     $scope.saveAnswer = function (myAnswer) {
         $scope.myAnswers.push(myAnswer);
         $scope.currentQuestion++;
-        $scope.getQuestion();
+        $scope.getNextQuestion();
     };
 
     $scope.getQuestion = function (id) {
