@@ -13,14 +13,7 @@ function showAlert(message) {
 
 // Function for Checking if User is logged in & valid
 function checkCookie() {
-    if (Cookies.get('myUser-token')) {
-        myUser = {
-            "token": Cookies.get('myUser-token'),
-            "email": Cookies.get('myUser-email'),
-            "name": Cookies.get('myUser-name'),
-            "profile_pic": Cookies.get('myUser-dp'),
-            "mobile": Cookies.get("myUser-phone")
-        };
+    if (myUser = Cookies.getJSON('myUser')) {
         $(".myAccount").html(myUser.name + "&nbsp;&nbsp;<i class='fa fa-user'></i>");
         $(".loginTrigger").attr("onclick", "gotoDashboard()");
     } else {
@@ -36,11 +29,7 @@ function gotoDashboard() {
 // Function Called After Successful Login
 function loginSuccess() {
     // SET COOKIES
-    Cookies.set('myUser-name', myUser.name);
-    Cookies.set('myUser-email', myUser.email);
-    Cookies.set('myUser-phone', myUser.mobile);
-    Cookies.set('myUser-token', myUser.token);
-    Cookies.set('myUser-dp', myUser.profile_pic);
+    Cookies.set('myUser', myUser);
     $('.alertMessage').hide();
     $('.loginOverlay').hide();
     $(".loginTrigger").attr("onclick", "gotoDashboard()");

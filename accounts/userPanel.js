@@ -120,7 +120,7 @@ var nodeID;
 $(document).ready(function () {
 
     $(".signOutButton").click(function(){
-       Cookies.remove('myUser-token');
+       Cookies.remove('myUser');
         hideDashboard();
     });
 
