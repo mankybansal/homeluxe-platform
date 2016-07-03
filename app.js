@@ -5,11 +5,10 @@ app.directive("quizAppLogic", function (quizFactory) {
     return {
         restrict: 'AE',
         scope: {},
-        link: function (scope, elem, attrs) {
+        link: function (scope) {
             scope.startQuiz = function () {
                 scope.currentQuestion = 0;
                 scope.myAnswers = [];
-                scope.questions = [];
                 scope.myProgress = 0;
                 scope.quizOver = false;
                 scope.inProgress = true;
@@ -18,9 +17,7 @@ app.directive("quizAppLogic", function (quizFactory) {
 
             scope.getNextQuestion = function () {
                 scope.myProgress += 100 / (quizFactory.questionCount() + 1);
-                if (scope.question = quizFactory.getQuestion(scope.currentQuestion)) {
-                    console.log(scope.question);
-                } else {
+                if (!(scope.question = quizFactory.getQuestion(scope.currentQuestion))) {
                     scope.quizOver = true;
                     requests.submitQuiz(scope.myAnswers.join(), function (response) {
                         styles = response;
@@ -40,6 +37,7 @@ app.directive("quizAppLogic", function (quizFactory) {
 
 app.factory('quizFactory', function () {
     var questions;
+
     requests.getQuiz(function (response) {
         questions = response;
     });

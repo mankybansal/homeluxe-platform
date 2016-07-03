@@ -13,13 +13,13 @@ function showAlert(message) {
 
 // Function for Checking if User is logged in & valid
 function checkCookie() {
-    if ($.cookie('myUser-token')) {
+    if (Cookies.get('myUser-token')) {
         myUser = {
-            "token": $.cookie('myUser-token'),
-            "email": $.cookie('myUser-email'),
-            "name": $.cookie('myUser-name'),
-            "profile_pic": $.cookie('myUser-dp'),
-            "mobile": $.cookie("myUser-phone")
+            "token": Cookies.get('myUser-token'),
+            "email": Cookies.get('myUser-email'),
+            "name": Cookies.get('myUser-name'),
+            "profile_pic": Cookies.get('myUser-dp'),
+            "mobile": Cookies.get("myUser-phone")
         };
         $(".myAccount").html(myUser.name + "&nbsp;&nbsp;<i class='fa fa-user'></i>");
         $(".loginTrigger").attr("onclick", "gotoDashboard()");
@@ -36,11 +36,11 @@ function gotoDashboard() {
 // Function Called After Successful Login
 function loginSuccess() {
     // SET COOKIES
-    $.cookie('myUser-name', myUser.name, {expires: 3, path: '/'});
-    $.cookie('myUser-email', myUser.email, {expires: 3, path: '/'});
-    $.cookie('myUser-phone', myUser.mobile, {expires: 3, path: '/'});
-    $.cookie('myUser-token', myUser.token, {expires: 3, path: '/'});
-    $.cookie('myUser-dp', myUser.profile_pic, {expires: 3, path: '/'});
+    Cookies.set('myUser-name', myUser.name);
+    Cookies.set('myUser-email', myUser.email);
+    Cookies.set('myUser-phone', myUser.mobile);
+    Cookies.set('myUser-token', myUser.token);
+    Cookies.set('myUser-dp', myUser.profile_pic);
     $('.alertMessage').hide();
     $('.loginOverlay').hide();
     $(".loginTrigger").attr("onclick", "gotoDashboard()");

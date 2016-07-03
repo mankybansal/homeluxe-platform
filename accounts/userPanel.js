@@ -81,7 +81,7 @@ function getLikes(){
         type: "POST",
         dataType: "json",
         data: {
-            "token": myUser.token,
+            "token": myUser.token
         },
         url: "http://homeluxe.in:3000/member/likes",
         success: function (data) {
@@ -120,8 +120,7 @@ var nodeID;
 $(document).ready(function () {
 
     $(".signOutButton").click(function(){
-        $.removeCookie('myUser-token', { path: '/' });
-        deleteAllCookies('myUser-token');
+       Cookies.remove('myUser-token');
         hideDashboard();
     });
 
@@ -129,16 +128,16 @@ $(document).ready(function () {
     nodeID = getUrlParameter("nodeID");
     
 
-    if ($.cookie('myUser-token')) {
+    if (Cookies.get('myUser-token')) {
 
-        showAlert("Signing in as <b>"+$.cookie('myUser-name')+"</b> &nbsp; <i class='fa fa-circle-o-notch fa-spin'></i>");
-        
+        showAlert("Signing in as <b>"+Cookie.get('myUser-name')+"</b> &nbsp; <i class='fa fa-circle-o-notch fa-spin'></i>");
+
         myUser = {
-            "token": $.cookie('myUser-token'),
-            "email": $.cookie('myUser-email'),
-            "name": $.cookie('myUser-name'),
-            "profile_pic": $.cookie('myUser-dp'),
-            "mobile": $.cookie("myUser-phone")
+            "token": Cookies.get('myUser-token'),
+            "email": Cookies.get('myUser-email'),
+            "name": Cookies.get('myUser-name'),
+            "profile_pic": Cookies.get('myUser-dp'),
+            "mobile": Cookies.get("myUser-phone")
         };
         
         setTimeout(showDashboard(),3000);
@@ -247,13 +246,12 @@ var fbConnected = false;
 
 function showDashboard() {
 
-    $.cookie('myUser-name', myUser.name, {expires: 3, path: '/'});
-    $.cookie('myUser-email', myUser.email, {expires: 3, path: '/'});
-    $.cookie('myUser-phone', myUser.mobile, {expires: 3, path: '/'});
-    $.cookie('myUser-token', myUser.token, {expires: 3, path: '/'});
-    $.cookie('myUser-dp', myUser.profile_pic, {expires: 3, path: '/'});
+    Cookies.set('myUser-name', myUser.name);
+    Cookies.set('myUser-email', myUser.email);
+    Cookies.set('myUser-phone', myUser.mobile);
+    Cookies.set('myUser-token', myUser.token);
+    Cookies.set('myUser-dp', myUser.profile_pic);
 
-    
     $(".viewPanel").hide();
     $(".menuLeft").find(".optionSelected").removeClass("optionSelected");
     $(".menuLeft").find(".viewOverview").parent().addClass("optionSelected");
