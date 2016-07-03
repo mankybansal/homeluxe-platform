@@ -3,15 +3,12 @@ var styles;
 
 quizApp.directive("quizAppLogic", function () {
 
-    var currentQuestion = 0;
-    var myAnswers = [];
-    var questions = [];
-
     return {
         restrict: 'AE',
         scope: {},
         link: function(scope, elem, attrs) {
             scope.startQuiz = function () {
+                console.log("Started");
                 scope.myProgress = 0;
                 scope.quizOver = false;
                 scope.inProgress = true;
