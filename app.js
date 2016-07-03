@@ -12,8 +12,9 @@ app.controller("quizController", function ($scope) {
         $scope.questions = [];
         requests.getQuiz(function (response) {
             $scope.questions = response;
+            $scope.getNextQuestion();
         });
-        $scope.getNextQuestion();
+
     };
 
     $scope.getNextQuestion = function () {
