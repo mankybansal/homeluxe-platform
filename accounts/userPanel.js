@@ -66,7 +66,7 @@ $(document).ready(function () {
     $('.loginOverlay').fadeIn(500);
     
     $(".signOutButton").click(function(){
-       Cookies.remove('myUser');
+        Cookies.remove('myUser');
         hideDashboard();
     });
 

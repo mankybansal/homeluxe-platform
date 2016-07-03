@@ -170,5 +170,6 @@ $(document).ready(function () {
         $(".loginOverlay").fadeIn(500);
     });
 
-    $(".loginOverlay").load("loginOverlay.html");
+    if(dashboard) $(".loginOverlay").load("../loginOverlay.html");
+    else $(".loginOverlay").load("loginOverlay.html");
 });
