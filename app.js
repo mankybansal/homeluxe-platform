@@ -23,7 +23,6 @@ app.controller("quizController", function ($scope) {
         if ($scope.currentQuestion < $scope.questions.length) {
             $scope.question = $scope.questions[$scope.currentQuestion].Questions.name;
             $scope.options = $scope.questions[$scope.currentQuestion].Options;
-            console.log(q);
         } else {
             $scope.quizOver = true;
             requests.submitQuiz($scope.myAnswers.join(), function (response) {
