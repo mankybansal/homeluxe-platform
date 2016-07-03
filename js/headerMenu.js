@@ -86,5 +86,5 @@ function loginButtonClick() {
 }
 
 $(document).ready(function () {
-    $(".headerMenu").load("headerMenu.html");
+    //$(".headerMenu").load("headerMenu.html");
 });

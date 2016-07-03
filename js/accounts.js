@@ -44,6 +44,16 @@ homeluxeApp.controller('userController', function ($scope, myUserFactory) {
     $scope.init();
 });
 
+homeluxeApp.directive('headerMenu', function () {
+    return {
+        restrict: 'AE',
+        template: '../headerMenu.html',
+        replace: true,
+        scope: {
+            myUser: '='
+        }
+    };
+});
 
 //Hide Overlay
 function hideLoginOverlay() {
