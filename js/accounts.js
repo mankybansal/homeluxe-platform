@@ -26,8 +26,6 @@ homeluxeApp.factory('myUserFactory', function () {
 
 homeluxeApp.controller('userController', function ($scope, myUserFactory) {
 
-    $scope.init();
-
     $scope.init = function(){
       $scope.myUser = myUserFactory.get();
     };
@@ -42,7 +40,7 @@ homeluxeApp.controller('userController', function ($scope, myUserFactory) {
             $(".loginTrigger").attr("onclick", "loginButtonClick()");
         }
     };
-
+    $scope.init();
     $scope.checkCookie();
 
     setInterval($scope.checkCookie, 3000);
