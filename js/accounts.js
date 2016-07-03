@@ -28,7 +28,7 @@ homeluxeApp.controller('userController', function($scope, myUserFactory){
     $scope.checkCookie = function(){
         console.log("RUNNING...");
         if (myUserFactory.get()) {
-            $(".myAccount").html(myUser.name + "&nbsp;&nbsp;<i class='fa fa-user'></i>");
+            $(".myAccount").html(myUserFactory.get().name + "&nbsp;&nbsp;<i class='fa fa-user'></i>");
             $(".loginTrigger").attr("onclick", "gotoDashboard()");
         } else {
             $(".myAccount").html("LOGIN/SIGN-UP");
