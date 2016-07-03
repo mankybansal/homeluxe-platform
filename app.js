@@ -34,7 +34,7 @@ app.directive("quizAppLogic", function() {
 
             scope.saveAnswer = function (myAnswer) {
                 scope.myAnswers.push(myAnswer);
-                currentQuestion++;
+                scope.currentQuestion++;
                 scope.getNextQuestion();
             };
         }
