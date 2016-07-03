@@ -3,9 +3,7 @@ var styles;
 
 quizApp.controller("quizController", function ($scope) {
 
-    $scope.start();
-
-    $scope.start = function () {
+    $scope.startQuiz = function () {
         $scope.currentQuestion = 0;
         $scope.myProgress = 0;
         $scope.quizOver = false;
@@ -14,11 +12,8 @@ quizApp.controller("quizController", function ($scope) {
         $scope.questions = [];
         requests.getQuiz(function (response) {
             $scope.questions = response;
+            $scope.getNextQuestion();
         });
-    };
-
-    $scope.startQuiz = function () {
-        $scope.getNextQuestion();
     };
 
     $scope.getNextQuestion = function () {
