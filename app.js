@@ -2,29 +2,30 @@ var quizApp = angular.module('quizApp', []);
 var styles;
 
 quizApp.directive("quizAppLogic", function () {
-
     return {
         restrict: 'AE',
         scope: {},
-        link: function(scope, elem, attrs) {
+        link: function (scope, elem, attrs) {
             scope.startQuiz = function () {
-                console.log("Started");
+                scope.currentQuestion = 0;
+                scope.myAnswers = [];
+                scope.questions = [];
                 scope.myProgress = 0;
                 scope.quizOver = false;
                 scope.inProgress = true;
                 requests.getQuiz(function (response) {
-                    questions = response;
+                    scope.questions = response;
                     scope.getNextQuestion();
                 });
             };
 
             scope.getNextQuestion = function () {
-                scope.myProgress += 100 / (questions.length + 1);
-                if (currentQuestion < questions.length)
-                    scope.question = questions[currentQuestion];
+                scope.myProgress += 100 / (scope.questions.length + 1);
+                if (currentQuestion < scope.questions.length)
+                    scope.question = scope.questions[currentQuestion];
                 else {
                     scope.quizOver = true;
-                    requests.submitQuiz(myAnswers.join(), function (response) {
+                    requests.submitQuiz(scope.myAnswers.join(), function (response) {
                         styles = response;
                         viewStyle(0);
                     });
@@ -32,7 +33,7 @@ quizApp.directive("quizAppLogic", function () {
             };
 
             scope.saveAnswer = function (myAnswer) {
-                myAnswers.push(myAnswer);
+                scope.myAnswers.push(myAnswer);
                 currentQuestion++;
                 scope.getNextQuestion();
             };
