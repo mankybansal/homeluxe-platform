@@ -24,14 +24,15 @@ homeluxeApp.factory('myUserFactory', function () {
     };
 });
 
-homeluxeApp.controller('userController', function ($scope, myUserFactory) {
+homeluxeApp.controller('userController', function ($scope, myUserFactory, $compile) {
 
     $scope.init = function () {
         $scope.checkCookie();
         setInterval($scope.checkCookie, 3000);
-        $(".headerMenu").load("headerMenu.html");
+        var compiled = $compile($(".headerMenu").html())($scope);
+        $(".headerMenu").html(compiled)
+
         $scope.myUser = myUserFactory.get();
-        $scope.$apply();
     };
 
     $scope.checkCookie = function () {
