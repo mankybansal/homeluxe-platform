@@ -19,7 +19,6 @@ quizApp.controller("quizController", function ($scope) {
 
     $scope.getNextQuestion = function () {
         $scope.myProgress += 100 / ($scope.questions.length + 1);
-        $('.quizProgress').css('width', $scope.myProgress + '%');
         if ($scope.currentQuestion < $scope.questions.length) {
             $scope.question = $scope.questions[$scope.currentQuestion].Questions.name;
             $scope.options = $scope.questions[$scope.currentQuestion].Options;
