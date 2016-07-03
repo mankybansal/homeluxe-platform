@@ -126,9 +126,9 @@ $(document).ready(function () {
 
 
     nodeID = getUrlParameter("nodeID");
-    
+
     if (myUser = Cookies.getJSON('myUser')) {
-        showAlert("Signing in as <b>"+Cookie.get('myUser-name')+"</b> &nbsp; <i class='fa fa-circle-o-notch fa-spin'></i>");
+        showAlert("Signing in as <b>"+myUser.name+"</b> &nbsp; <i class='fa fa-circle-o-notch fa-spin'></i>");
         setTimeout(showDashboard(),3000);
     }
 
