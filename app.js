@@ -12,7 +12,7 @@ quizApp.controller("quizController", function ($scope) {
         $scope.quizOver = false;
         $scope.inProgress = true;
         requests.getQuiz(function (response) {
-           questions = response;
+            questions = response;
             $scope.getNextQuestion();
         });
     };
