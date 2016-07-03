@@ -30,7 +30,6 @@ quizApp.directive("quizApp", function () {
                         viewStyle(0);
                     });
                 }
-                $scope.$apply();
             };
 
             $scope.saveAnswer = function (myAnswer) {
