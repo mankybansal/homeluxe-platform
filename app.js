@@ -32,6 +32,7 @@ app.controller("quizController", function ($scope) {
                 viewStyle(0);
             });
         }
+        $scope.$apply();
     };
 
     $scope.saveAnswer = function (myAnswer) {
