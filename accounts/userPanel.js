@@ -50,7 +50,7 @@ var nodeID;
 $(document).ready(function () {
 
     $('.loginOverlay').fadeIn(500);
-    $('.loginClose').hide();
+    $('.loginClose').remove();
 
 
     $(".signOutButton").click(function(){
