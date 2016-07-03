@@ -50,9 +50,7 @@ var nodeID;
 $(document).ready(function () {
 
     $('.loginOverlay').fadeIn(500);
-    $('.loginClose').remove();
-
-
+    
     $(".signOutButton").click(function(){
         Cookies.remove('myUser');
         hideDashboard();

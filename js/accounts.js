@@ -35,7 +35,7 @@ function loginSuccess() {
     $('.alertMessage').hide();
     $('.loginOverlay').hide();
     $(".loginTrigger").attr("onclick", "gotoDashboard()");
-    if(dashboard) showDashboard();
+    if (dashboard) showDashboard();
 }
 
 // Login to HomeLuxe (NOT oAUTH)
@@ -50,7 +50,7 @@ function login(username, password) {
         });
     }
     else showAlert('Please enter a username & password.');
-    if(dashboard) showDashboard();
+    if (dashboard) showDashboard();
 }
 
 // Submit Registration Form (NOT oAUTH)
@@ -170,6 +170,11 @@ $(document).ready(function () {
         $(".loginOverlay").fadeIn(500);
     });
 
-    if(dashboard) $(".loginOverlay").load("../loginOverlay.html");
-    else $(".loginOverlay").load("loginOverlay.html");
+    if (dashboard) {
+        $(".loginOverlay").load("../loginOverlay.html");
+        $('.loginClose').remove();
+    }
+    else {
+        $(".loginOverlay").load("loginOverlay.html");
+    }
 });
