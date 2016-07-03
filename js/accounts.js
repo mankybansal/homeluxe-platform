@@ -15,7 +15,10 @@ homeluxeApp.factory('myUserFactory', function () {
         },
         get: function () {
             if (myUser = Cookies.getJSON('myUser')) return myUser;
-            else return false;
+            else{
+                myUser = {};
+                return false;
+            }
         },
         unset: function () {
             Cookies.remove('myUser');
@@ -33,12 +36,11 @@ homeluxeApp.directive('headerMenu',function(myUserFactory){
             scope.init = function () {
                 scope.checkCookie();
                 setInterval(scope.checkCookie, 3000);
-                scope.myUser = myUserFactory.get();
             };
 
             scope.checkCookie = function () {
                 console.log("RUNNING...");
-                if (scope.myUser) {
+                if (scope.myUser = myUserFactory.get()) {
                     $(".loginTrigger").attr("onclick", "gotoDashboard()");
                 } else {
                     $(".loginTrigger").attr("onclick", "loginButtonClick()");
