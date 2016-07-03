@@ -47,6 +47,9 @@ homeluxeApp.controller('userController', function ($scope, myUserFactory) {
 homeluxeApp.directive('headerMenu', function () {
     return {
         restrict: 'AE',
+        scope: {
+            myUser: "="
+        },
         compile: function(element, attrs){
             element.load('headerMenu.html');
         }
