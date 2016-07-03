@@ -1,5 +1,6 @@
 var myUser;
 var regFBID, regFBDP, regFBName, regFBEmail;
+var fbConnected = false;
 
 //Hide Overlay
 function hideLoginOverlay() {
@@ -23,16 +24,18 @@ function checkCookie() {
 }
 
 function gotoDashboard() {
-    window.location = "http://www.homeluxe.in/accounts/"
+    window.location = baseURL + "accounts/";
 }
 
 // Function Called After Successful Login
 function loginSuccess() {
     // SET COOKIES
+    myUser.fbConnected = fbConnected;
     Cookies.set('myUser', myUser);
     $('.alertMessage').hide();
     $('.loginOverlay').hide();
     $(".loginTrigger").attr("onclick", "gotoDashboard()");
+    if(dashboard) showDashboard();
 }
 
 // Login to HomeLuxe (NOT oAUTH)
@@ -47,6 +50,7 @@ function login(username, password) {
         });
     }
     else showAlert('Please enter a username & password.');
+    if(dashboard) showDashboard();
 }
 
 // Submit Registration Form (NOT oAUTH)
@@ -104,13 +108,13 @@ window.fbAsyncInit = function () {
 function facebookRegister() {
     requests.userRegisterFacebook(regFBName, regFBEmail, regFBID, regFBDP, function (response) {
         console.log(response);
+        fbConnected = true;
         login(regFBEmail, regFBID);
     });
 }
 
 // Login to HomeLuxe (oAuth - FACEBOOK)
 function facebookLogin() {
-
     FB.login(function (response) {
         console.log(response);
         if (response.authResponse) {
@@ -132,6 +136,7 @@ function facebookLogin() {
                 requests.userLogin(response.email, response.id, function (response) {
                     if (response.status == "Success") {
                         myUser = response;
+                        fbConnected = true;
                         loginSuccess();
                     }
                     else facebookRegister();
