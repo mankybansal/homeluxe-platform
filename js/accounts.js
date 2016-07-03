@@ -26,24 +26,22 @@ homeluxeApp.factory('myUserFactory', function () {
 
 homeluxeApp.controller('userController', function ($scope, myUserFactory) {
 
-    $scope.init = function(){
-      $scope.myUser = myUserFactory.get();
+    $scope.init = function () {
+        $scope.checkCookie();
+        setInterval($scope.checkCookie, 3000);
+        $scope.myUser = myUserFactory.get();
     };
-    
+
     $scope.checkCookie = function () {
         console.log("RUNNING...");
         if ($scope.myUser) {
-            $(".myAccount").html($scope.myUser.name + "&nbsp;&nbsp;<i class='fa fa-user'></i>");
             $(".loginTrigger").attr("onclick", "gotoDashboard()");
         } else {
-            $(".myAccount").html("LOGIN/SIGN-UP");
             $(".loginTrigger").attr("onclick", "loginButtonClick()");
         }
     };
-    $scope.init();
-    $scope.checkCookie();
 
-    setInterval($scope.checkCookie, 3000);
+    $scope.init();
 });
 
 
