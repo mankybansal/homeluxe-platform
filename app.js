@@ -17,17 +17,18 @@ quizApp.controller("quizController", function ($scope) {
     };
 
     $scope.getNextQuestion = function () {
-        $scope.myProgress += 100 / ($scope.questions.length + 1);
-        if ($scope.currentQuestion < $scope.questions.length)
-            $scope.question = $scope.questions[$scope.currentQuestion];
-        else {
-            $scope.quizOver = true;
-            requests.submitQuiz($scope.myAnswers.join(), function (response) {
-                styles = response;
-                viewStyle(0);
-            });
-        }
-        $scope.$apply();
+        $scope.$apply(function () {
+            $scope.myProgress += 100 / ($scope.questions.length + 1);
+            if ($scope.currentQuestion < $scope.questions.length)
+                $scope.question = $scope.questions[$scope.currentQuestion];
+            else {
+                $scope.quizOver = true;
+                requests.submitQuiz($scope.myAnswers.join(), function (response) {
+                    styles = response;
+                    viewStyle(0);
+                });
+            }
+        });
     };
 
     $scope.saveAnswer = function (myAnswer) {
