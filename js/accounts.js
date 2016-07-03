@@ -1,4 +1,4 @@
-var myUser;
+//var myUser;
 var regFBID, regFBDP, regFBName, regFBEmail;
 var fbConnected = false;
 
