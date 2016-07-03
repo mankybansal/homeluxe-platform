@@ -43,6 +43,7 @@ homeluxeApp.directive('headerMenu',function(myUserFactory){
                 if (scope.myUser = myUserFactory.get()) {
                     $(".loginTrigger").attr("onclick", "gotoDashboard()");
                 } else {
+                    scope.myUser = false;
                     $(".loginTrigger").attr("onclick", "loginButtonClick()");
                 }
             };
