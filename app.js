@@ -1,4 +1,4 @@
-var app = angular.module('quizApp', ['ngCookie']);
+var app = angular.module('quizApp', []);
 var styles;
 
 app.controller("quizController",function($scope){
