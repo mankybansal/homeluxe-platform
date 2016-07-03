@@ -24,27 +24,30 @@ homeluxeApp.factory('myUserFactory', function () {
     };
 });
 
-homeluxeApp.controller('userController', function ($scope, myUserFactory, $compile) {
+homeluxeApp.directive('headerMenu',function(myUserFactory){
+    return {
+        restrict: 'AE',
+        scope: {},
+        templateUrl: 'headerMenu.html',
+        link: function(scope, element, attributes){
+            scope.init = function () {
+                scope.checkCookie();
+                setInterval(scope.checkCookie, 3000);
+                scope.myUser = myUserFactory.get();
+            };
 
-    $scope.init = function () {
-        $scope.checkCookie();
-        setInterval($scope.checkCookie, 3000);
-        var compiled = $compile($(".headerMenu").html())($scope);
-        $(".headerMenu").html(compiled)
+            scope.checkCookie = function () {
+                console.log("RUNNING...");
+                if (scope.myUser) {
+                    $(".loginTrigger").attr("onclick", "gotoDashboard()");
+                } else {
+                    $(".loginTrigger").attr("onclick", "loginButtonClick()");
+                }
+            };
 
-        $scope.myUser = myUserFactory.get();
-    };
-
-    $scope.checkCookie = function () {
-        console.log("RUNNING...");
-        if ($scope.myUser) {
-            $(".loginTrigger").attr("onclick", "gotoDashboard()");
-        } else {
-            $(".loginTrigger").attr("onclick", "loginButtonClick()");
+            scope.init();
         }
-    };
-
-    $scope.init();
+    }
 });
 
 
