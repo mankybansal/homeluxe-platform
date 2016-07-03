@@ -21,28 +21,16 @@ var getUrlParameter = function getUrlParameter(sParam) {
 var myLikes;
 
 function getLikes(){
-    $.ajax({
-        type: "POST",
-        dataType: "json",
-        data: {
-            "token": myUser.token
-        },
-        url: "https://dev.homeluxe.in:3000/member/likes",
-        success: function (data) {
-            if(data.success != "false"){
-                myLikes = data;
-                updateLikes();
-            }
-        },
-        error: function (data) {
-            console.log("An unknown error occurred.");
+    requests.getLikes(myUser.token, function(response){
+        if(response.success != "false"){
+            myLikes = response;
+            updateLikes();
         }
     });
 }
 
 function updateLikes(){
     $(".dataLikeCount").html(myLikes.length);
-
     $("#viewMyLikes").empty();
     if(myLikes.length > 0){
         $.each(myLikes, function(index,item){
@@ -53,10 +41,8 @@ function updateLikes(){
                 $("#viewMyLikes").append("<div class='likeBoxRoom'><div class='likeBoxImageBox'><img src='../images/NOIMAGE.png' class='likeBoxImage'></div><div class='likeBoxStyleTitle'>"+item.name+"</div><div class='likeBoxDescription'>"+item.desc+"</div></div>");
 
             }
-            
         });
     }
-
 }
 
 var nodeID;
@@ -64,12 +50,13 @@ var nodeID;
 $(document).ready(function () {
 
     $('.loginOverlay').fadeIn(500);
-    
+    $('.loginClose').hide();
+
+
     $(".signOutButton").click(function(){
         Cookies.remove('myUser');
         hideDashboard();
     });
-
 
     nodeID = getUrlParameter("nodeID");
 
@@ -103,7 +90,7 @@ function showDashboard() {
     $("#viewOverview").fadeIn(500);
     
     getLikes();
-    
+
     setTimeout(function () {
         $('.loginOverlay').fadeOut(1000);
     }, 2000);
