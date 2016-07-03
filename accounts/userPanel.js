@@ -46,7 +46,7 @@ function login(username, password) {
                 "email": username,
                 "password": password
             },
-            url: "http://homeluxe.in:3000/member/login",
+            url: "https://dev.homeluxe.in:3000/member/login",
             success: function (data) {
                 if (data.status == "Success") {
                     myUser = data;
@@ -83,7 +83,7 @@ function getLikes(){
         data: {
             "token": myUser.token
         },
-        url: "http://homeluxe.in:3000/member/likes",
+        url: "https://dev.homeluxe.in:3000/member/likes",
         success: function (data) {
             if(data.success != "false"){
                 myLikes = data;
@@ -184,7 +184,7 @@ function submitRegister() {
                 "mobile": rphone,
                 "password": rpassword
             },
-            url: "http://homeluxe.in:3000/member/register",
+            url: "https://dev.homeluxe.in:3000/member/register",
             success: function (data) {
                 if (data.status == "Success") {
                     showLogin();
@@ -291,7 +291,7 @@ function getToken() {
     $.ajax({
         type: "POST",
         dataType: "json",
-        url: "http://homeluxe.in:3000/getToken",
+        url: "https://dev.homeluxe.in:3000/getToken",
         success: function (data) {
 
             if (data.success == true) {
@@ -352,7 +352,7 @@ function getUserInfo() {
                 "email": response.email,
                 "oauth": response.id
             },
-            url: "http://homeluxe.in:3000/member/login",
+            url: "https://dev.homeluxe.in:3000/member/login",
             success: function (data) {
                 if (data.status == "Success") {
                     myUser = data;
@@ -441,7 +441,7 @@ function fbsubmitRegister() {
                 "oauth": regFBID,
                 "profile_pic": regFBDP
             },
-            url: "http://homeluxe.in:3000/member/register",
+            url: "https://dev.homeluxe.in:3000/member/register",
             success: function (data) {
                 console.log(data);
                 if (data.status == "Success") {
