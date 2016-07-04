@@ -35,8 +35,6 @@ app.controller("quizAppLogic", function($scope){
         $scope.getNextQuestion();
     };
 
-    $scope.init();
-
 });
 //
 // app.directive("quizAppLogic", function (quizFactory) {
