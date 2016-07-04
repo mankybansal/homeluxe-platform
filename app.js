@@ -12,9 +12,13 @@ app.controller("quizAppLogic", function($scope){
         requests.getQuiz(function(response){
             $scope.$apply(function () {
                 $scope.questions = response;
-                $scope.getNextQuestion();
+                console.log(response);
             });
         });
+    };
+
+    $scope.startQuiz = function(){
+        $scope.getNextQuestion();
     };
 
     $scope.getNextQuestion = function () {
