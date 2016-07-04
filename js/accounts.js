@@ -1,17 +1,10 @@
-var myUser;
+//var myUser;
 var regFBID, regFBDP, regFBName, regFBEmail;
 var fbConnected = false;
 
 var homeluxeApp = angular.module('homeluxeApp',['ngRoute']);
 
 homeluxeApp.controller("userControl", function($scope, $window, $rootScope){
-    $scope.$watch(function(){
-        return $window.myUser
-    }, function(){
-        $scope.ngMyUser = $window.myUser;
-        console.log("SCOPE: ");
-        console.log($scope.ngMyUser);
-    });
 
     $scope.facebookLogin = function() {
         FB.login(function (response) {
@@ -47,8 +40,24 @@ homeluxeApp.controller("userControl", function($scope, $window, $rootScope){
             }
             else console.log('User cancelled login or did not fully authorize.');
         }, {scope: 'email,public_profile'});
-    }
+    };
 
+    $scope.checkCookie = function(){
+        console.log('CHECK COOKIE');
+        console.log(myUser);
+        if ($scope.ngMyUser = Cookies.getJSON('myUser')) {
+            $(".loginTrigger").attr("onclick", "gotoDashboard()");
+        } else {
+            $(".loginTrigger").attr("onclick", "loginButtonClick()");
+        }
+    };
+
+
+
+    $scope.checkCookie();
+    setInterval(function () {
+        $scope.checkCookie();
+    }, 3000);
 });
 
 homeluxeApp.directive("headerMenu", function($templateRequest,$compile){
@@ -88,17 +97,17 @@ function showAlert(message) {
 }
 
 // Function for Checking if User is logged in & valid
-function checkCookie() {
-    console.log('CHECK COOKIE');
-    console.log(myUser);
-    if (myUser = Cookies.getJSON('myUser')) {
-        //$(".myAccount").html(myUser.name + "&nbsp;&nbsp;<i class='fa fa-user'></i>");
-        $(".loginTrigger").attr("onclick", "gotoDashboard()");
-    } else {
-        //$(".myAccount").html("LOGIN/SIGN-UP");
-        $(".loginTrigger").attr("onclick", "loginButtonClick()");
-    }
-}
+// function checkCookie() {
+//     console.log('CHECK COOKIE');
+//     console.log(myUser);
+//     if (myUser = Cookies.getJSON('myUser')) {
+//         //$(".myAccount").html(myUser.name + "&nbsp;&nbsp;<i class='fa fa-user'></i>");
+//         $(".loginTrigger").attr("onclick", "gotoDashboard()");
+//     } else {
+//         //$(".myAccount").html("LOGIN/SIGN-UP");
+//         $(".loginTrigger").attr("onclick", "loginButtonClick()");
+//     }
+// }
 
 function gotoDashboard() {
     window.location = baseURL + "accounts/";
