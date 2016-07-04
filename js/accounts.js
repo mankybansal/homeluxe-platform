@@ -12,6 +12,43 @@ homeluxeApp.controller("userControl", function($scope, $window, $rootScope){
         console.log("SCOPE: ");
         console.log($scope.ngMyUser);
     });
+
+    $scope.facebookLogin = function() {
+        FB.login(function (response) {
+            console.log(response);
+            if (response.authResponse) {
+                showAlert("Please wait... &nbsp; <i class='fa fa-circle-o-notch fa-spin'></i>");
+
+                FB.api('/me/picture?type=normal', function (response) {
+                    regFBDP = response.data.url;
+                    console.log(response.data.url);
+                });
+
+                FB.api('/me?fields=name,picture,email,id,link', function (response) {
+
+                    regFBName = response.name;
+                    regFBEmail = response.email;
+                    regFBID = response.id;
+
+                    console.log(response);
+
+                    requests.userLogin(response.email, response.id, function (response) {
+                        $scope.$apply(function(){
+                            if (response.status == "Success") {
+                                $scope.ngMyUser = response;
+                                myUser = response;
+                                fbConnected = true;
+                                loginSuccess();
+                            }
+                            else facebookRegister();
+                        });
+                    });
+                });
+            }
+            else console.log('User cancelled login or did not fully authorize.');
+        }, {scope: 'email,public_profile'});
+    }
+
 });
 
 homeluxeApp.directive("headerMenu", function($templateRequest,$compile){
@@ -141,38 +178,38 @@ function facebookRegister() {
 }
 
 // Login to HomeLuxe (oAuth - FACEBOOK)
-function facebookLogin() {
-    FB.login(function (response) {
-        console.log(response);
-        if (response.authResponse) {
-            showAlert("Please wait... &nbsp; <i class='fa fa-circle-o-notch fa-spin'></i>");
-
-            FB.api('/me/picture?type=normal', function (response) {
-                regFBDP = response.data.url;
-                console.log(response.data.url);
-            });
-
-            FB.api('/me?fields=name,picture,email,id,link', function (response) {
-
-                regFBName = response.name;
-                regFBEmail = response.email;
-                regFBID = response.id;
-
-                console.log(response);
-
-                requests.userLogin(response.email, response.id, function (response) {
-                    if (response.status == "Success") {
-                        myUser = response;
-                        fbConnected = true;
-                        loginSuccess();
-                    }
-                    else facebookRegister();
-                });
-            });
-        }
-        else console.log('User cancelled login or did not fully authorize.');
-    }, {scope: 'email,public_profile'});
-}
+// function facebookLogin() {
+//     FB.login(function (response) {
+//         console.log(response);
+//         if (response.authResponse) {
+//             showAlert("Please wait... &nbsp; <i class='fa fa-circle-o-notch fa-spin'></i>");
+//
+//             FB.api('/me/picture?type=normal', function (response) {
+//                 regFBDP = response.data.url;
+//                 console.log(response.data.url);
+//             });
+//
+//             FB.api('/me?fields=name,picture,email,id,link', function (response) {
+//
+//                 regFBName = response.name;
+//                 regFBEmail = response.email;
+//                 regFBID = response.id;
+//
+//                 console.log(response);
+//
+//                 requests.userLogin(response.email, response.id, function (response) {
+//                     if (response.status == "Success") {
+//                         myUser = response;
+//                         fbConnected = true;
+//                         loginSuccess();
+//                     }
+//                     else facebookRegister();
+//                 });
+//             });
+//         }
+//         else console.log('User cancelled login or did not fully authorize.');
+//     }, {scope: 'email,public_profile'});
+// }
 
 // Load Facebook SDK
 (function (d) {
