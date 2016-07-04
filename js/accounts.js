@@ -44,7 +44,7 @@ homeluxeApp.controller("userControl", function($scope, $window, $rootScope){
 
     $scope.checkCookie = function(){
         console.log('CHECK COOKIE');
-        console.log(myUser);
+        console.log($scope.ngMyUser);
         if ($scope.ngMyUser = Cookies.getJSON('myUser')) {
             $(".loginTrigger").attr("onclick", "gotoDashboard()");
         } else {
