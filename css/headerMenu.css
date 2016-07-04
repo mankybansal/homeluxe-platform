@@ -146,6 +146,17 @@
 }
 
 
+.accountOption {
+    height: 60px;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: RobotoMedium, sans-serif;
+    font-size: 15px;
+    text-align: center;
+    padding-top: 21.5px;
+    color: #333;
+}
+
 @media only screen and (max-width: 800px) {
     .headerSpacer {
         width: 150px;
