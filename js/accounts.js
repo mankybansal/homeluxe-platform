@@ -4,7 +4,7 @@ var fbConnected = false;
 
 var homeluxeApp = angular.module('homeluxeApp',['ngRoute']);
 
-homeluxeApp.controller("userControl", function($scope, $window, $rootScope){
+homeluxeApp.controller("userControl", function($scope, $interval, $window, $rootScope){
 
     $scope.facebookLogin = function() {
         FB.login(function (response) {
@@ -52,7 +52,7 @@ homeluxeApp.controller("userControl", function($scope, $window, $rootScope){
             $scope.ngMyUser = false;
         }
     };
-    
+
     $scope.loginSuccess = function() {
         // SET COOKIES
         $scope.ngMyUser.fbConnected = fbConnected;
@@ -66,7 +66,7 @@ homeluxeApp.controller("userControl", function($scope, $window, $rootScope){
 
 
     $scope.checkCookie();
-    setInterval(function () {
+    $interval(function () {
         $scope.checkCookie();
     }, 3000);
 });
