@@ -53,7 +53,12 @@ homeluxeApp.controller("userControl", function($scope, $window, $rootScope){
     };
 
     $scope.$watch("ngMyUser",function(oldValue,newValue){
-        if(!newValue) $scope.ngMyUser = false;
+        console.log("OLD");
+        console.log(oldValue);
+        console.log("NEW");
+        console.log(newValue);
+        console.log("WATCH USER");
+        console.log($scope.ngMyUser);
     });
 
     $scope.loginSuccess = function() {
