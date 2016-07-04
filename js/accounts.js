@@ -39,6 +39,8 @@ function showAlert(message) {
 
 // Function for Checking if User is logged in & valid
 function checkCookie() {
+    console.log('CHECK COOKIE');
+    console.log(myUser);
     if (myUser = Cookies.getJSON('myUser')) {
         //$(".myAccount").html(myUser.name + "&nbsp;&nbsp;<i class='fa fa-user'></i>");
         $(".loginTrigger").attr("onclick", "gotoDashboard()");
