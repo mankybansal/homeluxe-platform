@@ -1,10 +1,77 @@
 //var myUser;
-var regFBID, regFBDP, regFBName, regFBEmail;
-var fbConnected = false;
+
 
 var homeluxeApp = angular.module('homeluxeApp', ['ngRoute']);
 
 homeluxeApp.controller("userControl", function ($scope, $interval, $window, $rootScope) {
+
+    $scope.regFBID = null;
+    $scope.regFBDP = null;
+    $scope.regFBName = null;
+    $scope.regFBEmail = null;
+    $scope.fbConnected = null;
+
+    $scope.login = function (username, password) {
+        if (username != "" && password != "") {
+            requests.userLogin(username, password, function (response) {
+                $scope.$apply(function () {
+                    if (response.status == "Success") {
+                        $scope.ngMyUser = response;
+                        //myUser = response;
+                        $scope.loginSuccess();
+                    }
+                    else showAlert('Wrong username or password.');
+                });
+            });
+        }
+        else showAlert('Please enter a username & password.');
+        if (typeof dashboard != 'undefined' && dashboard) showDashboard();
+    };
+
+    $scope.submitRegister = function () {
+        var rname = $('#regName').val();
+        var remail = $('#regEmail').val();
+        var rphone = $('#regPhone').val();
+        var rpassword = $('#regPassword').val();
+
+        if (rname != "" && remail != "" && rpassword != "" && rphone != "") {
+            requests.userRegiserForm(rname, remail, rphone, rpassword, function (response) {
+                if (response.status == "Success")
+                    $scope.login(remail, rpassword);
+                else if (response.status == "Failed" && response.message == "User already exists")
+                    showAlert('You already have an account.');
+                else showAlert('Please fill the form correctly.');
+            });
+        } else showAlert('Please fill the form correctly.');
+    };
+
+    $scope.showLogin = function () {
+        $(".loginContainer").animate({"height": "440px"}, 500);
+        $(".registerPanel").hide();
+        setTimeout(function () {
+            $(".loginPanel").fadeIn(500);
+        }, 200);
+        var spacerHeight = $(".loginSpacer").height();
+        $(".loginSpacer").animate({"height": spacerHeight + 65}, 500);
+    };
+
+    $scope.userRegister = function () {
+        $(".loginContainer").animate({"height": "570px"}, 500);
+        $(".loginPanel").hide();
+        setTimeout(function () {
+            $(".registerPanel").fadeIn(500);
+        }, 200);
+        var spacerHeight = $(".loginSpacer").height();
+        $(".loginSpacer").animate({"height": spacerHeight - 65}, 500);
+    };
+
+    $scope.facebookRegister = function () {
+        requests.userRegisterFacebook($scope.regFBName, $scope.regFBEmail, $scope.regFBID, $scope.regFBDP, function (response) {
+            console.log(response);
+            $scope.fbConnected = true;
+            $scope.login($scope.regFBEmail, $scope.regFBID);
+        });
+    };
 
     $scope.facebookLogin = function () {
         FB.login(function (response) {
@@ -150,61 +217,61 @@ function showAlert(message) {
 // }
 
 // Login to HomeLuxe (NOT oAUTH)
-function login(username, password) {
-    if (username != "" && password != "") {
-        requests.userLogin(username, password, function (response) {
-            if (response.status == "Success") {
-                myUser = response;
-                loginSuccess();
-            }
-            else showAlert('Wrong username or password.');
-        });
-    }
-    else showAlert('Please enter a username & password.');
-    if (typeof dashboard != 'undefined' && dashboard) showDashboard();
-}
-
-// Submit Registration Form (NOT oAUTH)
-function submitRegister() {
-    var rname = $('#regName').val();
-    var remail = $('#regEmail').val();
-    var rphone = $('#regPhone').val();
-    var rpassword = $('#regPassword').val();
-
-    if (rname != "" && remail != "" && rpassword != "" && rphone != "") {
-        requests.userRegiserForm(rname, remail, rphone, rpassword, function (response) {
-            if (response.status == "Success")
-                login(remail, rpassword);
-            else if (response.status == "Failed" && response.message == "User already exists")
-                showAlert('You already have an account.');
-            else showAlert('Please fill the form correctly.');
-        });
-    } else showAlert('Please fill the form correctly.');
-}
+// function login(username, password) {
+//     if (username != "" && password != "") {
+//         requests.userLogin(username, password, function (response) {
+//             if (response.status == "Success") {
+//                 myUser = response;
+//                 loginSuccess();
+//             }
+//             else showAlert('Wrong username or password.');
+//         });
+//     }
+//     else showAlert('Please enter a username & password.');
+//     if (typeof dashboard != 'undefined' && dashboard) showDashboard();
+// }
+//
+// // Submit Registration Form (NOT oAUTH)
+// function submitRegister() {
+//     var rname = $('#regName').val();
+//     var remail = $('#regEmail').val();
+//     var rphone = $('#regPhone').val();
+//     var rpassword = $('#regPassword').val();
+//
+//     if (rname != "" && remail != "" && rpassword != "" && rphone != "") {
+//         requests.userRegiserForm(rname, remail, rphone, rpassword, function (response) {
+//             if (response.status == "Success")
+//                 login(remail, rpassword);
+//             else if (response.status == "Failed" && response.message == "User already exists")
+//                 showAlert('You already have an account.');
+//             else showAlert('Please fill the form correctly.');
+//         });
+//     } else showAlert('Please fill the form correctly.');
+// }
 
 
 // Show Login Form
-function showLogin() {
-    $(".loginContainer").animate({"height": "440px"}, 500);
-    $(".registerPanel").hide();
-    setTimeout(function () {
-        $(".loginPanel").fadeIn(500);
-    }, 200);
-    var spacerHeight = $(".loginSpacer").height();
-    $(".loginSpacer").animate({"height": spacerHeight + 65}, 500);
-}
+// function showLogin() {
+//     $(".loginContainer").animate({"height": "440px"}, 500);
+//     $(".registerPanel").hide();
+//     setTimeout(function () {
+//         $(".loginPanel").fadeIn(500);
+//     }, 200);
+//     var spacerHeight = $(".loginSpacer").height();
+//     $(".loginSpacer").animate({"height": spacerHeight + 65}, 500);
+// }
 
 
 // Show Registration Form
-function userRegister() {
-    $(".loginContainer").animate({"height": "570px"}, 500);
-    $(".loginPanel").hide();
-    setTimeout(function () {
-        $(".registerPanel").fadeIn(500);
-    }, 200);
-    var spacerHeight = $(".loginSpacer").height();
-    $(".loginSpacer").animate({"height": spacerHeight - 65}, 500);
-}
+// function userRegister() {
+//     $(".loginContainer").animate({"height": "570px"}, 500);
+//     $(".loginPanel").hide();
+//     setTimeout(function () {
+//         $(".registerPanel").fadeIn(500);
+//     }, 200);
+//     var spacerHeight = $(".loginSpacer").height();
+//     $(".loginSpacer").animate({"height": spacerHeight - 65}, 500);
+// }
 
 // INITIALIZE Facebook App Access
 window.fbAsyncInit = function () {
@@ -215,14 +282,14 @@ window.fbAsyncInit = function () {
         version: 'v2.6' // use graph api version 2.5
     });
 };
-
-function facebookRegister() {
-    requests.userRegisterFacebook(regFBName, regFBEmail, regFBID, regFBDP, function (response) {
-        console.log(response);
-        fbConnected = true;
-        login(regFBEmail, regFBID);
-    });
-}
+//
+// function facebookRegister() {
+//     requests.userRegisterFacebook(regFBName, regFBEmail, regFBID, regFBDP, function (response) {
+//         console.log(response);
+//         fbConnected = true;
+//         login(regFBEmail, regFBID);
+//     });
+// }
 
 // Login to HomeLuxe (oAuth - FACEBOOK)
 // function facebookLogin() {
@@ -271,16 +338,16 @@ function facebookRegister() {
     ref.parentNode.insertBefore(js, ref);
 }(document));
 
-$(document).ready(function () {
-    // checkCookie();
-    // setInterval(function () {
-    //     checkCookie();
-    // }, 3000);
-
-    // $(".loginButton").click(function () {
-    //     $(".loginOverlay").fadeIn(500);
-    // });
-    //
-    // if (typeof dashboard != 'undefined' && dashboard) $(".loginOverlay").load("../loginOverlay.html");
-    // else $(".loginOverlay").load("loginOverlay.html");
-});
+// $(document).ready(function () {
+//     checkCookie();
+//     setInterval(function () {
+//         checkCookie();
+//     }, 3000);
+//
+//     $(".loginButton").click(function () {
+//         $(".loginOverlay").fadeIn(500);
+//     });
+//
+//     if (typeof dashboard != 'undefined' && dashboard) $(".loginOverlay").load("../loginOverlay.html");
+//     else $(".loginOverlay").load("loginOverlay.html");
+// });
