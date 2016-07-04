@@ -49,9 +49,21 @@ homeluxeApp.controller("userControl", function($scope, $interval, $window, $root
           $scope.ngMyUser = false;
     };
 
-    $scope.loginTrigger = function(){
-        if($scope.ngMyUser) gotoDashboard();
-        else loginButtonClick();
+    $scope.accountOptions = false;
+    $scope.ngMyUser = false;
+
+    $scope.accountOptionsTrigger = function(){
+        if(!$scope.ngMyUser) loginButtonClick();
+        else $scope.accountOptions = !$scope.accountOptions;
+    };
+
+    $scope.gotoDashboard = function() {
+        window.location = baseURL + "accounts/";
+    };
+
+    $scope.logout = function(){
+        Cookies.remove('myUser');
+        $scope.ngMyUser = false;
     };
 
     $scope.loginSuccess = function() {
@@ -118,10 +130,10 @@ function showAlert(message) {
 //         $(".loginTrigger").attr("onclick", "loginButtonClick()");
 //     }
 // }
-
-function gotoDashboard() {
-    window.location = baseURL + "accounts/";
-}
+//
+// function gotoDashboard() {
+//     window.location = baseURL + "accounts/";
+// }
 
 // Function Called After Successful Login
 // function loginSuccess() {

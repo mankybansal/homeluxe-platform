@@ -15,7 +15,7 @@
     <img class='logoButton' src="images/logo.png" onclick="menuHomeClick()">
 
     <div class="headerSpacer spacerRight ">
-        <div class="menuBox menuLogin hideMobile loginTrigger" ng-click="loginTrigger()">
+        <div class="menuBox menuLogin hideMobile loginTrigger" ng-click="accountOptionsTrigger()">
             <div class="menuTriggerText myAccount">
                 <span ng-show="!ngMyUser">LOGIN/SIGN-UP</span>
                 <span ng-show="ngMyUser">
@@ -36,6 +36,15 @@
                 CONTACT US
             </div>
         </div>
+    </div>
+</div>
+
+<div class="accountOptions" ng-show="accountOptions">
+    <div class="accountOption" ng-click="gotoDashboard()">
+        MY ACCOUNT
+    </div>
+    <div class="accountOption" ng-click="logout()">
+        SIGN OUT
     </div>
 </div>
 
