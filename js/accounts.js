@@ -1,64 +1,6 @@
-//var myUser;
+var myUser;
 var regFBID, regFBDP, regFBName, regFBEmail;
 var fbConnected = false;
-
-
-var homeluxeApp = angular.module('myApp', []);
-
-homeluxeApp.factory('myUserFactory', function () {
-    var myUser;
-
-    return {
-        set: function (thisUser) {
-            Cookies.set('myUser', thisUser);
-            myUser = thisUser;
-        },
-        get: function () {
-            if(myUser = Cookies.getJSON('myUser')) {
-                console.log("NO USER");
-                return myUser;
-            }
-            else{
-                myUser = {};
-                return false;
-            }
-        },
-        unset: function () {
-            Cookies.remove('myUser');
-            myUser = {};
-        }
-    };
-});
-
-homeluxeApp.directive('headerMenu',function(myUserFactory){
-    return {
-        restrict: 'AE',
-        scope: {},
-        templateUrl: 'headerMenu.html',
-        link: function(scope, element, attributes){
-            scope.init = function () {
-                scope.myUser = false;
-                scope.checkCookie();
-                setInterval(scope.checkCookie, 3000);
-            };
-
-            scope.checkCookie = function () {
-                console.log("RUNNING...");
-                var q = myUserFactory.get();
-                if (q) {
-                    scope.myUser = q;
-                    $(".loginTrigger").attr("onclick", "gotoDashboard()");
-                } else {
-                    scope.myUser = false;
-                    $(".loginTrigger").attr("onclick", "loginButtonClick()");
-                }
-            };
-
-            scope.init();
-        }
-    }
-});
-
 
 //Hide Overlay
 function hideLoginOverlay() {
@@ -71,15 +13,15 @@ function showAlert(message) {
 }
 
 // Function for Checking if User is logged in & valid
-// function checkCookie() {
-//     if (myUser = Cookies.getJSON('myUser')) {
-//         $(".myAccount").html(myUser.name + "&nbsp;&nbsp;<i class='fa fa-user'></i>");
-//         $(".loginTrigger").attr("onclick", "gotoDashboard()");
-//     } else {
-//         $(".myAccount").html("LOGIN/SIGN-UP");
-//         $(".loginTrigger").attr("onclick", "loginButtonClick()");
-//     }
-// }
+function checkCookie() {
+    if (myUser = Cookies.getJSON('myUser')) {
+        $(".myAccount").html(myUser.name + "&nbsp;&nbsp;<i class='fa fa-user'></i>");
+        $(".loginTrigger").attr("onclick", "gotoDashboard()");
+    } else {
+        $(".myAccount").html("LOGIN/SIGN-UP");
+        $(".loginTrigger").attr("onclick", "loginButtonClick()");
+    }
+}
 
 function gotoDashboard() {
     window.location = baseURL + "accounts/";
@@ -219,10 +161,10 @@ function facebookLogin() {
 }(document));
 
 $(document).ready(function () {
-    // checkCookie();
-    // setInterval(function () {
-    //     checkCookie();
-    // }, 3000);
+    checkCookie();
+    setInterval(function () {
+        checkCookie();
+    }, 3000);
 
     $(".loginButton").click(function () {
         $(".loginOverlay").fadeIn(500);
