@@ -11,6 +11,11 @@ homeluxeApp.controller("userControl", function ($scope, $interval, $window, $roo
     $scope.regFBEmail = null;
     $scope.fbConnected = null;
 
+
+    $scope.hideMenuOverlay = function () {
+        $('.loginOverlay').fadeOut(500);
+    };
+
     $scope.login = function (username, password) {
         if (username != "" && password != "") {
             requests.userLogin(username, password, function (response) {
@@ -179,9 +184,9 @@ homeluxeApp.directive("loginOverlay", function ($templateRequest, $compile) {
 });
 
 //Hide Overlay
-function hideLoginOverlay() {
-    $('.loginOverlay').fadeOut(500);
-}
+// function hideLoginOverlay() {
+//     $('.loginOverlay').fadeOut(500);
+// }
 
 // Show Alert Message
 function showAlert(message) {

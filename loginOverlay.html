@@ -4,7 +4,7 @@
     </div>
     <div class="loginContainer">
 
-        <div class="loginClose" onclick="hideLoginOverlay()">
+        <div class="loginClose" ng-click="hideLoginOverlay()">
             <i class="fa fa-close"></i>
         </div>
         <div class="loginLogoContainer">
@@ -16,11 +16,11 @@
             <input type="text" class="inputBox" id="username" placeholder="USERNAME">
             <input type="password" class="inputBox" id="password" placeholder="PASSWORD">
 
-            <div class="registerButton" onclick="userRegister()">
+            <div class="registerButton" ng-click="userRegister()">
                 SIGN-UP
             </div>
 
-            <div class="loginButton" onclick="login($('#username').val(),$('#password').val())">
+            <div class="loginButton" ng-click="login($('#username').val(),$('#password').val())">
                 LOGIN
             </div>
 
@@ -37,11 +37,11 @@
             <input type="text" class="inputBox" id="regPhone" placeholder="PHONE NUMBER">
             <input type="password" class="inputBox" id="regPassword" placeholder="PASSWORD">
 
-            <div class="loginButton" style="background: #DDD; color: #555;" onclick="showLogin()">
+            <div class="loginButton" style="background: #DDD; color: #555;" ng-click="showLogin()">
                 BACK TO LOGIN
             </div>
 
-            <div class="registerButton regStep2" onclick="submitRegister()">
+            <div class="registerButton regStep2" ng-click="submitRegister()">
                 SIGN-UP
             </div>
 
