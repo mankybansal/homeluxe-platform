@@ -17,14 +17,17 @@ homeluxeApp.controller("userControl", function ($scope, $interval, $window, $roo
         $('.loginOverlay').fadeOut(500);
     };
 
+    $scope.isValid = function (value) {
+        return !value
+    };
+
     $scope.login = function () {
-        console.log($scope.guest.username,$scope.guest.password);
-        if (username != "" && password != "") {
+        console.log($scope.guest.username, $scope.guest.password);
+        if ($scope.isValid($scope.guest.username) && $scope.isValid($scope.guest.password)) {
             requests.userLogin($scope.guest.username, $scope.guest.password, function (response) {
                 $scope.$apply(function () {
                     if (response.status == "Success") {
                         $scope.ngMyUser = response;
-                        //myUser = response;
                         $scope.loginSuccess();
                     }
                     else showAlert('Wrong username or password.');
