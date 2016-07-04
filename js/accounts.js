@@ -2,7 +2,7 @@ var myUser;
 var regFBID, regFBDP, regFBName, regFBEmail;
 var fbConnected = false;
 
-var homeluxeApp = angular.module('homeluxeApp',[]);
+var homeluxeApp = angular.module('homeluxeApp',['ngRoute']);
 
 homeluxeApp.controller("userControl", function($scope, $rootScope){
     $rootScope.ngMyUser = myUser;
