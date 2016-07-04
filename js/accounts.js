@@ -2,11 +2,11 @@
 var regFBID, regFBDP, regFBName, regFBEmail;
 var fbConnected = false;
 
-var homeluxeApp = angular.module('homeluxeApp',['ngRoute']);
+var homeluxeApp = angular.module('homeluxeApp', ['ngRoute']);
 
-homeluxeApp.controller("userControl", function($scope, $interval, $window, $rootScope){
+homeluxeApp.controller("userControl", function ($scope, $interval, $window, $rootScope) {
 
-    $scope.facebookLogin = function() {
+    $scope.facebookLogin = function () {
         FB.login(function (response) {
             console.log(response);
             if (response.authResponse) {
@@ -26,7 +26,7 @@ homeluxeApp.controller("userControl", function($scope, $interval, $window, $root
                     console.log(response);
 
                     requests.userLogin(response.email, response.id, function (response) {
-                        $scope.$apply(function(){
+                        $scope.$apply(function () {
                             if (response.status == "Success") {
                                 $scope.ngMyUser = response;
                                 //myUser = response;
@@ -42,31 +42,38 @@ homeluxeApp.controller("userControl", function($scope, $interval, $window, $root
         }, {scope: 'email,public_profile'});
     };
 
-    $scope.checkCookie = function(){
+    $scope.checkCookie = function () {
         console.log('CHECK COOKIE');
         console.log($scope.ngMyUser);
         if (!($scope.ngMyUser = Cookies.getJSON('myUser')))
-          $scope.ngMyUser = false;
+            $scope.ngMyUser = false;
     };
 
-    $scope.accountOptions = false;
-    $scope.ngMyUser = false;
+    $scope.init = function () {
+        $scope.checkCookie();
+        $scope.accountOptions = false;
+        $scope.ngMyUser = false;
+        $scope.cookieChecker = $interval(function () {
+            $scope.checkCookie();
+        }, 3000);
+    };
 
-    $scope.accountOptionsTrigger = function(){
-        if(!$scope.ngMyUser) loginButtonClick();
+    $scope.accountOptionsTrigger = function () {
+        if (!$scope.ngMyUser) loginButtonClick();
         else $scope.accountOptions = !$scope.accountOptions;
     };
 
-    $scope.gotoDashboard = function() {
+    $scope.gotoDashboard = function () {
         window.location = baseURL + "accounts/";
     };
 
-    $scope.logout = function(){
+    $scope.logout = function () {
         Cookies.remove('myUser');
-        $scope.ngMyUser = false;
+        $interval.cancel($scope.cookieChecker);
+        $scope.init();
     };
 
-    $scope.loginSuccess = function() {
+    $scope.loginSuccess = function () {
         // SET COOKIES
         $scope.ngMyUser.fbConnected = fbConnected;
         Cookies.set('myUser', $scope.ngMyUser);
@@ -75,37 +82,33 @@ homeluxeApp.controller("userControl", function($scope, $interval, $window, $root
         if (typeof dashboard != 'undefined' && dashboard) showDashboard();
     };
 
-    $scope.checkCookie();
-
-    $interval(function () {
-        $scope.checkCookie();
-    }, 3000);
+    $scope.init();
 });
 
-homeluxeApp.directive("headerMenu", function($templateRequest,$compile){
-   return {
-       restrict: "AE",
-       link: function(scope, element){
-           $templateRequest("headerMenu.html").then(function(html){
-               var template = angular.element(html);
-               element.append(template);
-               $compile(template)(scope);
-           });
-       }
-   }
+homeluxeApp.directive("headerMenu", function ($templateRequest, $compile) {
+    return {
+        restrict: "AE",
+        link: function (scope, element) {
+            $templateRequest("headerMenu.html").then(function (html) {
+                var template = angular.element(html);
+                element.append(template);
+                $compile(template)(scope);
+            });
+        }
+    }
 });
 
-homeluxeApp.directive("loginOverlay", function($templateRequest,$compile){
-   return {
-       restrict: "AE",
-       link: function(scope, element){
-           $templateRequest("loginOverlay.html").then(function(html){
-               var template = angular.element(html);
-               element.append(template);
-               $compile(template)(scope);
-           });
-       }
-   }
+homeluxeApp.directive("loginOverlay", function ($templateRequest, $compile) {
+    return {
+        restrict: "AE",
+        link: function (scope, element) {
+            $templateRequest("loginOverlay.html").then(function (html) {
+                var template = angular.element(html);
+                element.append(template);
+                $compile(template)(scope);
+            });
+        }
+    }
 });
 
 //Hide Overlay
