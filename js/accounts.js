@@ -29,7 +29,7 @@ homeluxeApp.controller("userControl", function($scope, $window, $rootScope){
                         $scope.$apply(function(){
                             if (response.status == "Success") {
                                 $scope.ngMyUser = response;
-                                myUser = response;
+                                //myUser = response;
                                 fbConnected = true;
                                 loginSuccess();
                             }
