@@ -10,16 +10,17 @@ homeluxeApp.controller("userControl", function ($scope, $interval, $window, $roo
     $scope.regFBName = null;
     $scope.regFBEmail = null;
     $scope.fbConnected = null;
+    $scope.guest = {};
 
 
     $scope.hideMenuOverlay = function () {
         $('.loginOverlay').fadeOut(500);
     };
 
-    $scope.login = function (username, password) {
-        console.log(username,password);
+    $scope.login = function () {
+        console.log($scope.guest.username,$scope.guest.password);
         if (username != "" && password != "") {
-            requests.userLogin(username, password, function (response) {
+            requests.userLogin($scope.guest.username, $scope.guest.password, function (response) {
                 $scope.$apply(function () {
                     if (response.status == "Success") {
                         $scope.ngMyUser = response;

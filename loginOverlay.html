@@ -13,14 +13,14 @@
 
         <div class="loginPanel">
             <div class="loginTitleContainer">Sign-in to HomeLuxe</div>
-            <input type="text" class="inputBox" id="username" placeholder="USERNAME">
-            <input type="password" class="inputBox" id="password" placeholder="PASSWORD">
+            <input type="text" class="inputBox" ng-model="guest.username" placeholder="USERNAME">
+            <input type="password" class="inputBox" ng-model="guest.password" placeholder="PASSWORD">
 
             <div class="registerButton" ng-click="userRegister()">
                 SIGN-UP
             </div>
 
-            <div class="loginButton" ng-click="login($('#username').val(),$('#password').val())">
+            <div class="loginButton" ng-click="login()">
                 LOGIN
             </div>
 
