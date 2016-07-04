@@ -3,7 +3,7 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="86407cfb-79d2-423a-8a6e-a352d28c53fc" name="HomeLuxe PRODUCTION" url="http://dev.homeluxe.in">
-        <fileTransfer host="dev.homeluxe.in" port="22" accessType="SFTP" username="root">
+        <fileTransfer host="dev.homeluxe.in" port="22" rootFolder="/var/www/html" accessType="SFTP" password="dfc2dfc5dfc7dfcfdfc6dfdfdfd2dfcfdfeadf9bdf98df99" username="root">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" />
           </advancedOptions>

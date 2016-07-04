@@ -52,6 +52,10 @@ homeluxeApp.controller("userControl", function($scope, $window, $rootScope){
         }
     };
 
+    $scope.$watch("ngMyUser",function(oldValue,newValue){
+        if(!newValue) $scope.ngMyUser = false;
+    });
+
     $scope.loginSuccess = function() {
         // SET COOKIES
         $scope.ngMyUser.fbConnected = fbConnected;
