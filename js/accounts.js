@@ -18,12 +18,12 @@ homeluxeApp.controller("userControl", function ($scope, $interval, $window, $roo
     };
 
     $scope.isValid = function (value) {
-        return !value
+        if(typeof value != 'undefined' && value != "") return true;
+        else return false;
     };
 
     $scope.login = function () {
         console.log($scope.guest.username, $scope.guest.password);
-        console.log($scope.isValid($scope.guest.username));
         if ($scope.isValid($scope.guest.username) && $scope.isValid($scope.guest.password)) {
             requests.userLogin($scope.guest.username, $scope.guest.password, function (response) {
                 $scope.$apply(function () {
