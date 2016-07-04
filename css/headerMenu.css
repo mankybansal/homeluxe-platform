@@ -136,7 +136,7 @@
 }
 
 .accountOptions {
-    width: 30%;
+    width: 200px;
     display: inline-block;
     position: fixed;
     z-index: 9999;
@@ -155,6 +155,13 @@
     text-align: center;
     padding-top: 21.5px;
     color: #333;
+    border-bottom: 1px solid #DDDFE0;
+    cursor: pointer;
+    transition: all ease .5s;
+}
+
+.accountOption:hover {
+    background: rgba(255,255,255, 1);
 }
 
 @media only screen and (max-width: 800px) {
