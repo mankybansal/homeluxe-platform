@@ -153,7 +153,7 @@ homeluxeApp.controller("userControl", function ($scope, $interval, $window, $roo
 
     $scope.loginSuccess = function () {
         // SET COOKIES
-        $scope.ngMyUser.fbConnected = fbConnected;
+        if(fbConnected) $scope.ngMyUser.fbConnected = fbConnected;
         Cookies.set('myUser', $scope.ngMyUser);
         $('.alertMessage').hide();
         $('.loginOverlay').hide();
