@@ -5,7 +5,7 @@ var fbConnected = false;
 var homeluxeApp = angular.module('homeluxeApp',['ngRoute']);
 
 homeluxeApp.controller("userControl", function($scope, $rootScope){
-    $rootScope.ngMyUser = myUser;
+    $scope.ngMyUser = myUser;
 });
 
 homeluxeApp.directive("headerMenu", function($templateRequest,$compile){
