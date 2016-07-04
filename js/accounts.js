@@ -17,6 +17,7 @@ homeluxeApp.controller("userControl", function ($scope, $interval, $window, $roo
     };
 
     $scope.login = function (username, password) {
+        console.log(username,password);
         if (username != "" && password != "") {
             requests.userLogin(username, password, function (response) {
                 $scope.$apply(function () {
