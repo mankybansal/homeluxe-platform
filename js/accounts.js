@@ -31,7 +31,7 @@ homeluxeApp.controller("userControl", function($scope, $window, $rootScope){
                                 $scope.ngMyUser = response;
                                 //myUser = response;
                                 fbConnected = true;
-                                loginSuccess();
+                                $scope.loginSuccess();
                             }
                             else facebookRegister();
                         });
@@ -50,6 +50,16 @@ homeluxeApp.controller("userControl", function($scope, $window, $rootScope){
         } else {
             $(".loginTrigger").attr("onclick", "loginButtonClick()");
         }
+    };
+
+    $scope.loginSuccess = function() {
+        // SET COOKIES
+        $scope.ngMyUser.fbConnected = fbConnected;
+        Cookies.set('myUser', $scope.ngMyUser);
+        $('.alertMessage').hide();
+        $('.loginOverlay').hide();
+        $(".loginTrigger").attr("onclick", "gotoDashboard()");
+        if (typeof dashboard != 'undefined' && dashboard) showDashboard();
     };
 
 
@@ -114,15 +124,15 @@ function gotoDashboard() {
 }
 
 // Function Called After Successful Login
-function loginSuccess() {
-    // SET COOKIES
-    myUser.fbConnected = fbConnected;
-    Cookies.set('myUser', myUser);
-    $('.alertMessage').hide();
-    $('.loginOverlay').hide();
-    $(".loginTrigger").attr("onclick", "gotoDashboard()");
-    if (typeof dashboard != 'undefined' && dashboard) showDashboard();
-}
+// function loginSuccess() {
+//     // SET COOKIES
+//     myUser.fbConnected = fbConnected;
+//     Cookies.set('myUser', myUser);
+//     $('.alertMessage').hide();
+//     $('.loginOverlay').hide();
+//     $(".loginTrigger").attr("onclick", "gotoDashboard()");
+//     if (typeof dashboard != 'undefined' && dashboard) showDashboard();
+// }
 
 // Login to HomeLuxe (NOT oAUTH)
 function login(username, password) {
