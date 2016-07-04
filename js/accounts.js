@@ -247,15 +247,15 @@ function facebookRegister() {
 }(document));
 
 $(document).ready(function () {
-    checkCookie();
-    setInterval(function () {
-        checkCookie();
-    }, 3000);
+    // checkCookie();
+    // setInterval(function () {
+    //     checkCookie();
+    // }, 3000);
 
     $(".loginButton").click(function () {
         $(".loginOverlay").fadeIn(500);
     });
-
-    if (typeof dashboard != 'undefined' && dashboard) $(".loginOverlay").load("../loginOverlay.html");
-    else $(".loginOverlay").load("loginOverlay.html");
+    //
+    // if (typeof dashboard != 'undefined' && dashboard) $(".loginOverlay").load("../loginOverlay.html");
+    // else $(".loginOverlay").load("loginOverlay.html");
 });
