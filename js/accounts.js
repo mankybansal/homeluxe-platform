@@ -49,18 +49,10 @@ homeluxeApp.controller("userControl", function($scope, $window, $rootScope){
             $(".loginTrigger").attr("onclick", "gotoDashboard()");
         } else {
             $(".loginTrigger").attr("onclick", "loginButtonClick()");
+            $scope.ngMyUser = false;
         }
     };
-
-    $scope.$watch("ngMyUser",function(oldValue,newValue){
-        console.log("OLD");
-        console.log(oldValue);
-        console.log("NEW");
-        console.log(newValue);
-        console.log("WATCH USER");
-        console.log($scope.ngMyUser);
-    });
-
+    
     $scope.loginSuccess = function() {
         // SET COOKIES
         $scope.ngMyUser.fbConnected = fbConnected;
