@@ -108,7 +108,7 @@ homeluxeApp.controller("userControl", function ($scope, $interval, $window, $roo
                             if (response.status == "Success") {
                                 $scope.ngMyUser = response;
                                 //myUser = response;
-                                fbConnected = true;
+                                $scope.fbConnected = true;
                                 $scope.loginSuccess();
                             }
                             else facebookRegister();
@@ -153,7 +153,7 @@ homeluxeApp.controller("userControl", function ($scope, $interval, $window, $roo
 
     $scope.loginSuccess = function () {
         // SET COOKIES
-        if(fbConnected) $scope.ngMyUser.fbConnected = fbConnected;
+        if($scope.fbConnected) $scope.ngMyUser.fbConnected = $scope.fbConnected;
         Cookies.set('myUser', $scope.ngMyUser);
         $('.alertMessage').hide();
         $('.loginOverlay').hide();
