@@ -64,6 +64,19 @@ homeluxeApp.directive("headerMenu", function($templateRequest,$compile){
    }
 });
 
+homeluxeApp.directive("loginOverlay", function($templateRequest,$compile){
+   return {
+       restrict: "AE",
+       link: function(scope, element){
+           $templateRequest("loginOverlay.html").then(function(html){
+               var template = angular.element(html);
+               element.append(template);
+               $compile(template)(scope);
+           });
+       }
+   }
+});
+
 //Hide Overlay
 function hideLoginOverlay() {
     $('.loginOverlay').fadeOut(500);
