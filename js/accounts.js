@@ -8,7 +8,7 @@ homeluxeApp.controller("userControl", function($scope, $rootScope){
     $rootScope.ngMyUser = myUser;
 });
 
-homeluxeApp.directive("headerMenu", function(){
+homeluxeApp.directive("headerMenu", function($templateRequest,$compile){
    return {
        restrict: "AE",
        link: function(scope, element){
