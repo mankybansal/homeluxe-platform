@@ -4,7 +4,6 @@ var styles;
 app.controller("quizAppLogic", function($scope){
 
    $scope.startQuiz = function(){
-        $scope.getNextQuestion();
         $scope.currentQuestion = 0;
         $scope.myAnswers = [];
         $scope.myProgress = 0;
@@ -14,6 +13,8 @@ app.controller("quizAppLogic", function($scope){
             $scope.$apply(function () {
                 $scope.questions = response;
                 console.log(response);
+                $scope.getNextQuestion();
+
             });
         });
     };
