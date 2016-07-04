@@ -2,6 +2,25 @@ var myUser;
 var regFBID, regFBDP, regFBName, regFBEmail;
 var fbConnected = false;
 
+var homeluxeApp = angular.module('homeluxeApp',[]);
+
+homeluxeApp.controller("userControl", function($scope, $rootScope){
+    $rootScope.ngMyUser = myUser;
+});
+
+homeluxeApp.directive("headerMenu", function(){
+   return {
+       restrict: "AE",
+       link: function(scope, element){
+           $templateRequest("headerMenu.html").then(function(html){
+               var template = angular.element(html);
+               element.append(template);
+               $compile(template)(scope);
+           });
+       }
+   }
+});
+
 //Hide Overlay
 function hideLoginOverlay() {
     $('.loginOverlay').fadeOut(500);
@@ -15,10 +34,10 @@ function showAlert(message) {
 // Function for Checking if User is logged in & valid
 function checkCookie() {
     if (myUser = Cookies.getJSON('myUser')) {
-        $(".myAccount").html(myUser.name + "&nbsp;&nbsp;<i class='fa fa-user'></i>");
+        //$(".myAccount").html(myUser.name + "&nbsp;&nbsp;<i class='fa fa-user'></i>");
         $(".loginTrigger").attr("onclick", "gotoDashboard()");
     } else {
-        $(".myAccount").html("LOGIN/SIGN-UP");
+        //$(".myAccount").html("LOGIN/SIGN-UP");
         $(".loginTrigger").attr("onclick", "loginButtonClick()");
     }
 }
