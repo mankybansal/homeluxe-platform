@@ -45,12 +45,13 @@ homeluxeApp.controller("userControl", function($scope, $interval, $window, $root
     $scope.checkCookie = function(){
         console.log('CHECK COOKIE');
         console.log($scope.ngMyUser);
-        if ($scope.ngMyUser = Cookies.getJSON('myUser')) {
-            $(".loginTrigger").attr("onclick", "gotoDashboard()");
-        } else {
-            $(".loginTrigger").attr("onclick", "loginButtonClick()");
-            $scope.ngMyUser = false;
-        }
+        if (!($scope.ngMyUser = Cookies.getJSON('myUser')))
+          $scope.ngMyUser = false;
+    };
+
+    $scope.loginTrigger = function(){
+        if($scope.ngMyUser) gotoDashboard();
+        else loginButtonClick();
     };
 
     $scope.loginSuccess = function() {
@@ -59,13 +60,11 @@ homeluxeApp.controller("userControl", function($scope, $interval, $window, $root
         Cookies.set('myUser', $scope.ngMyUser);
         $('.alertMessage').hide();
         $('.loginOverlay').hide();
-        $(".loginTrigger").attr("onclick", "gotoDashboard()");
         if (typeof dashboard != 'undefined' && dashboard) showDashboard();
     };
 
-
-
     $scope.checkCookie();
+
     $interval(function () {
         $scope.checkCookie();
     }, 3000);
@@ -263,9 +262,9 @@ $(document).ready(function () {
     //     checkCookie();
     // }, 3000);
 
-    $(".loginButton").click(function () {
-        $(".loginOverlay").fadeIn(500);
-    });
+    // $(".loginButton").click(function () {
+    //     $(".loginOverlay").fadeIn(500);
+    // });
     //
     // if (typeof dashboard != 'undefined' && dashboard) $(".loginOverlay").load("../loginOverlay.html");
     // else $(".loginOverlay").load("loginOverlay.html");
