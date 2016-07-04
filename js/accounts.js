@@ -5,10 +5,10 @@ var fbConnected = false;
 var homeluxeApp = angular.module('homeluxeApp',['ngRoute']);
 
 homeluxeApp.controller("userControl", function($scope, $window, $rootScope){
-    console.log($window.myUser);
-
-    $scope.$apply(function(){
-        $scope.ngMyUser = $window.myUser
+    $scope.$watch(function(){
+        return $window.myUser
+    }, function(){
+        $scope.ngMyUser = $window.myUser;
     });
 });
 
@@ -37,6 +37,7 @@ function showAlert(message) {
 
 // Function for Checking if User is logged in & valid
 function checkCookie() {
+    console.log(myUser);
     if (myUser = Cookies.getJSON('myUser')) {
         //$(".myAccount").html(myUser.name + "&nbsp;&nbsp;<i class='fa fa-user'></i>");
         $(".loginTrigger").attr("onclick", "gotoDashboard()");
