@@ -11,8 +11,8 @@ homeluxeApp.controller("userControl", function ($scope, $interval) {
     };
 
     $scope.login = function () {
-        if ($scope.isValid($scope.guest.username) && $scope.isValid($scope.guest.password))
-            requests.userLogin($scope.guest.username, $scope.guest.password, function (response) {
+        if ($scope.isValid($scope.guest.email) && $scope.isValid($scope.guest.password))
+            requests.userLogin($scope.guest.email, $scope.guest.password, function (response) {
                 $scope.$apply(function () {
                     if (response.status == "Success") {
                         $scope.ngMyUser = response;
