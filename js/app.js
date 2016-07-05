@@ -5,11 +5,11 @@ homeluxeApp.config(['$routeProvider', function ($routeProvider) {
     when('/browse', {
         templateUrl: 'browse.php'
     }).
-    when('/newaccount', {
+    when('/newAccount', {
         templateUrl: 'accounts/index.html'
     }).
     otherwise({
-        redirectTo: '/nope'
+        templateUrl: 'home.html'
     });
 }]);
 
