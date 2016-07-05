@@ -210,7 +210,7 @@ window.fbAsyncInit = function () {
     ref.parentNode.insertBefore(js, ref);
 }(document));
 
-homeluxeApp.controller("quizAppControl", function($scope, $rootScope){
+homeluxeApp.controller("quizAppControl", function($scope, $rootScope, stylesService){
 
     $scope.startQuiz = function(){
         $scope.currentQuestion = 0;
@@ -231,7 +231,7 @@ homeluxeApp.controller("quizAppControl", function($scope, $rootScope){
         if (!($scope.question = $scope.questions[$scope.currentQuestion])) {
             $scope.quizOver = true;
             requests.submitQuiz($scope.myAnswers.join(), function (response) {
-                $rootScope.styles = response;
+                stylesService.setStyles(response);
                 $scope.$parent.viewStyle(0);
             });
         }
@@ -242,4 +242,16 @@ homeluxeApp.controller("quizAppControl", function($scope, $rootScope){
         $scope.currentQuestion++;
         $scope.getNextQuestion();
     };
+});
+
+homeluxeApp.service('stylesService', function() {
+    this.styles = [];
+    this.setStyles = function (newStyles) {
+        this.styles = newStyles;
+        return this.styles;
+    };
+
+    this.getStyles = function(){
+        return this.styles;
+    }
 });

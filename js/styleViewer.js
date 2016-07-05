@@ -29,7 +29,7 @@ function changeUrlParam(param, value) {
     }
 }
 
-homeluxeApp.controller("browseStyleControl", function ($scope,$rootScope) {
+homeluxeApp.controller("browseStyleControl", function ($scope,stylesService) {
     getServer();
 
     $scope.mySplit = function (string, nb) {
@@ -40,15 +40,15 @@ homeluxeApp.controller("browseStyleControl", function ($scope,$rootScope) {
     $scope.getStyles = function () {
         requests.getStyles(function (response) {
             $scope.$apply(function () {
-                $rootScope.styles = response;
+                stylesService.setStyles(response);
             });
 
             $('.mainCard').fadeIn(1000).animate({marginTop: '0px'}, 500);
 
             if (urlStyle != null) {
                 var styleNumber;
-                for (var i = 0; i < $rootScope.styles.length; i++)
-                    if ($rootScope.styles[i].catalogueKey == urlStyle)
+                for (var i = 0; i < $scope.styles.length; i++)
+                    if ($scope.styles[i].catalogueKey == urlStyle)
                         styleNumber = i;
                 $scope.viewStyle(styleNumber);
             }
@@ -63,10 +63,10 @@ homeluxeApp.controller("browseStyleControl", function ($scope,$rootScope) {
 
 });
 
-homeluxeApp.controller("styleViewerControl", function ($scope,$rootScope) {
+homeluxeApp.controller("styleViewerControl", function ($scope,stylesService) {
 
     $scope.init = function () {
-        $rootScope.styles = [];
+        $scope.styles = stylesService.getStyles();
         $scope.current = {
             image: 0,
             images: [],
@@ -134,29 +134,29 @@ homeluxeApp.controller("styleViewerControl", function ($scope,$rootScope) {
             image: 0,
             images: [],
             style: styleNum,
-            styleNode: $rootScope.styles[styleNum].id
+            styleNode: $scope.styles[styleNum].id
         };
 
-        $('.coverImage').empty().append("<img src='images/styles/covers/clear-images/" + $rootScope.styles[styleNum].cover_pic + "' class='coverPic'>");
+        $('.coverImage').empty().append("<img src='images/styles/covers/clear-images/" + $scope.styles[styleNum].cover_pic + "' class='coverPic'>");
 
         $(".coverBG").css({
-            "background": "url('images/styles/covers/blurred-images/" + $rootScope.styles[styleNum].cover_pic + "')",
+            "background": "url('images/styles/covers/blurred-images/" + $scope.styles[styleNum].cover_pic + "')",
             "background-size": "100% 100%",
             "background-repeat": "no-repeat",
             "background-position": "center"
         });
         
-        changeUrlParam('style', $rootScope.styles[styleNum].catalogueKey);
+        changeUrlParam('style', $scope.styles[styleNum].catalogueKey);
 
         if (typeof myRandomToken !== 'undefined') {
             changeUrlParam('token', myRandomToken);
         }
         
-        if ($rootScope.styles[styleNum].images.length != 0) {
-            for (var i = 0; i < $rootScope.styles[styleNum].images.length; i++)
+        if ($scope.styles[styleNum].images.length != 0) {
+            for (var i = 0; i < $scope.styles[styleNum].images.length; i++)
                 $scope.current.images[i] = {
-                    "img": $rootScope.styles[styleNum].name + '/' + $rootScope.styles[styleNum].images[i].file,
-                    "id": $rootScope.styles[styleNum].images[i].id
+                    "img": $scope.styles[styleNum].name + '/' + $scope.styles[styleNum].images[i].file,
+                    "id": $scope.styles[styleNum].images[i].id
                 };
             $scope.loadImage();
         }
@@ -190,11 +190,11 @@ homeluxeApp.controller("styleViewerControl", function ($scope,$rootScope) {
     $scope.fbShare = function() {
         FB.ui({
             method: 'feed',
-            name: $rootScope.styles[$scope.current.style].name + ' on HomeLuxe.in',
+            name: $scope.styles[$scope.current.style].name + ' on HomeLuxe.in',
             link: window.location.href,
-            picture: 'http://www.homeluxe.in/images/styles/' + $rootScope.styles[$scope.current.style].name + '/' + $rootScope.styles[$scope.current.style].images[0].file.img,
+            picture: 'http://www.homeluxe.in/images/styles/' + $scope.styles[$scope.current.style].name + '/' + $scope.styles[$scope.current.style].images[0].file.img,
             caption: 'This style is available on HomeLuxe.in',
-            description: $rootScope.styles[$scope.current.style].description,
+            description: $scope.styles[$scope.current.style].description,
             message: 'Check out this style. It looks absolutely beautiful! :)'
         });
     };
