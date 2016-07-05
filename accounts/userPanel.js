@@ -18,13 +18,13 @@ homeluxeApp.controller("memberDashboardControl", function ($scope, $rootScope, $
     $scope.getLikes = function () {
         if ($scope.$parent.ngMyUser = Cookies.getJSON("myUser")) {
             console.log($scope.$parent.ngMyUser);
-            requests.getLikes($scope.$parent.ngMyUser.token, function (response) {
+            getGuestToken(requests.getLikes($scope.$parent.ngMyUser.token, function (response) {
                 $scope.$apply(function () {
                     if (response.success != "false") {
                         $scope.myLikes = response;
                     }
                 });
-            });
+            }));
         }
     };
 
