@@ -345,7 +345,7 @@ homeluxeApp.controller("styleViewerControl", function ($scope, $rootScope) {
 homeluxeApp.directive("headerMenu", function ($templateRequest, $compile) {
 
     var template;
-    if(dashboard) template = "../modules/headerMenu.html";
+    if(typeof dashboard != 'undefined') template = "../modules/headerMenu.html";
     else template = "modules/headerMenu.html";
 
     return {
@@ -363,7 +363,7 @@ homeluxeApp.directive("headerMenu", function ($templateRequest, $compile) {
 homeluxeApp.directive("loginOverlay", function ($templateRequest, $compile) {
 
     var template;
-    if(dashboard) template = "../modules/loginOverlay.html";
+    if(typeof dashboard != 'undefined') template = "../modules/loginOverlay.html";
     else template = "modules/loginOverlay.html";
 
     return {
@@ -381,7 +381,7 @@ homeluxeApp.directive("loginOverlay", function ($templateRequest, $compile) {
 homeluxeApp.directive("styleViewer", function ($templateRequest, $compile) {
 
     var template;
-    if(dashboard) template = "../modules/styleViewer.html";
+    if(typeof dashboard != 'undefined') template = "../modules/styleViewer.html";
     else template = "modules/styleViewer.html";
 
     return {
