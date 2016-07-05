@@ -21,6 +21,7 @@ function getServer() {
 
 // Server Request Function with callback
 function serverRequest(url, data, callback) {
+    console.log(guestToken);
     if (!guestToken) {
         guestToken = true;
         getGuestToken(function () {
