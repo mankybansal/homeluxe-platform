@@ -16,8 +16,10 @@
 <script type="text/javascript" src="js/js.cookie.js"></script>
 <script type="text/javascript" src="js/accounts.js"></script>
 <script type="text/javascript" src="js/headerMenu.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.js"></script>
-<script src="app.js"></script>
+<script src="/bower_components/angular/angular.js"></script>
+<script src="/bower_components/angular-route/angular-route.js"></script>
+
+<!--<script src="app.js"></script>-->
 
 <style>
 
@@ -302,9 +304,11 @@
 
     }
 </style>
-<body ng-app="quizApp">
-<div class="headerMenu"></div>
-<div class="loginOverlay"></div>
+<body ng-app="homeluxeApp" ng-controller="userControl">
+
+<login-overlay></login-overlay>
+<header-menu></header-menu>
+
 <div class="styleViewer"></div>
 
 <div ng-controller="quizAppController">
