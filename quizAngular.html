@@ -320,9 +320,9 @@
     </span>
     </div>
 
-    <div class="questionCardContainer" ng-show="!quizOver">
+    <div class="questionCardContainer animated fadeInUp" ng-show="!quizOver">
     <span class="aligner">
-    <div class="questionCard animated fadeInUp">
+    <div class="questionCard">
         <div class="questionText">{{question.Questions.name}}</div>
         <div class="questionOptions">
             <div class="option animated fadeInUp" ng-repeat="option in question.Options" ng-click="saveAnswer(option.id)">
