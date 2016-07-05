@@ -85,6 +85,8 @@ function likeRoom() {
 
 homeluxeApp.controller("browseStyleControl", function ($scope, $compile) {
 
+    getServer();
+
     $scope.getStyles = function () {
         requests.getStyles(function (response) {
 
