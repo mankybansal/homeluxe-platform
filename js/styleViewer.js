@@ -109,13 +109,13 @@ homeluxeApp.controller("browseStyleControl", function ($scope, $compile) {
 
             $('.mainCard').fadeIn(1000).animate({marginTop: '0px'}, 500);
 
-            // if (urlStyle != null) {
-            //     var styleNumber;
-            //     for (var i = 0; i < $scope.styles.length; i++)
-            //         if ($scope.styles[i].catalogueKey == urlStyle)
-            //             styleNumber = i;
-            //     $scope.viewStyle(styleNumber);
-            // }
+            if (urlStyle != null) {
+                var styleNumber;
+                for (var i = 0; i < $scope.styles.length; i++)
+                    if ($scope.styles[i].catalogueKey == urlStyle)
+                        styleNumber = i;
+                $scope.viewStyle(styleNumber);
+            }
         });
     };
 
@@ -200,7 +200,7 @@ homeluxeApp.controller("styleViewerControl", function ($scope) {
             $scope.currentImage = 0;
             $('.leftNav').hide();
         }
-        loadImage();
+        $scope.loadImage();
     };
 
     $scope.rightNavClick = function () {
