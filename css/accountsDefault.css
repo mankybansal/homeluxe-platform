@@ -95,11 +95,15 @@
 .loginButton {
     width: 100px;
     background: #468fde;
+    font-size: 16px;
+    padding: 22px;
 }
 
 .registerButton {
     width: 230px;
+    padding: 22px;
     background: yellowgreen;
+    font-size: 16px;
 }
 
 .faceBookLogin {
