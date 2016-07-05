@@ -172,7 +172,7 @@
             $('.resultLogo').click(function () {
                 window.location = 'index.html';
             });
-            getStyles();
+            //getStyles();
         });
     </script>
 
