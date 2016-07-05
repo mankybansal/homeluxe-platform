@@ -194,13 +194,13 @@
                         <i class='fa fa-rupee'></i>&nbsp;{{like.price}}
                     </div>
                 </div>
-                <!--<div class='likeBoxRoom' ng-repeat="like in myLikes" id='{{like.catalogueKey}}' ng-if="!like.catalogueKey">-->
-                <!--<div class='likeBoxImageBox'>-->
-                <!--<img src='../images/NOIMAGE.png' class='likeBoxImage'></div>-->
-                <!--<div class='likeBoxStyleTitle'>{{like.name}}</div>-->
-                <!--<div class='likeBoxDescription'>{like.description}}-->
-                <!--</div>-->
-                <!--</div>-->
+                <div class='likeBoxRoom' ng-repeat="like in myLikes" id='{{like.id}}' ng-if="!like.catalogueKey">
+                    <div class='likeBoxImageBox'>
+                        <img src='../images/NOIMAGE.png' class='likeBoxImage'></div>
+                    <div class='likeBoxStyleTitle'>{{like.name}}</div>
+                    <div class='likeBoxDescription'>{like.description}}
+                    </div>
+                </div>
             </div>
 
             <div class="viewPanel" id="viewLogout">
