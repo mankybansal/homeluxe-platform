@@ -47,7 +47,6 @@ homeluxeApp.controller("memberDashboardControl", function ($scope, $rootScope, $
             $scope.$apply(function () {
                 if (typeof response.success == 'undefined' && response.success != "false") {
                     $scope.myLikes = response;
-                    console.log($scope.myLikes);
                 }
             });
         });
