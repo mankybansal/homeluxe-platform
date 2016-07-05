@@ -45,7 +45,7 @@ homeluxeApp.controller("homeluxeAppControl", function ($scope) {
 
         userLogin: function (username, password, callback) {
             var myObject = {
-                "token": guestToken,
+                "token":  $scope.guestToken,
                 "email": username,
                 "password": password
             };
@@ -54,7 +54,7 @@ homeluxeApp.controller("homeluxeAppControl", function ($scope) {
 
         userRegiserForm: function (name, email, password, callback) {
             var myObject = {
-                "token": guestToken,
+                "token": $scope.guestToken,
                 "name": name,
                 "email": email,
                 "password": password
@@ -64,7 +64,7 @@ homeluxeApp.controller("homeluxeAppControl", function ($scope) {
 
         userRegisterFacebook: function (name, email, oAuth, profilePic, callback) {
             var myObject = {
-                "token": guestToken,
+                "token": $scope.guestToken,
                 "name": name,
                 "email": email,
                 "password": oAuth,
@@ -76,7 +76,7 @@ homeluxeApp.controller("homeluxeAppControl", function ($scope) {
 
         getStyles: function (callback) {
             var myObject = {
-                'token': guestToken
+                'token': $scope.guestToken
             };
             $scope.serverRequest("browse", myObject, callback);
         },
@@ -84,7 +84,7 @@ homeluxeApp.controller("homeluxeAppControl", function ($scope) {
         getQuiz: function (callback) {
             var myObject = {
                 "submit": 0,
-                "token": guestToken
+                "token": $scope.guestToken
             };
             $scope.serverRequest("quiz", myObject, callback);
         },
@@ -92,7 +92,7 @@ homeluxeApp.controller("homeluxeAppControl", function ($scope) {
         submitQuiz: function (answerSet, callback) {
             var myObject = {
                 "submit": 1,
-                "token": guestToken,
+                "token": $scope.guestToken,
                 "answer_set": answerSet
             };
             $scope.serverRequest("quiz", myObject, callback);
