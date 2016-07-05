@@ -415,7 +415,7 @@
         <div class="mainCard">
             <div class="introPanel" style="width: 100%;">
                 <div class="diamondContainer clear">
-                    <div class='diamond' ng-repeat="style in styles" ng-click='viewStyle(style.id)'>
+                    <div class='diamond' ng-repeat="style in styles" ng-click="viewStyle(style.id)">
                         <div class='diamondText' id='style{{style.id}}'>
                             <div class='textHighlight'>{{style.name}}</div>
                         </div>
