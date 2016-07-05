@@ -74,7 +74,7 @@
     font-family: RobotoLight, sans-serif;
 }
 
-.loginButton, .registerButton, .fbContButton, .fbRegisterButton , .faceBookLogin {
+.loginButton, .registerButton, .fbRegisterButton , .faceBookLogin {
     cursor: pointer;
     background: #468fde;
     vertical-align: top;
@@ -98,7 +98,7 @@
 }
 
 .registerButton {
-    width: 220px;
+    width: 230px;
     background: yellowgreen;
 }
 

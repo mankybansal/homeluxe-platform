@@ -38,7 +38,7 @@ homeluxeApp.controller("userControl", function ($scope, $rootScope, $interval) {
     };
 
     $scope.showLogin = function () {
-        $(".loginContainer").animate({"height": "440px"}, 500);
+        $(".loginContainer").animate({"height": "520px"}, 500);
         $(".registerPanel").hide();
         setTimeout(function () {
             $(".loginPanel").fadeIn(500);
@@ -48,7 +48,7 @@ homeluxeApp.controller("userControl", function ($scope, $rootScope, $interval) {
     };
 
     $scope.userRegister = function () {
-        $(".loginContainer").animate({"height": "570px"}, 500);
+        $(".loginContainer").animate({"height": "600px"}, 500);
         $(".loginPanel").hide();
         setTimeout(function () {
             $(".registerPanel").fadeIn(500);
@@ -283,7 +283,7 @@ homeluxeApp.controller("styleViewerControl", function ($scope,$rootScope) {
             style: styleNum,
             styleNode: $rootScope.styles[styleNum].id
         };
-        
+
         changeUrlParam('style', $rootScope.styles[styleNum].catalogueKey);
 
         if (typeof myRandomToken !== 'undefined') {
