@@ -8,6 +8,7 @@ var dashboard = true;
 homeluxeApp.controller("memberDashboardControl", function ($scope, $rootScope, $interval) {
 
     getServer();
+    getGuestToken();
 
     $scope.init = function () {
         $scope.myLikes = [];
@@ -18,13 +19,13 @@ homeluxeApp.controller("memberDashboardControl", function ($scope, $rootScope, $
     $scope.getLikes = function () {
         if ($scope.$parent.ngMyUser = Cookies.getJSON("myUser")) {
             console.log($scope.$parent.ngMyUser);
-            getGuestToken(requests.getLikes($scope.$parent.ngMyUser.token, function (response) {
+            requests.getLikes($scope.$parent.ngMyUser.token, function (response) {
                 $scope.$apply(function () {
                     if (response.success != "false") {
                         $scope.myLikes = response;
                     }
                 });
-            }));
+            });
         }
     };
 
