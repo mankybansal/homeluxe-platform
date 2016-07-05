@@ -2,7 +2,7 @@ var homeluxeApp = angular.module('homeluxeApp', ['ngRoute']);
 
 homeluxeApp.controller("userControl", function ($scope, $interval) {
 
-    $scope.hideMenuOverlay = function () {
+    $scope.hideLoginOverlay = function () {
         $('.loginOverlay').fadeOut(500);
     };
 
