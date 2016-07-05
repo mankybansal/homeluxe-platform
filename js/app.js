@@ -85,7 +85,7 @@ homeluxeApp.directive('homeluxeAppControl', function () {
 
                 getStyles: function (callback) {
                     $scope.$watch("guestToken", function (n, o) {
-                        if (!n || !o) return;
+                        
                         var myObject = {
                             "token": $scope.guestToken
                         };
