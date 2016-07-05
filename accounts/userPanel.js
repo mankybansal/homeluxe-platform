@@ -3,7 +3,6 @@
  */
 
 var dashboard = true;
-guestToken = true;
 
 homeluxeApp.controller("memberDashboardControl", function ($scope, $rootScope, $interval) {
 
@@ -16,21 +15,16 @@ homeluxeApp.controller("memberDashboardControl", function ($scope, $rootScope, $
     };
 
     $scope.showDashboard = function () {
-        $(".viewPanel").hide();
 
+        $(".viewPanel").hide();
         $(".menuLeft")
             .find(".optionSelected").removeClass("optionSelected")
             .find(".viewOverview").parent().addClass("optionSelected");
-
         $("#viewOverview").fadeIn(500);
 
         setTimeout(function () {
-            $('.loginOverlay').fadeOut(1000);
-        }, 2000);
-
-        setTimeout(function () {
             $('.contentOverlay').fadeIn(1000);
-        }, 3000);
+        }, 1000);
     };
 
     $scope.getLikes = function () {
@@ -58,15 +52,11 @@ $(document).ready(function () {
     $(".menuOption").click(function () {
         var menuGroupSelected = $(this).parent().find(".menuGroupLabel").text();
         var menuOptionSelected = $(this).find(".menuOptionText").text();
-
         $('.menuGroupSelected').html(menuGroupSelected);
         $('.menuOptionSelected').html(menuOptionSelected);
-
         $(".menuLeft").find(".optionSelected").removeClass("optionSelected");
         $(this).addClass("optionSelected");
-
         $(".viewPanel").hide();
-
         $("#" + $(this).find(".menuOptionSelect").attr('class').split(' ')[1]).fadeIn(500);
     });
 });
