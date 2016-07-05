@@ -107,7 +107,7 @@
     <title>Browse Styles | HomeLuxe</title>
 
 
-    <script src="/bower_components/jquery/src/jquery.js"></script>
+    <script src="/bower_components/jquery/dist/jquery.js"></script>
     <script src="/bower_components/angular/angular.js"></script>
     <script src="/bower_components/angular-route/angular-route.js"></script>
     <script src="/bower_components/js-cookie/src/js.cookie.js"></script>
