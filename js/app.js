@@ -369,7 +369,7 @@ homeluxeApp.directive("browseStyleControl", function () {
 //     }
 // });
 
-homeluxeApp.controller("styleViewerControl", function () {
+homeluxeApp.directive("styleViewerControl", function () {
     return {
         controller: function ($scope, $rootScope) {
             $scope.init = function () {
