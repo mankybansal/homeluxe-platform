@@ -160,136 +160,135 @@ homeluxeApp.directive('userControl', function () {
             };
 
             $scope.login = function () {
-                if ($scope.isValid($scope.guest.email) && $scope.isValid($scope.guest.password))}
-            {
-                console.log("Entered");
-                $scope.requests.userLogin($scope.guest.email, $scope.guest.password, function (response) {
-                    if (response.status == "Success") {
-                        $scope.ngMyUser = response;
-                        $scope.loginSuccess();
-                    }
-                    else showAlert('Wrong username or password.');
-                });
-            }
-            else
-            showAlert('Please enter a username & password.');
-        };
-
-    $scope.submitRegister = function () {
-        if ($scope.isValid($scope.guest.name) && $scope.isValid($scope.guest.email) && $scope.isValid($scope.guest.password))
-            $scope.requests.userRegisterForm($scope.guest.name, $scope.guest.email, $scope.guest.password, function (response) {
-                if (response.status == "Success")
-                    $scope.login();
-                else if (response.status == "Failed" && response.message == "User already exists")
-                    showAlert('You already have an account.');
-                else showAlert('Please fill the form correctly.');
-            });
-        else showAlert('Please fill the form correctly.');
-    };
-
-    $scope.showLogin = function () {
-        $(".loginContainer").animate({"height": "520px"}, 500);
-        $(".registerPanel").hide();
-        setTimeout(function () {
-            $(".loginPanel").fadeIn(500);
-        }, 200);
-        var spacerHeight = $(".loginSpacer").height();
-        $(".loginSpacer").animate({"height": spacerHeight + 35}, 500);
-    };
-
-    $scope.userRegister = function () {
-        $(".loginContainer").animate({"height": "590px"}, 500);
-        $(".loginPanel").hide();
-        setTimeout(function () {
-            $(".registerPanel").fadeIn(500);
-        }, 200);
-        var spacerHeight = $(".loginSpacer").height();
-        $(".loginSpacer").animate({"height": spacerHeight - 35}, 500);
-    };
-
-    $scope.facebookRegister = function () {
-        $scope.requests.userRegisterFacebook($scope.facebook.name, $scope.facebook.email, $scope.facebook.id, $scope.facebook.dp, function (response) {
-            console.log(response);
-            $scope.facebook.connected = true;
-            $scope.login($scope.facebook.email, $scope.facebook.id);
-        });
-    };
-
-    $scope.facebookLogin = function () {
-        FB.login(function (response) {
-            console.log(response);
-            if (response.authResponse) {
-                showAlert("Please wait... &nbsp; <i class='fa fa-circle-o-notch fa-spin'></i>");
-
-                FB.api('/me/picture?type=normal', function (response) {
-                    $scope.facebook.dp = response.data.url;
-                });
-
-                FB.api('/me?fields=name,picture,email,id,link', function (response) {
-
-                    $scope.facebook.name = response.name;
-                    $scope.facebook.id = response.id;
-                    $scope.facebook.email = response.email;
-
-                    $scope.requests.userLogin(response.email, response.id, function (response) {
+                if ($scope.isValid($scope.guest.email) && $scope.isValid($scope.guest.password)) {
+                    console.log("Entered");
+                    $scope.requests.userLogin($scope.guest.email, $scope.guest.password, function (response) {
                         if (response.status == "Success") {
                             $scope.ngMyUser = response;
-                            $scope.facebook.connected = true;
                             $scope.loginSuccess();
                         }
-                        else $scope.facebookRegister();
+                        else showAlert('Wrong username or password.');
                     });
-                    console.log($scope.facebook);
+                }
+                else
+                    showAlert('Please enter a username & password.');
+            };
+
+            $scope.submitRegister = function () {
+                if ($scope.isValid($scope.guest.name) && $scope.isValid($scope.guest.email) && $scope.isValid($scope.guest.password))
+                    $scope.requests.userRegisterForm($scope.guest.name, $scope.guest.email, $scope.guest.password, function (response) {
+                        if (response.status == "Success")
+                            $scope.login();
+                        else if (response.status == "Failed" && response.message == "User already exists")
+                            showAlert('You already have an account.');
+                        else showAlert('Please fill the form correctly.');
+                    });
+                else showAlert('Please fill the form correctly.');
+            };
+
+            $scope.showLogin = function () {
+                $(".loginContainer").animate({"height": "520px"}, 500);
+                $(".registerPanel").hide();
+                setTimeout(function () {
+                    $(".loginPanel").fadeIn(500);
+                }, 200);
+                var spacerHeight = $(".loginSpacer").height();
+                $(".loginSpacer").animate({"height": spacerHeight + 35}, 500);
+            };
+
+            $scope.userRegister = function () {
+                $(".loginContainer").animate({"height": "590px"}, 500);
+                $(".loginPanel").hide();
+                setTimeout(function () {
+                    $(".registerPanel").fadeIn(500);
+                }, 200);
+                var spacerHeight = $(".loginSpacer").height();
+                $(".loginSpacer").animate({"height": spacerHeight - 35}, 500);
+            };
+
+            $scope.facebookRegister = function () {
+                $scope.requests.userRegisterFacebook($scope.facebook.name, $scope.facebook.email, $scope.facebook.id, $scope.facebook.dp, function (response) {
+                    console.log(response);
+                    $scope.facebook.connected = true;
+                    $scope.login($scope.facebook.email, $scope.facebook.id);
                 });
-            }
-            else showAlert('Facebook Login Failed.');
-        }, {scope: 'email,public_profile'});
+            };
+
+            $scope.facebookLogin = function () {
+                FB.login(function (response) {
+                    console.log(response);
+                    if (response.authResponse) {
+                        showAlert("Please wait... &nbsp; <i class='fa fa-circle-o-notch fa-spin'></i>");
+
+                        FB.api('/me/picture?type=normal', function (response) {
+                            $scope.facebook.dp = response.data.url;
+                        });
+
+                        FB.api('/me?fields=name,picture,email,id,link', function (response) {
+
+                            $scope.facebook.name = response.name;
+                            $scope.facebook.id = response.id;
+                            $scope.facebook.email = response.email;
+
+                            $scope.requests.userLogin(response.email, response.id, function (response) {
+                                if (response.status == "Success") {
+                                    $scope.ngMyUser = response;
+                                    $scope.facebook.connected = true;
+                                    $scope.loginSuccess();
+                                }
+                                else $scope.facebookRegister();
+                            });
+                            console.log($scope.facebook);
+                        });
+                    }
+                    else showAlert('Facebook Login Failed.');
+                }, {scope: 'email,public_profile'});
+            };
+
+            $scope.checkCookie = function () {
+                if (!($scope.ngMyUser = Cookies.getJSON('myUser')))
+                    $scope.ngMyUser = false;
+            };
+
+            $scope.init = function () {
+                $scope.checkCookie();
+                $scope.accountOptions = false;
+                $scope.ngMyUser = false;
+                $scope.facebook = {};
+                $scope.guest = {};
+
+                $scope.cookieChecker = $interval(function () {
+                    $scope.checkCookie();
+                }, 3000);
+            };
+
+            $scope.accountOptionsTrigger = function () {
+                if (!$scope.ngMyUser) loginButtonClick();
+                else $scope.accountOptions = !$scope.accountOptions;
+            };
+
+            $scope.gotoDashboard = function () {
+                window.location = $scope.baseURL + "accounts/";
+            };
+
+            $scope.logout = function () {
+                Cookies.remove('myUser');
+                $interval.cancel($scope.cookieChecker);
+                $scope.init();
+            };
+
+            $scope.loginSuccess = function () {
+                // SET COOKIES
+                if ($scope.facebook.connected) $scope.ngMyUser.fbConnected = $scope.facebook.connected;
+                Cookies.set('myUser', $scope.ngMyUser);
+                $('.alertMessage').hide();
+                $('.loginOverlay').hide();
+                if (typeof dashboard != 'undefined' && dashboard) $scope.showDashboard();
+            };
+
+            $scope.init();
+        }
     };
-
-    $scope.checkCookie = function () {
-        if (!($scope.ngMyUser = Cookies.getJSON('myUser')))
-            $scope.ngMyUser = false;
-    };
-
-    $scope.init = function () {
-        $scope.checkCookie();
-        $scope.accountOptions = false;
-        $scope.ngMyUser = false;
-        $scope.facebook = {};
-        $scope.guest = {};
-
-        $scope.cookieChecker = $interval(function () {
-            $scope.checkCookie();
-        }, 3000);
-    };
-
-    $scope.accountOptionsTrigger = function () {
-        if (!$scope.ngMyUser) loginButtonClick();
-        else $scope.accountOptions = !$scope.accountOptions;
-    };
-
-    $scope.gotoDashboard = function () {
-        window.location = $scope.baseURL + "accounts/";
-    };
-
-    $scope.logout = function () {
-        Cookies.remove('myUser');
-        $interval.cancel($scope.cookieChecker);
-        $scope.init();
-    };
-
-    $scope.loginSuccess = function () {
-        // SET COOKIES
-        if ($scope.facebook.connected) $scope.ngMyUser.fbConnected = $scope.facebook.connected;
-        Cookies.set('myUser', $scope.ngMyUser);
-        $('.alertMessage').hide();
-        $('.loginOverlay').hide();
-        if (typeof dashboard != 'undefined' && dashboard) $scope.showDashboard();
-    };
-
-    $scope.init();
-}
-};
 })
 ;
 
