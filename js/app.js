@@ -2,10 +2,10 @@ var homeluxeApp = angular.module('homeluxeApp', ['ngRoute']);
 
 homeluxeApp.config(['$routeProvider', function ($routeProvider) {
     $routeProvider.
-    when('/browse', {
+    when('browse', {
         templateUrl: 'browse.php'
     }).
-    when('/newAccount', {
+    when('newAccount', {
         templateUrl: 'accounts/index.html'
     }).
     otherwise({
