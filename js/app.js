@@ -26,8 +26,8 @@ homeluxeApp.controller("userControl", function ($scope, $rootScope, $interval) {
     };
 
     $scope.submitRegister = function () {
-        if ($scope.isValid($scope.guest.name) && $scope.isValid($scope.guest.email) && $scope.isValid($scope.guest.password) && $scope.isValid($scope.guest.phone))
-            requests.userRegiserForm($scope.guest.name, $scope.guest.email, $scope.guest.phone, $scope.guest.password, function (response) {
+        if ($scope.isValid($scope.guest.name) && $scope.isValid($scope.guest.email) && $scope.isValid($scope.guest.password))
+            requests.userRegiserForm($scope.guest.name, $scope.guest.email, $scope.guest.password, function (response) {
                 if (response.status == "Success")
                     $scope.login();
                 else if (response.status == "Failed" && response.message == "User already exists")

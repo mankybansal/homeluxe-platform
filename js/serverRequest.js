@@ -65,12 +65,11 @@ var requests = {
         serverRequest("member/login", myObject, callback);
     },
 
-    userRegiserForm: function (name, email, phone, password, callback) {
+    userRegiserForm: function (name, email, password, callback) {
         var myObject = {
             "token": guestToken,
             "name": name,
             "email": email,
-            "mobile": phone,
             "password": password
         };
         serverRequest("member/register", myObject, callback);
