@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="homeluxeApp"  ng-controller="homeluxeControl">
 <head>
 
 
@@ -404,24 +404,22 @@
 
 </head>
 
-<body ng-app="homeluxeApp" ng-controller="userControl">
+<body ng-controller="userControl">
 
 <header-menu></header-menu>
 <login-overlay></login-overlay>
 
 <div ng-controller="styleViewerControl">
-    <style-viewer></style-viewer>
+    <style-viewer ></style-viewer>
     <div class="mainCardContainer" ng-controller="browseStyleControl">
         <div class="mainCard">
             <div class="introPanel" style="width: 100%;">
                 <div class="diamondContainer clear">
-                    <span ng-repeat="style in styles">
-                    <div class='diamond' ng-click="viewStyle(style.id)">
+                    <div class='diamond' ng-repeat="style in styles" ng-click="viewStyle(style.id)">
                         <div class='diamondText' id='style{{style.id}}'>
                             <div class='textHighlight'>{{style.name}}</div>
                         </div>
                     </div>
-                    </span>
                 </div>
             </div>
         </div>

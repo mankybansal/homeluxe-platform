@@ -129,7 +129,6 @@ homeluxeApp.controller("browseStyleControl", function ($scope, $compile) {
 
 
 homeluxeApp.controller("styleViewerControl", function ($scope) {
-    $scope.styles = [];
     $scope.init = function () {
         $scope.images = [];
         $scope.currentImage = 0;

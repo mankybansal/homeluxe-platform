@@ -1,5 +1,9 @@
 var homeluxeApp = angular.module('homeluxeApp', ['ngRoute']);
 
+homeluxeApp.controller("homeluxeControl", function($scope){
+    $scope.styles = [];
+});
+
 homeluxeApp.controller("userControl", function ($scope, $interval) {
 
     $scope.hideLoginOverlay = function () {
