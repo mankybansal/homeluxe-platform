@@ -9,7 +9,7 @@ homeluxeApp.controller("memberDashboardControl", function ($scope, $rootScope, $
 
     getServer();
     $scope.init = function () {
-        $scope.myLikes = [];
+        $scope.myLikes = {};
         $scope.$parent.ngMyUser = Cookies.getJSON('myUser');
         $scope.getLikes();
         $scope.showDashboard();
@@ -47,6 +47,7 @@ homeluxeApp.controller("memberDashboardControl", function ($scope, $rootScope, $
             $scope.$apply(function () {
                 if (response.success != "false") {
                     $scope.myLikes = response;
+                    console.log($scope.myLikes);
                 }
             });
         });
