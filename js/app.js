@@ -362,7 +362,10 @@ homeluxeApp.controller("browseStyleControl", function ($scope, $rootScope) {
         });
     };
 
-    $scope.getStyles();
+    $scope.$watch( "guestToken" , function(n,o){
+        if(n==o) return;
+        $scope.getStyles();
+    },true);
 
     $scope.viewStyle = function (styleNum) {
         $scope.$parent.viewStyle(styleNum);
