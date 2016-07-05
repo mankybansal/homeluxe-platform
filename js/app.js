@@ -45,13 +45,12 @@ homeluxeApp.directive('homeluxeAppControl', function () {
 
                 userLogin: function (username, password, callback) {
                     $scope.$watch("guestToken", function (n, o) {
-                        if (n == o) return;
+                        if (!n || !o) return;
                         var myObject = {
                             "token": $scope.guestToken,
                             "email": username,
                             "password": password
                         };
-                        console.log("Entered");
                         $scope.serverRequest("member/login", myObject, callback);
                     }, true);
                 },
@@ -136,7 +135,7 @@ homeluxeApp.directive('homeluxeAppControl', function () {
             $scope.init = function () {
                 $scope.apiBaseURL = null;
                 $scope.baseURL = null;
-                $scope.guestToken = null;
+                $scope.guestToken = false;
                 $scope.getServer();
                 $scope.requests.getGuestToken(function (response) {
                     if (response.success)
