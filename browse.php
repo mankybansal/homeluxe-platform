@@ -105,8 +105,12 @@
     <title>Browse Styles | HomeLuxe</title>
 
     <script src="js/jquery.min.js"></script>
-    <script src="js/jquery.cookie.js"></script>
+    <script src="js/js.cookie.js"></script>
     <script src="js/serverRequest.js"></script>
+
+    <script src="/bower_components/angular/angular.js"></script>
+    <script src="/bower_components/angular-route/angular-route.js"></script>
+
     <script src="js/accounts.js"></script>
     <script src="js/headerMenu.js"></script>
     <script src="js/styleViewer.js"></script>
@@ -397,12 +401,11 @@
 
 </head>
 
-<body>
+<body ng-app="homeluxeApp" ng-controller="userControl">
 
 
-<div class="loginOverlay"></div>
-
-<div class="headerMenu"></div>
+<header-menu></header-menu>
+<login-overlay></login-overlay>
 
 <div class="mainCardContainer">
     <div class="mainCard">
