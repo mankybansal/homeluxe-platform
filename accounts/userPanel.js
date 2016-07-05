@@ -9,6 +9,7 @@ homeluxeApp.controller("memberDashboardControl", function ($scope, $rootScope, $
 
     $scope.init = function () {
         $scope.myLikes = [];
+        $scope.getLikes();
     };
 
 
@@ -64,7 +65,7 @@ function showDashboard() {
         .find(".optionSelected").removeClass("optionSelected")
         .find(".viewOverview").parent().addClass("optionSelected");
     $("#viewOverview").fadeIn(500);
-    
+
     setTimeout(function () {
         $('.loginOverlay').fadeOut(1000);
     }, 2000);
