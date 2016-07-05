@@ -92,11 +92,6 @@
     font-family: RobotoLight, sans-serif;
 }
 
-.fbContButton, .fbRegisterButton {
-    width: 200px;
-    background: #3b5998;
-}
-
 .loginButton {
     background: #468fde;
 }
@@ -107,7 +102,7 @@
 
 .faceBookLogin {
     padding: 10px;
-    width: 60px;
+    width: 100%;
     background: #3b5998;
     padding-top: 20px;
 }
