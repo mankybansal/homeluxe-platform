@@ -87,8 +87,6 @@ homeluxeApp.controller("browseStyleControl", function ($scope, $compile) {
 
     getServer();
 
-    $scope.styles = [];
-
     $scope.getStyles = function () {
         requests.getStyles(function (response) {
             $scope.$apply(function () {
@@ -121,6 +119,14 @@ homeluxeApp.controller("browseStyleControl", function ($scope, $compile) {
             }
         });
     };
+
+    $scope.getStyles();
+});
+
+
+homeluxeApp.controller("styleViewerControl", function ($scope) {
+
+    $scope.styles = [];
 
     $scope.init = function () {
         $scope.images = [];
@@ -182,7 +188,6 @@ homeluxeApp.controller("browseStyleControl", function ($scope, $compile) {
         }
     };
 
-
     $scope.leftNavClick = function () {
         $scope.currentImage -= 1;
         $('.leftNav').show();
@@ -214,75 +219,6 @@ homeluxeApp.controller("browseStyleControl", function ($scope, $compile) {
             "background-repeat": "no-repeat",
             "background-position": "center"
         });
-    };
-
-
-    $scope.init();
-
-    $scope.getStyles();
-});
-
-
-homeluxeApp.controller("styleViewerControl", function ($scope) {
-
-    $scope.init = function () {
-        $scope.images = [];
-        $scope.currentImage = 0;
-        $scope.currentStyle = null;
-        $scope.currentStyleNode = null;
-        $scope.currentImageNode = null;
-    };
-
-    $scope.viewStyle = function (styleNum) {
-        $('.leftNav').hide();
-
-        $scope.currentImage = 0;
-        $('.coverContainer').fadeIn(500);
-
-        $scope.currentStyle = styleNum;
-        $('.resultCard').fadeIn(500);
-        $('.centerDesc').fadeIn(500);
-
-        $scope.currentStyleNode = styles[styleNum].id;
-
-        $('.coverImage').empty().append("<img src='images/styles/covers/clear-images/" + styles[styleNum].cover_pic + "' class='coverPic'>");
-
-        $(".coverBG").css({
-            "background": "url('images/styles/covers/blurred-images/" + styles[styleNum].cover_pic + "')",
-            "background-size": "100% 100%",
-            "background-repeat": "no-repeat",
-            "background-position": "center"
-        });
-        $('.coverTitle').html("This style is called <b>" + styles[styleNum].name + "</b>!");
-        $('.coverTextBox').html(styles[styleNum].description);
-        $(".viewStyleTitle2").html(styles[styleNum].name);
-
-        changeUrlParam('style', styles[styleNum].catalogueKey);
-
-        if (typeof myRandomToken !== 'undefined') {
-            changeUrlParam('token', myRandomToken);
-        }
-
-        $scope.images = [];
-
-        if (styles[styleNum].images.length != 0) {
-            for (var i = 0; i < styles[styleNum].images.length; i++) {
-                $scope.images[i] = {
-                    "img": styles[styleNum].name + '/' + styles[styleNum].images[i].file,
-                    "id": styles[styleNum].images[i].id
-                };
-            }
-
-            loadImage();
-        } else {
-            $('.leftNav').hide();
-            $('.rightNav').hide();
-        }
-
-        if (styles[styleNum].images.length == 1) {
-            $('.leftNav').hide();
-            $('.rightNav').hide();
-        }
     };
 
     $scope.init();

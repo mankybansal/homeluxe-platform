@@ -408,16 +408,17 @@
 
 <header-menu></header-menu>
 <login-overlay></login-overlay>
-s
-<style-viewer ng-controller="styleViewerControl"></style-viewer>
 
-<div class="mainCardContainer" ng-controller="browseStyleControl">
-    <div class="mainCard">
-        <div class="introPanel" style="width: 100%;">
-            <div class="diamondContainer clear">
-                <div class='diamond' ng-repeat="style in styles" ng-click='viewStyle(style.id)'>
-                    <div class='diamondText' id='style{{style.id}}'>
-                        <div class='textHighlight'>{{style.name}}</div>
+<div ng-controller="styleViewerControl">
+    <style-viewer></style-viewer>
+    <div class="mainCardContainer" ng-controller="browseStyleControl">
+        <div class="mainCard">
+            <div class="introPanel" style="width: 100%;">
+                <div class="diamondContainer clear">
+                    <div class='diamond' ng-repeat="style in styles" ng-click='viewStyle(style.id)'>
+                        <div class='diamondText' id='style{{style.id}}'>
+                            <div class='textHighlight'>{{style.name}}</div>
+                        </div>
                     </div>
                 </div>
             </div>
