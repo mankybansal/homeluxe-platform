@@ -92,6 +92,7 @@ homeluxeApp.controller("userControl", function ($scope, $interval) {
                         });
                     });
                 });
+                console.log($scope.facebook);
             }
             else showAlert('Facebook Login Failed.');
         }, {scope: 'email,public_profile'});
