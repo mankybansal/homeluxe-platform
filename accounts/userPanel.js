@@ -15,7 +15,7 @@ homeluxeApp.controller("memberDashboardControl", function ($scope, $rootScope, $
         $scope.showDashboard();
     };
 
-    $scope.showDashboard = function (){
+    $scope.showDashboard = function () {
         $(".viewPanel").hide();
         $(".menuLeft")
             .find(".optionSelected").removeClass("optionSelected")
@@ -38,17 +38,16 @@ homeluxeApp.controller("memberDashboardControl", function ($scope, $rootScope, $
         $(".myDP").append("<img src='" + $scope.$parent.ngMyUser.profile_pic + "' class='myDPimage'>");
         if ($scope.$parent.ngMyUser.fbConnected) $(".connectedTo").html("Connected to Facebook");
         else $(".connectedTo").html("Not Connected");
-    }
+    };
 
 
     $scope.getLikes = function () {
         requests.getLikes($scope.$parent.ngMyUser.token, function (response) {
-            $scope.$apply(function () {
-                if (typeof response.success == 'undefined' && response.success != "false") {
-                    $scope.myLikes = response;
-                    console.log($scope.myLikes.length);
-                }
-            });
+            if (typeof response.success == 'undefined' && response.success != "false") {
+                $scope.$apply(function () {
+                    $scope.myLikes = response;       
+                });
+            }
         });
     };
 
