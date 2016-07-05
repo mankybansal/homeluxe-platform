@@ -283,16 +283,7 @@ homeluxeApp.controller("styleViewerControl", function ($scope,$rootScope) {
             style: styleNum,
             styleNode: $rootScope.styles[styleNum].id
         };
-
-        $('.coverImage').empty().append("<img src='images/styles/covers/clear-images/" + $rootScope.styles[styleNum].cover_pic + "' class='coverPic'>");
-
-        $(".coverBG").css({
-            "background": "url('images/styles/covers/blurred-images/" + $rootScope.styles[styleNum].cover_pic + "')",
-            "background-size": "100% 100%",
-            "background-repeat": "no-repeat",
-            "background-position": "center"
-        });
-
+        
         changeUrlParam('style', $rootScope.styles[styleNum].catalogueKey);
 
         if (typeof myRandomToken !== 'undefined') {
@@ -326,12 +317,6 @@ homeluxeApp.controller("styleViewerControl", function ($scope,$rootScope) {
     $scope.loadImage = function () {
         $scope.current.imageNode = $scope.current.images[$scope.current.image].id;
         $scope.updateLikes($scope.current.styleNode, $scope.current.imageNode);
-        // $(".styleContainer").css({
-        //     "background": "url('images/styles/" + $scope.current.images[$scope.current.image].img + "')",
-        //     "background-size": "contain",
-        //     "background-repeat": "no-repeat",
-        //     "background-position": "center"
-        // });
     };
 
     $scope.fbShare = function() {

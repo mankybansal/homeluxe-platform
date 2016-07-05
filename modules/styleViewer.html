@@ -1,12 +1,14 @@
 <div class="coverContainer" ng-click="coverContainerClose()">
-    <div class="coverBG"></div>
+    <div class="coverBG" style="background: url('images/styles/covers/blurred-images/{{styles[current.style].cover_pic}}'); background-size: 100% 100%; background-repeat: no-repeat; background-position: center;"></div>
     <div class="coverFG">
         <div class="coverTop">
             <div class="coverTitle">This style is called <b>{{styles[current.style].name}}</b>!</div>
             <div class="coverSubtitle">We hope you love it.</div>
         </div>
         <div class="coverBottom">
-            <div class="coverImage"></div>
+            <div class="coverImage">
+                <img src='images/styles/covers/clear-images/{{styles[current.style].cover_pic}}"' class='coverPic'>
+            </div>
             <div class="coverText">
                 <span class="coverTextBox">{{styles[current.style].description}}</span><br><br><br><br>
                 <div class="actionButton" style="margin: 0 auto;">VIEW ROOMS</div>
