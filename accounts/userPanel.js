@@ -11,6 +11,7 @@ homeluxeApp.controller("memberDashboardControl", function ($scope, $rootScope, $
     $scope.init = function () {
         $scope.myLikes = [];
         $scope.getLikes();
+        showDashboard();
     };
 
 
