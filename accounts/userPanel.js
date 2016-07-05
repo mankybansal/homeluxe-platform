@@ -10,6 +10,7 @@ homeluxeApp.controller("memberDashboardControl", function ($scope, $rootScope, $
     getServer();
     $scope.init = function () {
         $scope.myLikes = {};
+        $scope.$parent.ngMyUser = Cookies.getJSON('myUser');
         $scope.getLikes();
         $scope.showDashboard();
     };
