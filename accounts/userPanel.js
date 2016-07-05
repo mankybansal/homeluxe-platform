@@ -6,7 +6,6 @@ var dashboard = true;
 
 homeluxeApp.controller("memberDashboardControl", function ($scope, $rootScope, $interval) {
 
-    getServer();
     $scope.init = function () {
         $scope.myLikes = {};
         if ($scope.$parent.ngMyUser = Cookies.getJSON('myUser')) {
