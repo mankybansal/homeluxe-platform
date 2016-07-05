@@ -196,7 +196,7 @@ homeluxeApp.controller("styleViewerControl", function ($scope) {
         $scope.currentImage -= 1;
         $('.leftNav').show();
         $('.rightNav').show();
-        if (currentImage < 0) {
+        if ($scope.currentImage < 0) {
             $scope.currentImage = 0;
             $('.leftNav').hide();
         }
