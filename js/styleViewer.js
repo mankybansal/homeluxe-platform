@@ -190,6 +190,9 @@ homeluxeApp.controller("styleViewerControl", function ($scope) {
             $('.leftNav').hide();
             $('.rightNav').hide();
         }
+
+        console.log($scope.images);
+
     };
 
     $scope.leftNavClick = function () {
