@@ -118,11 +118,11 @@ homeluxeApp.controller("homeluxeAppControl", function ($scope) {
         $scope.apiBaseURL = null;
         $scope.baseURL = null;
         $scope.guestToken = null;
+        $scope.getServer();
         $scope.requests.getGuestToken(function (response) {
             if (response.success)
                 $scope.guestToken = response.token;
         });
-        $scope.getServer();
     };
 
     $scope.init();
