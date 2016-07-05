@@ -3,7 +3,7 @@ var homeluxeApp = angular.module('homeluxeApp', ['ngRoute']);
 
 homeluxeApp.directive('homeluxeAppControl2', function() {
     return {
-        controller: function($scope) {
+        controller: function($scope, $interval) {
             $scope.getServer = function () {
                 if (typeof location.origin != 'undefined') {
                     if (location.host === 'dev.homeluxe.in') {
@@ -134,7 +134,7 @@ homeluxeApp.directive('homeluxeAppControl2', function() {
 
 homeluxeApp.directive('userControl2', function() {
     return {
-        controller: function($scope) {
+        controller: function($scope, $interval) {
             $scope.hideLoginOverlay = function () {
                 $('.loginOverlay').fadeOut(500);
             };
