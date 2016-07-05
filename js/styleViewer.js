@@ -182,6 +182,41 @@ homeluxeApp.controller("browseStyleControl", function ($scope, $compile) {
         }
     };
 
+
+    $scope.leftNavClick = function () {
+        $scope.currentImage -= 1;
+        $('.leftNav').show();
+        $('.rightNav').show();
+        if (currentImage < 0) {
+            $scope.currentImage = 0;
+            $('.leftNav').hide();
+        }
+        loadImage();
+    };
+
+    $scope.rightNavClick = function () {
+        $scope.currentImage++;
+        $('.leftNav').show();
+        $('.rightNav').show();
+        if ($scope.currentImage > ($scope.images.length - 1)) {
+            $scope.currentImage = $scope.images.length - 1;
+            $('.rightNav').hide();
+        }
+        $scope.loadImage();
+    };
+
+    $scope.loadImage = function () {
+        $scope.currentImageNode = $scope.images[$scope.currentImage].id;
+        //updateLikes($scope.currentStyleNode, $scope.currentImageNode);
+        $(".styleContainer").css({
+            "background": "url('images/styles/" + $scope.images[$scope.currentImage].img + "')",
+            "background-size": "contain",
+            "background-repeat": "no-repeat",
+            "background-position": "center"
+        });
+    };
+
+
     $scope.init();
 
     $scope.getStyles();
@@ -314,39 +349,6 @@ function callDesigner() {
 
 function coverContainerClose() {
     $('.coverContainer').hide();
-}
-
-function loadImage() {
-    currentImageNode = images[currentImage].id;
-    updateLikes(currentStyleNode, currentImageNode);
-    $(".styleContainer").css({
-        "background": "url('images/styles/" + images[currentImage].img + "')",
-        "background-size": "contain",
-        "background-repeat": "no-repeat",
-        "background-position": "center"
-    });
-}
-
-function leftNavClick() {
-    currentImage -= 1;
-    $('.leftNav').show();
-    $('.rightNav').show();
-    if (currentImage < 0) {
-        currentImage = 0;
-        $('.leftNav').hide();
-    }
-    loadImage();
-}
-
-function rightNavClick() {
-    currentImage++;
-    $('.leftNav').show();
-    $('.rightNav').show();
-    if (currentImage > (images.length - 1)) {
-        currentImage = images.length - 1;
-        $('.rightNav').hide();
-    }
-    loadImage();
 }
 
 function fbShare() {
