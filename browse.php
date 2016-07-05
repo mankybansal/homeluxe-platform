@@ -114,7 +114,7 @@
 
 
     <script src="js/serverRequest.js"></script>
-    <script src="js/accounts.js"></script>
+    <script src="js/app.js"></script>
     <script src="js/headerMenu.js"></script>
     <script src="js/styleViewer.js"></script>
     
