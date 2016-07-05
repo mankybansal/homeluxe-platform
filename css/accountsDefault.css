@@ -27,7 +27,7 @@
 
 .loginContainer {
     width: 400px;
-    height: 440px;
+    height: 520px;
     border-radius: 2px;
     background: #FFF;
     float: top;
@@ -97,13 +97,13 @@
 }
 
 .registerButton {
-    width: 360px;
+    width: 340px;
     background: yellowgreen;
 }
 
 .faceBookLogin {
     padding: 10px;
-    width: 360px;
+    width: 340px;
     background: #3b5998;
     padding-top: 20px;
 }
