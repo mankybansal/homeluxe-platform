@@ -83,6 +83,55 @@ function likeRoom() {
         loginButtonClick();
 }
 
+homeluxeApp.controller("browseStyleControl", function ($scope, $compile) {
+
+    $scope.getStyles = function () {
+        requests.getStyles(function (response) {
+
+            styles = response;
+
+            $compile(
+                $.each(styles, function (index, item) {
+
+                    if (item.images[0].name != 'NOIMAGE.png') {
+                        $('.diamondContainer').append("<div class='diamond' id='styleDia" + index + "' ng-click='viewStyle(" + index + ")'><div  data-adaptive-background data-ab-css-background data-ab-parent='#styleDia" + index + "' class='diamondText' id='style" + index + "' ><div class='textHighlight'>" + item.name + "</div></div></div>");
+
+                        var str = item.images[2].file;
+                        var res = str.split(".");
+
+                        $("#style" + index).css({
+                            "background": "url('images/styles/" + item.name + "/" + res[0] + "thumb." + res[1] + "')",
+                            "background-size": "auto 160%",
+                            "background-repeat": "no-repeat",
+                            "background-position": "center"
+                        });
+                    } else {
+                        $('.diamondContainer').append("<div class='diamond' ng-click='viewStyle(" + index + ")'><div  class='diamondText' id='style" + index + "' ><div class='textHighlight'>" + item.name + "</div></div></div>");
+                        $("#style" + index).css({
+                            "background": "url('images/styles/" + item.name + "/" + item.images[2].file + "')",
+                            "background-size": "auto 100%",
+                            "background-repeat": "no-repeat",
+                            "background-position": "center"
+                        });
+                    }
+                })
+            )($scope);
+
+            $('.mainCard').fadeIn(1000).animate({marginTop: '0px'}, 500);
+
+            // if (urlStyle != null) {
+            //     var styleNumber;
+            //     for (var i = 0; i < styles.length; i++)
+            //         if (styles[i].catalogueKey == urlStyle)
+            //             styleNumber = i;
+            //     viewStyle(styleNumber);
+            // }
+        });
+    };
+    
+    $scope.getStyles();
+});
+
 
 homeluxeApp.controller("styleViewerControl", function ($scope) {
 
@@ -94,7 +143,7 @@ homeluxeApp.controller("styleViewerControl", function ($scope) {
         $scope.currentImageNode = null;
     };
 
-    $scope.viewStyle = function(styleNum){
+    $scope.viewStyle = function (styleNum) {
         $('.leftNav').hide();
 
         $scope.currentImage = 0;
@@ -145,10 +194,9 @@ homeluxeApp.controller("styleViewerControl", function ($scope) {
             $('.rightNav').hide();
         }
     };
-    
+
     $scope.init();
 });
-
 
 
 // function viewStyle(styleNum) {
