@@ -91,8 +91,8 @@ homeluxeApp.controller("userControl", function ($scope, $interval) {
                             else facebookRegister();
                         });
                     });
+                    console.log($scope.facebook);
                 });
-                console.log($scope.facebook);
             }
             else showAlert('Facebook Login Failed.');
         }, {scope: 'email,public_profile'});
