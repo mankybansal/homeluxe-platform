@@ -15,7 +15,7 @@ homeluxeApp.controller("memberDashboardControl", function ($scope, $rootScope, $
 
 
     $scope.getLikes = function () {
-        $scope.$parent.ngMyUser = Cookie.getJSON('myUser');
+        $scope.$parent.ngMyUser = Cookies.getJSON('myUser');
         console.log($scope.$parent.ngMyUser.token);
 
         requests.getLikes($scope.$parent.ngMyUser.token, function (response) {
