@@ -1,0 +1,24 @@
+{
+  "name": "homeluxe-platform",
+  "homepage": "https://github.com/mankybansal/homeluxe-platform",
+  "authors": [
+    "Mayank Bansal <sunny.bansal@gmail.com>",
+    "Arjhun Srinivas <arjhun.s@gmail.com>"
+  ],
+  "description": "HomeLuxe.in online platform",
+  "main": "index.html",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-route": "^1.5.7",
+    "jquery": "^3.0.0",
+    "angular": "^1.5.7",
+    "js-cookie": "^2.1.2"
+  }
+}
