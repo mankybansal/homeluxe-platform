@@ -140,7 +140,7 @@ homeluxeApp.controller("browseStyleControl", function ($scope, $compile) {
         $('.resultCard').fadeIn(500);
         $('.centerDesc').fadeIn(500);
 
-        $scope.currentStyleNode = styles[styleNum].id;
+        $scope.currentStyleNode = $scope.styles[styleNum].id;
 
         $('.coverImage').empty().append("<img src='images/styles/covers/clear-images/" + $scope.styles[styleNum].cover_pic + "' class='coverPic'>");
 
