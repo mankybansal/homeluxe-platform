@@ -1,5 +1,7 @@
 var homeluxeApp = angular.module('homeluxeApp', ['ngRoute']);
 
+
+
 homeluxeApp.controller("userControl", function ($scope, $interval) {
 
     $scope.hideLoginOverlay = function () {
@@ -210,15 +212,15 @@ window.fbAsyncInit = function () {
     ref.parentNode.insertBefore(js, ref);
 }(document));
 
-homeluxeApp.controller("quizAppControl", function ($scope, $rootScope, stylesService) {
+homeluxeApp.controller("quizAppControl", function($scope, $rootScope){
 
-    $scope.startQuiz = function () {
+    $scope.startQuiz = function(){
         $scope.currentQuestion = 0;
         $scope.myAnswers = [];
         $scope.myProgress = 0;
         $scope.quizOver = false;
         $scope.inProgress = true;
-        requests.getQuiz(function (response) {
+        requests.getQuiz(function(response){
             $scope.$apply(function () {
                 $scope.questions = response;
                 $scope.getNextQuestion();
@@ -231,8 +233,7 @@ homeluxeApp.controller("quizAppControl", function ($scope, $rootScope, stylesSer
         if (!($scope.question = $scope.questions[$scope.currentQuestion])) {
             $scope.quizOver = true;
             requests.submitQuiz($scope.myAnswers.join(), function (response) {
-                stylesService.setStyles(response);
-                console.log(stylesService.getStyles());
+                $rootScope.styles = response;
                 $scope.$parent.viewStyle(0);
             });
         }
@@ -242,17 +243,5 @@ homeluxeApp.controller("quizAppControl", function ($scope, $rootScope, stylesSer
         $scope.myAnswers.push(myAnswer);
         $scope.currentQuestion++;
         $scope.getNextQuestion();
-    };
-});
-
-homeluxeApp.factory('stylesService', function () {
-    var styles = [];
-    return {
-        setStyles: function (newStyles) {
-            styles = newStyles;
-        },
-        getStyles: function () {
-            return styles;
-        }
     };
 });
