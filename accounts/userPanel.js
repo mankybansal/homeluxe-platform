@@ -31,7 +31,7 @@ homeluxeApp.controller("memberDashboardControl", function ($scope, $rootScope, $
 
     $scope.getLikes = function () {
         $scope.requests.getLikes($scope.$parent.ngMyUser.token, function (response) {
-            if (typeof $scope.response.success == 'undefined' && response.success != "false")
+            if (typeof response.success == 'undefined' && response.success != "false")
                 $scope.myLikes = response;
         });
     };
