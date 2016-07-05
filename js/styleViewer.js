@@ -86,6 +86,12 @@ function likeRoom() {
 homeluxeApp.controller("browseStyleControl", function ($scope, $compile) {
    getServer();
 
+    $scope.mySplit = function(string, nb) {
+        var array = string.split('.');
+        return array[nb];
+    }
+
+
     $scope.getStyles = function () {
         requests.getStyles(function (response) {
             $scope.$apply(function () {
@@ -166,9 +172,9 @@ homeluxeApp.controller("styleViewerControl", function ($scope) {
 
         changeUrlParam('style', $scope.styles[styleNum].catalogueKey);
 
-        // if (typeof myRandomToken !== 'undefined') {
-        //     changeUrlParam('token', myRandomToken);
-        // }
+        if (typeof myRandomToken !== 'undefined') {
+            changeUrlParam('token', myRandomToken);
+        }
 
         $scope.images = [];
 
@@ -179,7 +185,6 @@ homeluxeApp.controller("styleViewerControl", function ($scope) {
                     "id": $scope.styles[styleNum].images[i].id
                 };
             }
-
             $scope.loadImage();
         } else {
             $('.leftNav').hide();
@@ -190,9 +195,6 @@ homeluxeApp.controller("styleViewerControl", function ($scope) {
             $('.leftNav').hide();
             $('.rightNav').hide();
         }
-
-        console.log($scope.images);
-
     };
 
     $scope.leftNavClick = function () {

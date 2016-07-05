@@ -416,7 +416,7 @@
             <div class="introPanel" style="width: 100%;">
                 <div class="diamondContainer clear">
                     <div class='diamond' ng-repeat="style in styles" ng-click="viewStyle(style.id)">
-                        <div class='diamondText' id='style{{style.id}}'>
+                        <div class='diamondText' id='style{{style.id}}' style="background: url('images/styles/{{style.name}}/{{mySplit(style.images[2].file,0) + 'thumb.' + mySplit(style.images[2].file,1)}}'); background-size: auto 160%; background-repeat: no-repeat; background-position: center;">
                             <div class='textHighlight'>{{style.name}}</div>
                         </div>
                     </div>
