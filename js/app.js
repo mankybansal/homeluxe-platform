@@ -343,10 +343,15 @@ homeluxeApp.controller("styleViewerControl", function ($scope, $rootScope) {
 });
 
 homeluxeApp.directive("headerMenu", function ($templateRequest, $compile) {
+
+    var template;
+    if(dashboard) template = "../modules/headerMenu.html";
+    else template = "modules/headerMenu.html";
+
     return {
         restrict: "AE",
         link: function (scope, element) {
-            $templateRequest("modules/headerMenu.html").then(function (html) {
+            $templateRequest(template).then(function (html) {
                 var template = angular.element(html);
                 element.append(template);
                 $compile(template)(scope);
@@ -356,10 +361,15 @@ homeluxeApp.directive("headerMenu", function ($templateRequest, $compile) {
 });
 
 homeluxeApp.directive("loginOverlay", function ($templateRequest, $compile) {
+
+    var template;
+    if(dashboard) template = "../modules/loginOverlay.html";
+    else template = "modules/loginOverlay.html";
+
     return {
         restrict: "AE",
         link: function (scope, element) {
-            $templateRequest("modules/loginOverlay.html").then(function (html) {
+            $templateRequest(template).then(function (html) {
                 var template = angular.element(html);
                 element.append(template);
                 $compile(template)(scope);
@@ -369,10 +379,15 @@ homeluxeApp.directive("loginOverlay", function ($templateRequest, $compile) {
 });
 
 homeluxeApp.directive("styleViewer", function ($templateRequest, $compile) {
+
+    var template;
+    if(dashboard) template = "../modules/styleViewer.html";
+    else template = "modules/styleViewer.html";
+
     return {
         restrict: "AE",
         link: function (scope, element) {
-            $templateRequest("modules/styleViewer.html").then(function (html) {
+            $templateRequest(template).then(function (html) {
                 var template = angular.element(html);
                 element.append(template);
                 $compile(template)(scope);
