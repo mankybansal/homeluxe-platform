@@ -80,7 +80,7 @@ homeluxeApp.controller("userControl", function ($scope, $interval) {
                     $scope.facebook.name = response.name;
                     $scope.facebook.id = response.id;
                     $scope.facebook.email = response.email;
-                    
+
                     requests.userLogin(response.email, response.id, function (response) {
                         $scope.$apply(function () {
                             if (response.status == "Success") {
@@ -109,7 +109,7 @@ homeluxeApp.controller("userControl", function ($scope, $interval) {
         $scope.ngMyUser = false;
         $scope.facebook = {};
         $scope.guest = {};
-        
+
         $scope.cookieChecker = $interval(function () {
             $scope.checkCookie();
         }, 3000);
@@ -210,15 +210,15 @@ window.fbAsyncInit = function () {
     ref.parentNode.insertBefore(js, ref);
 }(document));
 
-homeluxeApp.controller("quizAppControl", function($scope, $rootScope, stylesService){
+homeluxeApp.controller("quizAppControl", function ($scope, $rootScope, stylesService) {
 
-    $scope.startQuiz = function(){
+    $scope.startQuiz = function () {
         $scope.currentQuestion = 0;
         $scope.myAnswers = [];
         $scope.myProgress = 0;
         $scope.quizOver = false;
         $scope.inProgress = true;
-        requests.getQuiz(function(response){
+        requests.getQuiz(function (response) {
             $scope.$apply(function () {
                 $scope.questions = response;
                 $scope.getNextQuestion();
@@ -244,13 +244,14 @@ homeluxeApp.controller("quizAppControl", function($scope, $rootScope, stylesServ
     };
 });
 
-homeluxeApp.service('stylesService', function() {
-    this.styles = [];
-    this.setStyles = function (newStyles) {
-        this.styles = newStyles;
+homeluxeApp.factory('stylesService', function () {
+    var styles = [];
+    return {
+        setStyles: function (newStyles) {
+            styles = newStyles;
+        },
+        getStyles: function () {
+            return styles;
+        }
     };
-
-    this.getStyles = function(){
-        return this.styles;
-    }
 });
