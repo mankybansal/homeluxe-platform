@@ -7,6 +7,8 @@ var dashboard = true;
 
 homeluxeApp.controller("memberDashboardControl", function ($scope, $rootScope, $interval) {
 
+    getServer();
+
     $scope.init = function () {
         $scope.myLikes = [];
         $scope.getLikes();
