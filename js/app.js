@@ -45,7 +45,7 @@ homeluxeApp.controller("homeluxeAppControl", function ($scope) {
 
         userLogin: function (username, password, callback) {
             var myObject = {
-                "token":  $scope.guestToken,
+                "token": $scope.guestToken,
                 "email": username,
                 "password": password
             };
@@ -141,26 +141,22 @@ homeluxeApp.controller("userControl", function ($scope, $rootScope, $interval) {
     $scope.login = function () {
         if ($scope.isValid($scope.guest.email) && $scope.isValid($scope.guest.password))
             $scope.requests.userLogin($scope.guest.email, $scope.guest.password, function (response) {
-                $scope.$apply(function () {
-                    if (response.status == "Success") {
-                        $scope.ngMyUser = response;
-                        $scope.loginSuccess();
-                    }
-                    else showAlert('Wrong username or password.');
-                });
+                if (response.status == "Success") {
+                    $scope.ngMyUser = response;
+                    $scope.loginSuccess();
+                }
+                else showAlert('Wrong username or password.');
             });
         else showAlert('Please enter a username & password.');
     };
 
     $scope.submitRegister = function () {
         if ($scope.isValid($scope.guest.name) && $scope.isValid($scope.guest.email) && $scope.isValid($scope.guest.password))
-            $scope.requests.userRegiserForm($scope.guest.name, $scope.guest.email, $scope.guest.password, function (response) {
-                if (response.status == "Success")
-                    $scope.login();
-                else if (response.status == "Failed" && response.message == "User already exists")
-                    showAlert('You already have an account.');
-                else showAlert('Please fill the form correctly.');
-            });
+            if (response.status == "Success")
+                $scope.login();
+            else if (response.status == "Failed" && response.message == "User already exists")
+                showAlert('You already have an account.');
+            else showAlert('Please fill the form correctly.');
         else showAlert('Please fill the form correctly.');
     };
 
@@ -209,14 +205,12 @@ homeluxeApp.controller("userControl", function ($scope, $rootScope, $interval) {
                     $scope.facebook.email = response.email;
 
                     $scope.requests.userLogin(response.email, response.id, function (response) {
-                        $scope.$apply(function () {
-                            if (response.status == "Success") {
-                                $scope.ngMyUser = response;
-                                $scope.facebook.connected = true;
-                                $scope.loginSuccess();
-                            }
-                            else $scope.facebookRegister();
-                        });
+                        if (response.status == "Success") {
+                            $scope.ngMyUser = response;
+                            $scope.facebook.connected = true;
+                            $scope.loginSuccess();
+                        }
+                        else $scope.facebookRegister();
                     });
                     console.log($scope.facebook);
                 });
@@ -278,10 +272,8 @@ homeluxeApp.controller("quizAppControl", function ($scope, $rootScope) {
         $scope.quizOver = false;
         $scope.inProgress = true;
         $scope.requests.getQuiz(function (response) {
-            $scope.$apply(function () {
-                $scope.questions = response;
-                $scope.getNextQuestion();
-            });
+            $scope.questions = response;
+            $scope.getNextQuestion();
         });
     };
 
@@ -313,10 +305,8 @@ homeluxeApp.controller("browseStyleControl", function ($scope, $rootScope) {
 
     $scope.getStyles = function () {
         $scope.requests.getStyles(function (response) {
-            $scope.$apply(function () {
-                $rootScope.styles = response;
-            });
-
+            $rootScope.styles = response;
+            
             $('.mainCard').fadeIn(1000).animate({marginTop: '0px'}, 500);
 
             if (urlStyle != null) {
