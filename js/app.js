@@ -326,12 +326,12 @@ homeluxeApp.controller("styleViewerControl", function ($scope,$rootScope) {
     $scope.loadImage = function () {
         $scope.current.imageNode = $scope.current.images[$scope.current.image].id;
         $scope.updateLikes($scope.current.styleNode, $scope.current.imageNode);
-        $(".styleContainer").css({
-            "background": "url('images/styles/" + $scope.current.images[$scope.current.image].img + "')",
-            "background-size": "contain",
-            "background-repeat": "no-repeat",
-            "background-position": "center"
-        });
+        // $(".styleContainer").css({
+        //     "background": "url('images/styles/" + $scope.current.images[$scope.current.image].img + "')",
+        //     "background-size": "contain",
+        //     "background-repeat": "no-repeat",
+        //     "background-position": "center"
+        // });
     };
 
     $scope.fbShare = function() {
