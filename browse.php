@@ -93,8 +93,7 @@
     }
 
     ?>
-
-
+    
     <link rel="stylesheet" href="bower_components/animate.css/animate.css" type="text/css">
     <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.css">
 
@@ -117,14 +116,6 @@
     <script src="js/app.js"></script>
     <script src="js/headerMenu.js"></script>
     
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('.resultLogo').click(function () {
-                window.location = 'index.html';
-            });
-        });
-    </script>
-
     <style>
 
         html, body {

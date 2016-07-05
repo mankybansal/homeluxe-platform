@@ -1,6 +1,6 @@
 var homeluxeApp = angular.module('homeluxeApp', ['ngRoute']);
 
-homeluxeApp.controller("userControl", function ($scope, $interval) {
+homeluxeApp.controller("userControl", function ($scope, $rootScope, $interval) {
 
     $scope.hideLoginOverlay = function () {
         $('.loginOverlay').fadeOut(500);
@@ -361,7 +361,7 @@ homeluxeApp.directive("headerMenu", function ($templateRequest, $compile) {
     return {
         restrict: "AE",
         link: function (scope, element) {
-            $templateRequest("headerMenu.html").then(function (html) {
+            $templateRequest("modules/headerMenu.html").then(function (html) {
                 var template = angular.element(html);
                 element.append(template);
                 $compile(template)(scope);
@@ -374,7 +374,7 @@ homeluxeApp.directive("loginOverlay", function ($templateRequest, $compile) {
     return {
         restrict: "AE",
         link: function (scope, element) {
-            $templateRequest("loginOverlay.html").then(function (html) {
+            $templateRequest("modules/loginOverlay.html").then(function (html) {
                 var template = angular.element(html);
                 element.append(template);
                 $compile(template)(scope);
@@ -387,7 +387,7 @@ homeluxeApp.directive("styleViewer", function ($templateRequest, $compile) {
     return {
         restrict: "AE",
         link: function (scope, element) {
-            $templateRequest("styleViewer.html").then(function (html) {
+            $templateRequest("modules/styleViewer.html").then(function (html) {
                 var template = angular.element(html);
                 element.append(template);
                 $compile(template)(scope);
