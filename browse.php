@@ -344,7 +344,9 @@
 
 </head>
 
-<body ng-app="homeluxeApp" homeluxe-app-control user-control header-menu login-overlay>
+<body ng-app="homeluxeApp" homeluxe-app-control user-control>
+<header-menu></header-menu>
+<login-overlay></login-overlay>
 <div ng-controller="styleViewerControl">
     <style-viewer></style-viewer>
     <div class="mainCardContainer" ng-controller="browseStyleControl">
