@@ -1,3 +1,16 @@
+::-webkit-input-placeholder {
+    font-size: 16px;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+    font-size: 16px;
+}
+
+:-ms-input-placeholder {
+    font-size: 16px;
+}
+
+
 .contentOverlay {
     width: 100%;
     height: 100%;
@@ -22,12 +35,12 @@
 
 .loginSpacer {
     width: 100%;
-    height: calc((100% - 440px) / 2);
+    height: calc((100% - 520px) / 2);
 }
 
 .loginContainer {
     width: 400px;
-    height: 440px;
+    height: 520px;
     border-radius: 2px;
     background: #FFF;
     float: top;
@@ -74,7 +87,7 @@
     font-family: RobotoLight, sans-serif;
 }
 
-.loginButton, .registerButton, .fbContButton, .fbRegisterButton , .faceBookLogin {
+.loginButton, .registerButton, .fbRegisterButton , .faceBookLogin {
     cursor: pointer;
     background: #468fde;
     vertical-align: top;
@@ -92,24 +105,26 @@
     font-family: RobotoLight, sans-serif;
 }
 
-.fbContButton, .fbRegisterButton {
-    width: 200px;
-    background: #3b5998;
-}
-
 .loginButton {
+    width: 100px;
     background: #468fde;
+    font-size: 16px;
+    padding: 22px;
 }
 
 .registerButton {
+    width: 230px;
+    padding: 22px;
     background: yellowgreen;
+    font-size: 16px;
 }
 
 .faceBookLogin {
     padding: 10px;
-    width: 60px;
+    width: 340px;
     background: #3b5998;
-    padding-top: 20px;
+    padding-top: 22px;
+    font-size: 16px;
 }
 
 .loginLogo {

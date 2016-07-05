@@ -11,7 +11,7 @@
 
 
     <?php
-    
+
 
     function generateRandomString($length = 10)
     {
@@ -93,82 +93,29 @@
     }
 
     ?>
+    
+   
+    <meta charset="UTF-8">
+    <title>Browse Styles | HomeLuxe</title>
+
+    <link rel="stylesheet" href="bower_components/animate.css/animate.css" type="text/css">
+    <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.css">
 
     <link rel="stylesheet" href="css/default.css" type="text/css">
     <link rel="stylesheet" href="css/accountsDefault.css" type="text/css">
     <link rel="stylesheet" href="css/headerMenu.css" type="text/css">
-    <link rel="stylesheet" href="css/animate.css" type="text/css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/styleViewer.css" type="text/css">
 
-    <meta charset="UTF-8">
-    <title>Browse Styles | HomeLuxe</title>
+    <script src="/bower_components/jquery/dist/jquery.js"></script>
+    <script src="/bower_components/angular/angular.js"></script>
+    <script src="/bower_components/angular-route/angular-route.js"></script>
+    <script src="/bower_components/js-cookie/src/js.cookie.js"></script>
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/jquery.cookie.js"></script>
+
     <script src="js/serverRequest.js"></script>
-    <script src="js/accounts.js"></script>
+    <script src="js/app.js"></script>
     <script src="js/headerMenu.js"></script>
-    <script src="js/styleViewer.js"></script>
     
-    <script type="text/javascript">
-
-
-        var styles = [];
-        
-        function getStyles() {
-            requests.getStyles(function (response) {
-                
-                styles = response;
-
-                $.each(styles, function (index, item) {
-
-                    if (item.images[0].name != 'NOIMAGE.png') {
-                        $('.diamondContainer').append("<div class='diamond' id='styleDia" + index + "'><a href='javascript:viewStyle(" + index + ");'><div  data-adaptive-background data-ab-css-background data-ab-parent='#styleDia" + index + "' class='diamondText' id='style" + index + "' ><div class='textHighlight'>" + item.name + "</div></div></a></div>");
-
-                        var str = item.images[2].file;
-                        var res = str.split(".");
-
-                        $("#style" + index).css({
-                            "background": "url('images/styles/" + item.name + "/" + res[0] + "thumb." + res[1] + "')",
-                            "background-size": "auto 160%",
-                            "background-repeat": "no-repeat",
-                            "background-position": "center"
-                        });
-                    } else {
-                        $('.diamondContainer').append("<div class='diamond'><a href='javascript:viewStyle(" + index + ");'><div  class='diamondText' id='style" + index + "' ><div class='textHighlight'>" + item.name + "</div></div></a></div>");
-                        $("#style" + index).css({
-                            "background": "url('images/styles/" + item.name + "/" + item.images[2].file + "')",
-                            "background-size": "auto 100%",
-                            "background-repeat": "no-repeat",
-                            "background-position": "center"
-                        });
-                    }
-                });
-                
-                $('.mainCard').fadeIn(1000).animate({marginTop: '0px'}, 500);
-
-                if (urlStyle != null) {
-                    var styleNumber;
-                    for (var i = 0; i < styles.length; i++)
-                        if (styles[i].catalogueKey == urlStyle)
-                            styleNumber = i;
-                    viewStyle(styleNumber);
-                }
-            });
-        }
-
-        $(document).ready(function () {
-            $('.browseLooks').click(function () {
-                $('.resultCard').fadeOut(500);
-            });
-            $('.resultLogo').click(function () {
-                window.location = 'index.html';
-            });
-            getStyles();
-        });
-    </script>
-
     <style>
 
         html, body {
@@ -397,21 +344,27 @@
 
 </head>
 
-<body>
+<body ng-app="homeluxeApp" ng-controller="userControl">
 
+<header-menu></header-menu>
+<login-overlay></login-overlay>
 
-<div class="loginOverlay"></div>
-
-<div class="headerMenu"></div>
-
-<div class="mainCardContainer">
-    <div class="mainCard">
-        <div class="introPanel" style="width: 100%;">
-            <div class="diamondContainer clear"></div>
+<div ng-controller="styleViewerControl">
+    <style-viewer ></style-viewer>
+    <div class="mainCardContainer" ng-controller="browseStyleControl">
+        <div class="mainCard">
+            <div class="introPanel" style="width: 100%;">
+                <div class="diamondContainer clear">
+                    <div class='diamond' ng-repeat="style in styles" ng-click="viewStyle(style.id)">
+                        <div class='diamondText' id='style{{style.id}}' style="background: url('images/styles/{{style.name}}/{{mySplit(style.images[2].file,0) + 'thumb.' + mySplit(style.images[2].file,1)}}'); background-size: auto 160%; background-repeat: no-repeat; background-position: center;">
+                            <div class='textHighlight'>{{style.name}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
-<div class="styleViewer"></div>
 </body>
 </html>

@@ -5,19 +5,24 @@
         <div class="menuBox" onclick="menuClicked()">
             <i class="fa fa-caret-left menuButton menuCloseFeedback" style="margin-right: 5px; opacity: 0;"></i>
 
-            <img src="images/MENU.png" style="height: 30px; width: 30px; float: left; margin-top: 15px;">
+            <img src="../images/MENU.png" style="height: 30px; width: 30px; float: left; margin-top: 15px;">
             <div class="menuTriggerText">
                 MENU
             </div>
         </div>
     </div>
 
-    <img class='logoButton' src="images/logo.png" onclick="menuHomeClick()">
+    <img class='logoButton' src="../images/logo.png" onclick="menuHomeClick()">
 
     <div class="headerSpacer spacerRight ">
-        <div class="menuBox menuLogin hideMobile loginTrigger" onclick="loginButtonClick()">
+        <div class="menuBox menuLogin hideMobile loginTrigger" ng-click="accountOptionsTrigger()">
             <div class="menuTriggerText myAccount">
-                LOGIN/SIGN-UP
+                <span ng-show="!ngMyUser">LOGIN/SIGN-UP</span>
+                <span ng-show="ngMyUser">
+                    {{ngMyUser.name}}
+                    &nbsp;&nbsp;
+                    <i class="fa fa-user"></i>
+                </span>
             </div>
         </div>
         <div class="menuBox hideMobile menuLogin"
@@ -34,17 +39,25 @@
     </div>
 </div>
 
+<div class="accountOptions" ng-show="accountOptions">
+    <div class="accountOption" ng-click="gotoDashboard()">
+        MY ACCOUNT
+    </div>
+    <div class="accountOption" ng-click="logout()">
+        SIGN OUT
+    </div>
+</div>
+
 <div class="menuContainer" onclick="menuContainerClicked()"></div>
 
 <div class="menu">
-
-    <div class="menuOption myAccount loginTrigger" onclick="loginButtonClick()">My Account</div>
     <div class="menuOption" onclick="menuHomeClick()">Home</div>
     <div class="menuOption" onclick="menuQuizClick()">Find Your Style</div>
     <div class="menuOption" onclick="menuBrowseClick()">Browse Our Styles</div>
     <div class="menuOption" onclick="menuHowItWorksClick()">How It Works</div>
     <div class="menuOption" onclick="menuWhoWeAreClick()">Who We Are</div>
     <div class="menuOption" onclick="menuContactClick()">Contact Us</div>
+    <div class="menuOption myAccount loginTrigger" onclick="loginButtonClick()">My Account</div>
 </div>
 
 <div id="left-menu"></div>

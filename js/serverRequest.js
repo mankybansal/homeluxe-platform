@@ -30,6 +30,8 @@ function serverRequest(url, data, callback) {
             serverRequest(url, data, callback)
         });
     } else {
+        console.log(apiBaseURL + url);
+        console.log(data);
         $.ajax({
             type: "POST",
             dataType: "json",
@@ -64,12 +66,11 @@ var requests = {
         serverRequest("member/login", myObject, callback);
     },
 
-    userRegiserForm: function (name, email, phone, password, callback) {
+    userRegiserForm: function (name, email, password, callback) {
         var myObject = {
             "token": guestToken,
             "name": name,
             "email": email,
-            "mobile": phone,
             "password": password
         };
         serverRequest("member/register", myObject, callback);

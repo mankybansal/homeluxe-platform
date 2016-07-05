@@ -84,7 +84,3 @@ function menuQuizClick() {
 function loginButtonClick() {
     $('.loginOverlay').fadeIn(500);
 }
-
-$(document).ready(function () {
-    $(".headerMenu").load("headerMenu.html");
-});

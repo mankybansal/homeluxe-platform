@@ -4,22 +4,26 @@
     <meta charset="UTF-8">
 
     <title>Welcome to HomeLuxe.in</title>
+
+    <link rel="stylesheet" href="bower_components/animate.css/animate.css" type="text/css">
+    <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.css">
+
     <link rel="stylesheet" href="css/default.css" type="text/css">
     <link rel="stylesheet" href="css/accountsDefault.css" type="text/css">
     <link rel="stylesheet" href="css/headerMenu.css" type="text/css">
-    <meta name=viewport content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="css/jquery.fullPage.css"/>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <script src="/bower_components/jquery/dist/jquery.js"></script>
+    <script src="/bower_components/angular/angular.js"></script>
+    <script src="/bower_components/angular-route/angular-route.js"></script>
+    <script src="/bower_components/js-cookie/src/js.cookie.js"></script>
+    <script src="/bower_components/fullpage.js/dist/jquery.fullpage.js"></script>
+    <script src="/bower_components/fullpage.js/vendors/jquery.easings.min.js"></script>
+    <script src="/bower_components/fullpage.js/vendors/scrolloverflow.js"></script>
 
-    <script src='js/jquery.min.js'></script>
-    <script type="text/javascript" src="js/jquery.slimscroll.min.js"></script>
-    <script type="text/javascript" src="js/jquery.fullPage.min.js"></script>
     <script type="text/javascript" src="js/serverRequest.js"></script>
     <script type="text/javascript" src="js/headerMenu.js"></script>
-    <script type="text/javascript" src="js/accounts.js"></script>
-    <script type="text/javascript" src="js/js.cookie.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
 
     <script type="text/javascript">
 
@@ -46,15 +50,21 @@
                 var phone = encodeURIComponent(document.getElementById("PHONE").value);
                 var message = encodeURIComponent(document.getElementById("MESSAGE").value);
 
-                var dataString = 'name=' + name + '&email=' + email + '&phone=' + phone + '&message=' + message;
-                console.log(dataString);
                 if (name == '' || email == '' || phone == '') {
                     alert("Please fill all the details!");
                 } else {
+                    var dataObj = {
+                        query: {
+                            name: name,
+                            email: email,
+                            phone: phone,
+                            message: message
+                        }
+                    };
                     $.ajax({
                         type: "GET",
-                        url: "send.php",
-                        data: dataString,
+                        url: "https://dev.homeluxe.in:3000/sendmail",
+                        data: dataObj,
                         success: function () {
                             $('.contactSuccess').fadeIn(500);
                             $('.contactSubmit').fadeOut(500);
@@ -506,11 +516,11 @@
 
 </head>
 
-<body>
+<body ng-app="homeluxeApp" ng-controller="userControl">
 
-<div class="loginOverlay"></div>
+<login-overlay></login-overlay>
 
-<div class="headerMenu"></div>
+<header-menu></header-menu>
 
 <div id="fullpage">
     <div class="section introSection" id="section0">
