@@ -210,7 +210,7 @@ window.fbAsyncInit = function () {
     ref.parentNode.insertBefore(js, ref);
 }(document));
 
-homeluxeApp.controller("quizAppControl", function($scope){
+homeluxeApp.controller("quizAppControl", function($scope, $rootScope){
 
     $scope.startQuiz = function(){
         $scope.currentQuestion = 0;
@@ -231,8 +231,8 @@ homeluxeApp.controller("quizAppControl", function($scope){
         if (!($scope.question = $scope.questions[$scope.currentQuestion])) {
             $scope.quizOver = true;
             requests.submitQuiz($scope.myAnswers.join(), function (response) {
-                $scope.$parent.styles = response;
-                $scope.$parent.viewStyle(0);
+                $rootScope.styles = response;
+                $rootScope.$parent.viewStyle(0);
             });
         }
     };
