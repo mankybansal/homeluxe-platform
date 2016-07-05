@@ -21,6 +21,7 @@
     "angular": "^1.5.7",
     "js-cookie": "^2.1.2",
     "animate.css": "^3.5.2",
-    "components-font-awesome": "^4.6.3"
+    "components-font-awesome": "^4.6.3",
+    "fullpage.js": "^2.8.1"
   }
 }
