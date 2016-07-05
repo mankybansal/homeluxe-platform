@@ -232,6 +232,7 @@ homeluxeApp.controller("quizAppControl", function ($scope, $rootScope, stylesSer
             $scope.quizOver = true;
             requests.submitQuiz($scope.myAnswers.join(), function (response) {
                 stylesService.setStyles(response);
+                console.log(stylesService.getStyles());
                 $scope.$parent.viewStyle(0);
             });
         }
