@@ -131,7 +131,7 @@
                 $.each(styles, function (index, item) {
 
                     if (item.images[0].name != 'NOIMAGE.png') {
-                        $('.diamondContainer').append("<div class='diamond' id='styleDia" + index + "'><a href='javascript:viewStyle(" + index + ");'><div  data-adaptive-background data-ab-css-background data-ab-parent='#styleDia" + index + "' class='diamondText' id='style" + index + "' ><div class='textHighlight'>" + item.name + "</div></div></a></div>");
+                        $('.diamondContainer').append("<div class='diamond' id='styleDia" + index + "' ng-click='viewStyle(" + index + ")'><div  data-adaptive-background data-ab-css-background data-ab-parent='#styleDia" + index + "' class='diamondText' id='style" + index + "' ><div class='textHighlight'>" + item.name + "</div></div></div>");
 
                         var str = item.images[2].file;
                         var res = str.split(".");
@@ -143,7 +143,7 @@
                             "background-position": "center"
                         });
                     } else {
-                        $('.diamondContainer').append("<div class='diamond'><a href='javascript:viewStyle(" + index + ");'><div  class='diamondText' id='style" + index + "' ><div class='textHighlight'>" + item.name + "</div></div></a></div>");
+                        $('.diamondContainer').append("<div class='diamond' ng-click='viewStyle(" + index + ")'><div  class='diamondText' id='style" + index + "' ><div class='textHighlight'>" + item.name + "</div></div></div>");
                         $("#style" + index).css({
                             "background": "url('images/styles/" + item.name + "/" + item.images[2].file + "')",
                             "background-size": "auto 100%",

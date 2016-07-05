@@ -2,12 +2,12 @@
  * Created by mayankbansal on 6/21/16.
  */
 
-var images = [];
-var currentImage = 0;
-var currentStyle;
-
-var currentStyleNode;
-var currentImageNode;
+// var images = [];
+// var currentImage = 0;
+// var currentStyle;
+//
+// var currentStyleNode;
+// var currentImageNode;
 
 function getURLParameter(name) {
     return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [, ""])[1].replace(/\+/g, '%20')) || null;
@@ -83,59 +83,127 @@ function likeRoom() {
         loginButtonClick();
 }
 
-function viewStyle(styleNum) {
 
-    $('.leftNav').hide();
+homeluxeApp.controller("styleViewerControl", function ($scope) {
 
-    currentImage = 0;
-    $('.coverContainer').fadeIn(500);
+    $scope.init = function () {
+        $scope.images = [];
+        $scope.currentImage = 0;
+        $scope.currentStyle = null;
+        $scope.currentStyleNode = null;
+        $scope.currentImageNode = null;
+    };
 
-    currentStyle = styleNum;
-    $('.resultCard').fadeIn(500);
-    $('.centerDesc').fadeIn(500);
+    $scope.viewStyle = function(styleNum){
+        $('.leftNav').hide();
 
-    currentStyleNode = styles[styleNum].id;
+        $scope.currentImage = 0;
+        $('.coverContainer').fadeIn(500);
 
-    $('.coverImage').empty().append("<img src='images/styles/covers/clear-images/" + styles[styleNum].cover_pic + "' class='coverPic'>");
+        $scope.currentStyle = styleNum;
+        $('.resultCard').fadeIn(500);
+        $('.centerDesc').fadeIn(500);
 
-    $(".coverBG").css({
-        "background": "url('images/styles/covers/blurred-images/" + styles[styleNum].cover_pic + "')",
-        "background-size": "100% 100%",
-        "background-repeat": "no-repeat",
-        "background-position": "center"
-    });
-    $('.coverTitle').html("This style is called <b>" + styles[styleNum].name + "</b>!");
-    $('.coverTextBox').html(styles[styleNum].description);
-    $(".viewStyleTitle2").html(styles[styleNum].name);
+        $scope.currentStyleNode = styles[styleNum].id;
 
-    changeUrlParam('style', styles[styleNum].catalogueKey);
+        $('.coverImage').empty().append("<img src='images/styles/covers/clear-images/" + styles[styleNum].cover_pic + "' class='coverPic'>");
 
-    if (typeof myRandomToken !== 'undefined') {
-        changeUrlParam('token', myRandomToken);
-    }
+        $(".coverBG").css({
+            "background": "url('images/styles/covers/blurred-images/" + styles[styleNum].cover_pic + "')",
+            "background-size": "100% 100%",
+            "background-repeat": "no-repeat",
+            "background-position": "center"
+        });
+        $('.coverTitle').html("This style is called <b>" + styles[styleNum].name + "</b>!");
+        $('.coverTextBox').html(styles[styleNum].description);
+        $(".viewStyleTitle2").html(styles[styleNum].name);
 
-    images = [];
+        changeUrlParam('style', styles[styleNum].catalogueKey);
 
-    if (styles[styleNum].images.length != 0) {
-        for (var i = 0; i < styles[styleNum].images.length; i++) {
-            images[i] = {
-                "img": styles[styleNum].name + '/' + styles[styleNum].images[i].file,
-                "id": styles[styleNum].images[i].id
-            };
+        if (typeof myRandomToken !== 'undefined') {
+            changeUrlParam('token', myRandomToken);
         }
 
-        loadImage();
-    } else {
-        $('.leftNav').hide();
-        $('.rightNav').hide();
-    }
+        $scope.images = [];
 
-    if (styles[styleNum].images.length == 1) {
-        $('.leftNav').hide();
-        $('.rightNav').hide();
-    }
+        if (styles[styleNum].images.length != 0) {
+            for (var i = 0; i < styles[styleNum].images.length; i++) {
+                $scope.images[i] = {
+                    "img": styles[styleNum].name + '/' + styles[styleNum].images[i].file,
+                    "id": styles[styleNum].images[i].id
+                };
+            }
 
-}
+            loadImage();
+        } else {
+            $('.leftNav').hide();
+            $('.rightNav').hide();
+        }
+
+        if (styles[styleNum].images.length == 1) {
+            $('.leftNav').hide();
+            $('.rightNav').hide();
+        }
+    };
+    
+    $scope.init();
+});
+
+
+
+// function viewStyle(styleNum) {
+//
+//     $('.leftNav').hide();
+//
+//     currentImage = 0;
+//     $('.coverContainer').fadeIn(500);
+//
+//     currentStyle = styleNum;
+//     $('.resultCard').fadeIn(500);
+//     $('.centerDesc').fadeIn(500);
+//
+//     currentStyleNode = styles[styleNum].id;
+//
+//     $('.coverImage').empty().append("<img src='images/styles/covers/clear-images/" + styles[styleNum].cover_pic + "' class='coverPic'>");
+//
+//     $(".coverBG").css({
+//         "background": "url('images/styles/covers/blurred-images/" + styles[styleNum].cover_pic + "')",
+//         "background-size": "100% 100%",
+//         "background-repeat": "no-repeat",
+//         "background-position": "center"
+//     });
+//     $('.coverTitle').html("This style is called <b>" + styles[styleNum].name + "</b>!");
+//     $('.coverTextBox').html(styles[styleNum].description);
+//     $(".viewStyleTitle2").html(styles[styleNum].name);
+//
+//     changeUrlParam('style', styles[styleNum].catalogueKey);
+//
+//     if (typeof myRandomToken !== 'undefined') {
+//         changeUrlParam('token', myRandomToken);
+//     }
+//
+//     images = [];
+//
+//     if (styles[styleNum].images.length != 0) {
+//         for (var i = 0; i < styles[styleNum].images.length; i++) {
+//             images[i] = {
+//                 "img": styles[styleNum].name + '/' + styles[styleNum].images[i].file,
+//                 "id": styles[styleNum].images[i].id
+//             };
+//         }
+//
+//         loadImage();
+//     } else {
+//         $('.leftNav').hide();
+//         $('.rightNav').hide();
+//     }
+//
+//     if (styles[styleNum].images.length == 1) {
+//         $('.leftNav').hide();
+//         $('.rightNav').hide();
+//     }
+//
+// }
 
 function callDesigner() {
     window.location = 'index.php#contactUsX';
@@ -189,7 +257,3 @@ function fbShare() {
         message: 'Check out this style. It looks absolutely beautiful! :)'
     });
 }
-
-$(document).ready(function () {
-    $('.styleViewer').load('styleViewer.html');
-});

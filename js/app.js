@@ -168,7 +168,6 @@ homeluxeApp.directive("loginOverlay", function ($templateRequest, $compile) {
     }
 });
 
-
 homeluxeApp.directive("styleViewer", function ($templateRequest, $compile) {
     return {
         restrict: "AE",
@@ -213,7 +212,7 @@ window.fbAsyncInit = function () {
 
 var styles;
 
-homeluxeApp.controller("quizAppController", function($scope){
+homeluxeApp.controller("quizAppControl", function($scope){
 
     $scope.startQuiz = function(){
         $scope.currentQuestion = 0;
