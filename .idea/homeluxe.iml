@@ -3,6 +3,7 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/api/node_modules" />
+      <excludeFolder url="file://$MODULE_DIR$/bower_components" />
       <excludeFolder url="file://$MODULE_DIR$/coming-soon" />
       <excludeFolder url="file://$MODULE_DIR$/coming-soon/images" />
       <excludeFolder url="file://$MODULE_DIR$/fullPageJS" />
@@ -10,5 +11,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="angular-js" level="application" />
+    <orderEntry type="library" name="angular" level="application" />
+    <orderEntry type="library" name="js.cookie" level="application" />
   </component>
 </module>

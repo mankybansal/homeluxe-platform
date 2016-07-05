@@ -14,8 +14,6 @@ var options = {
 	key  : fs.readFileSync('/etc/letsencrypt/live/dev.homeluxe.in/privkey.pem'),
 	cert : fs.readFileSync('/etc/letsencrypt/live/dev.homeluxe.in/cert.pem')
 };
-
-
 var express = require('express');
 var chalk = require('chalk');
 var morgan = require('morgan');
@@ -28,7 +26,19 @@ var db = require('seraph')({
 	user: "neo4j",
 	pass: "homeluxe@123"
 });
-//var moment = require('moment');
+var mysql = require('mysql');
+var archive = mysql.createConnection({
+	host : 'localhost',
+	user : 'dev',
+	password : 'homeluxe@123',
+	database : 'homeluxe'
+});
+
+// Connect to MYSQL
+archive.connect();
+
+var mode = process.argv[2] || 0;
+var port = 3000;
 var app = express();
 
 /***********************
@@ -49,12 +59,22 @@ var adminRoutes = express.Router();
 /********************
 * Support Functions *
 ********************/
-function search(nameKey, myArray) {
-    for (var i=0; i < myArray.length; i++) {
-        if (myArray[i].name === nameKey) {
-            return myArray[i];
-        }
-    }
+function tokenBlacklisted(token, callback) {
+	var query = 'SELECT COUNT(*) as count FROM blacklist WHERE token = ?';
+	var values = [token];
+
+	archive.query(query, values, function(err,rows,fields) {
+		if(err) {
+			res.send({
+				status : 'Failed',
+				message : 'Internal Server Error'
+			});
+			console.log(err);
+			return;
+		} else {
+			callback(rows[0].count);
+		}
+	});
 }
 
 /***********************
@@ -70,10 +90,12 @@ app.use(function(req, res, next) {
 ****************/
 publicRoutes.post('/getToken', function(req,res) {
 	var payload = {
-		userType : 'guest',
-		generatedAt : (new Date).getTime()
+		userType : 'guest'
 	};
-	var token = jwt.sign(payload,superSecret);
+	var options = {
+		expiresIn : 1200
+	};
+	var token = jwt.sign(payload,superSecret,options);
 	res.json({
 		success : true,
 		token : token
@@ -101,21 +123,29 @@ publicRoutes.get('/sendmail', function(req,res) {
 	});
 });
 
-
 publicRoutes.use(function(req,res,next) {
 	var token = req.headers['x-access-token'] || req.query.token || req.body.token;
 	if(token) {
-		jwt.verify(token, superSecret, function(err,decoded) {
-			if(err) {
-				res.json({
-					success : false,
-					message : 'Invalid token detected'
+		// Scan token against blacklist
+		tokenBlacklisted(req.body.token, function(result) {
+			if(result) {
+				// Token is blacklisted, reject.
+				res.send({
+					status : 'Failed',
+					message : 'Token has expired'
 				});
 			} else {
-				/* Redis token check needs to go here */
-				/* Analytics grabs data here */
-				req.decoded = decoded;
-				next();
+				jwt.verify(token, superSecret, function(err,decoded) {
+					if(err) {
+						res.json({
+							success : false,
+							message : 'Invalid token detected'
+						});
+					} else {
+						req.decoded = decoded;
+						next();
+					}
+				});
 			}
 		});
 	} else {
@@ -172,6 +202,26 @@ publicRoutes.post('/browse', function(req,res) {
 			throw err;
 		}
 		res.send(results);
+	});
+});
+
+publicRoutes.post('/logout', function(req,res) {
+	var query = 'INSERT INTO blacklist VALUES (?,?);';
+	var values = [req.body.token,req.decoded.exp];
+	// Insert token into blacklist
+	archive.query(query, values, function(err,rows,fields) {
+		if(err) {
+			console.log(err);
+			res.send({
+				status : 'Failed',
+				message : 'Logout Failed'
+			});
+		} else {
+			res.send({
+				status : 'Success',
+				message : 'Logout Successful'
+			});
+		}
 	});
 });
 
@@ -265,10 +315,12 @@ memberRoutes.post('/login', function(req,res) {
 					var payload = {
 						id : results[0].id,
 						email : results[0].email,
-						userType : results[0].user_type,
-						generatedAt : (new Date).getTime()
+						userType : results[0].user_type
 					};
-					var token = jwt.sign(payload,superSecret);
+					var options = {
+						expiresIn : 604800
+					};
+					var token = jwt.sign(payload,superSecret,options);
 					res.send({
 						status : 'Success',
 						message : 'Logged in successfully',
@@ -316,10 +368,12 @@ memberRoutes.post('/login', function(req,res) {
 					var payload = {
 						id : results[0].id,
 						email : results[0].email,
-						userType : results[0].user_type,
-						generatedAt : (new Date).getTime()
+						userType : results[0].user_type
 					};
-					var token = jwt.sign(payload,superSecret);
+					var options = {
+						expiresIn : 604800
+					};
+					var token = jwt.sign(payload,superSecret,options);
 					res.send({
 						status : 'Success',
 						message : 'Logged in successfully',
@@ -345,22 +399,32 @@ memberRoutes.post('/login', function(req,res) {
 memberRoutes.use(function(req,res,next) {
 	var token = req.headers['x-access-token'] || req.query.token || req.body.token;
 	if(token) {
-		jwt.verify(token, superSecret, function(err,decoded) {
-			if(err) {
-				res.json({
+		tokenBlacklisted(req.body.token, function(result) {
+			if(result) {
+				// Token is blacklisted, reject.
+				res.send({
 					status : 'Failed',
-					message : 'Invalid token detected'
+					message : 'Token has expired'
 				});
 			} else {
-				if(decoded.userType == 'member') {
-					req.decoded = decoded;
-					next();
-				} else {
-					res.send({
-						status : 'Failed',
-						message : 'Forbidden endpoint'
-					});
-				}
+				jwt.verify(token, superSecret, function(err,decoded) {
+					if(err) {
+						res.json({
+							status : 'Failed',
+							message : 'Invalid token detected'
+						});
+					} else {
+						if(decoded.userType == 'member') {
+							req.decoded = decoded;
+							next();
+						} else {
+							res.send({
+								status : 'Failed',
+								message : 'Forbidden endpoint'
+							});
+						}
+					}
+				});
 			}
 		});
 	} else {
@@ -407,10 +471,6 @@ memberRoutes.post('/like', function(req,res) {
 			});
 		}
 	});
-});
-
-memberRoutes.post('/unlike', function(req,res) {
-
 });
 
 memberRoutes.post('/likes', function(req,res) {
@@ -462,7 +522,10 @@ adminRoutes.post('/login', function(req,res) {
 				email : results[0].email,
 				userType : results[0].user_type
 			};
-			var token = jwt.sign(payload,superSecret);
+			var options = {
+				expiresIn : 604800
+			};
+			var token = jwt.sign(payload,superSecret,options);
 			res.send({
 				status : 'Success',
 				message : 'Logged in successfully',
@@ -485,22 +548,32 @@ adminRoutes.post('/login', function(req,res) {
 adminRoutes.use(function(req,res,next) {
 	var token = req.headers['x-access-token'] || req.query.token || req.body.token;
 	if(token) {
-		jwt.verify(token, superSecret, function(err,decoded) {
-			if(err) {
-				res.json({
+		tokenBlacklisted(req.body.token, function(result) {
+			if(result) {
+				// Token is blacklisted, reject.
+				res.send({
 					status : 'Failed',
-					message : 'Invalid token detected'
+					message : 'Token has expired'
 				});
 			} else {
-				if(decoded.userType == 'admin') {
-					req.decoded = decoded;
-					next();
-				} else {
-					res.send({
-						status : 'Failed',
-						message : 'Forbidden endpoint'
-					});
-				}
+				jwt.verify(token, superSecret, function(err,decoded) {
+					if(err) {
+						res.json({
+							status : 'Failed',
+							message : 'Invalid token detected'
+						});
+					} else {
+						if(decoded.userType == 'admin') {
+							req.decoded = decoded;
+							next();
+						} else {
+							res.send({
+								status : 'Failed',
+								message : 'Forbidden endpoint'
+							});
+						}
+					}
+				});
 			}
 		});
 	} else {
@@ -656,28 +729,6 @@ adminRoutes.post('/removeStyle', function(req,res) {
 				message : 'Transaction completed'
 			});
 		});
-		/*
-		async.each(req.body.nodes, function(node) {
-			db.delete(node, true, function(err) {
-				if(err) {
-					console.log(err);
-				}
-				return callback();
-			});
-		}, function(err) {
-			if(err) {
-				res.send({
-					status : 'Failed',
-					message : 'Delete failed'
-				});
-				console.log(err);
-			}
-			res.send({
-				status : 'Successful',
-				message : 'Delete completed'
-			});
-		});
-		*/
 	}
 });
 
@@ -686,6 +737,12 @@ app.use('/admin', adminRoutes);
 /**************
 * Start Server *
 **************/
-https.createServer(options, app).listen(3000, function () {
-	console.log('Started!');
-});
+if(mode) {
+	app.listen(port, function() {
+		console.log('[TEST MODE] Listening on port: ' + port);
+	});
+} else {
+	https.createServer(options, app).listen(port, function () {
+		console.log('[LIVE MODE] Listening on port: ' + port);
+	});
+}

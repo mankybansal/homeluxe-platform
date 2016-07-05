@@ -17,6 +17,7 @@
     "jsonwebtoken": "^5.5.4",
     "moment": "^2.11.1",
     "morgan": "^1.6.1",
+    "mysql": "^2.11.1",
     "sendgrid": "^2.0.0",
     "seraph": "^0.14.1"
   }

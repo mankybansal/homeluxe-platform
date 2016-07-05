@@ -11,28 +11,8 @@ html, body {
     padding: 0;
     margin: 0;
     background: #EEE;
-    font-family: RobotoLight;
+    font-family: RobotoLight, sans-serif;
     overflow: hidden;
-}
-
-@font-face {
-    font-family: RobotoLight;
-    src: url('../fonts/roboto/Roboto-Light.ttf');
-}
-
-@font-face {
-    font-family: RobotoMedium;
-    src: url('../fonts/roboto/Roboto-Medium.ttf');
-}
-
-@font-face {
-    font-family: RobotoRegular;
-    src: url('../fonts/roboto/Roboto-Regular.ttf');
-}
-
-@font-face {
-    font-family: RobotoBlack;
-    src: url('../fonts/roboto/Roboto-Black.ttf');
 }
 
 ::-webkit-input-placeholder {
@@ -235,9 +215,6 @@ html, body {
     padding-top: 10px;
 }
 
-
-
-
 .viewPanel {
     display: none;
 }
@@ -245,8 +222,6 @@ html, body {
 .viewSelected {
     display: inline-block;
 }
-
-
 
 .fillContent {
     width: 100%;
@@ -443,7 +418,7 @@ html, body {
     text-align: center;
     color: #FFF;
     font-size: 15px;
-    font-family: RobotoLight;
+    font-family: RobotoLight, sans-serif;
     text-transform: uppercase;
     cursor: pointer;
     pointer-events: auto;
@@ -502,127 +477,4 @@ html, body {
 .statsContent {
     height: 125px;
     width: 100%;
-}
-
-.loginOverlay {
-    width: 100%;
-    height: 100%;
-    min-width: 600px;
-    min-height: 300px;
-    background: rgba(0, 0, 0, 0.7);
-    position: relative;
-    z-index: 200;
-}
-
-.loginSpacer {
-    width: 100%;
-    height: calc((100% - 440px) / 2);
-}
-
-.loginContainer {
-    width: 400px;
-    height: 440px;
-    border-radius: 2px;
-    background: #FFF;
-    float: top;
-    margin: 0 auto;
-    overflow: hidden;
-    text-align: center;
-    box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
-}
-
-.loginLogoContainer {
-    width: 100%;
-    height: 120px;
-    background: #FFF;
-}
-
-.loginTitleContainer {
-    height: 60px;
-    float: top;
-    width: 100%;
-    background: #FFF;
-    font-family: RobotoLight;
-    color: #333;
-    text-align: center;
-    font-size: 25px;
-    margin-bottom: 5px;
-    margin-top: 5px;
-    padding-top: 20px;
-    box-sizing: border-box;
-}
-
-.inputBox {
-    width: 340px;
-    margin: 0 auto;
-    margin-top: 10px;
-    outline: none;
-    border: 0px;
-    background: #F8F8F8;
-    color: black;
-    height: 60px;
-    box-sizing: border-box;
-    padding: 10px 20px 10px 20px;
-    font-size: 20px;
-    border-radius: 2px;
-    font-family: RobotoLight;
-}
-
-.loginButton, .registerButton, .fbContButton, .fbRegisterButton , .faceBookLogin {
-    cursor: pointer;
-    background: #468fde;
-    vertical-align: top;
-    display: inline-block;
-    height: 60px;
-    width: 120px;
-    margin-top: 20px;
-    margin-left: 5px;
-    margin-right: 5px;
-    border-radius: 2px;
-    padding: 20px;
-    box-sizing: border-box;
-    text-align: center;
-    color: #FFF;
-    font-size: 20px;
-    font-family: RobotoLight;
-}
-
-.fbContButton, .fbRegisterButton {
-    width: 200px;
-    background: #3b5998;
-}
-
-.loginButton {
-    background: #468fde;
-}
-
-.registerButton {
-    background: yellowgreen;
-}
-
-.faceBookLogin {
-    padding: 10px;
-    width: 60px;
-    background: #3b5998;
-    padding-top: 20px;
-}
-
-.loginLogo {
-    height: 90px;
-    margin: 0 auto;
-    margin-top: 30px;
-}
-
-.alertMessage {
-    margin: 0 auto;
-    padding: 16.5px 15px 16.5px 15px;
-    width: 400px;
-    box-sizing: border-box;
-    height: 50px;
-    background: #333;
-    font-size: 17px;
-    text-align: center;
-    box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
-    display: none;
-    color: white;
 }

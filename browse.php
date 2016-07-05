@@ -94,20 +94,27 @@
 
     ?>
 
+
+    <link rel="stylesheet" href="bower_components/animate.css/animate.css" type="text/css">
+    <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.css">
+    
     <link rel="stylesheet" href="css/default.css" type="text/css">
     <link rel="stylesheet" href="css/accountsDefault.css" type="text/css">
     <link rel="stylesheet" href="css/headerMenu.css" type="text/css">
-    <link rel="stylesheet" href="css/animate.css" type="text/css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/styleViewer.css" type="text/css">
 
     <meta charset="UTF-8">
     <title>Browse Styles | HomeLuxe</title>
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/jquery.cookie.js"></script>
+
+    <script src="/bower_components/jquery/dist/jquery.js"></script>
+    <script src="/bower_components/angular/angular.js"></script>
+    <script src="/bower_components/angular-route/angular-route.js"></script>
+    <script src="/bower_components/js-cookie/src/js.cookie.js"></script>
+
+
     <script src="js/serverRequest.js"></script>
-    <script src="js/accounts.js"></script>
+    <script src="js/app.js"></script>
     <script src="js/headerMenu.js"></script>
     <script src="js/styleViewer.js"></script>
     
@@ -397,12 +404,11 @@
 
 </head>
 
-<body>
+<body ng-app="homeluxeApp" ng-controller="userControl">
 
-
-<div class="loginOverlay"></div>
-
-<div class="headerMenu"></div>
+<header-menu></header-menu>
+<login-overlay></login-overlay>
+<style-viewer></style-viewer>
 
 <div class="mainCardContainer">
     <div class="mainCard">
@@ -412,6 +418,5 @@
     </div>
 </div>
 
-<div class="styleViewer"></div>
 </body>
 </html>
