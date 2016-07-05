@@ -104,12 +104,13 @@
     <meta charset="UTF-8">
     <title>Browse Styles | HomeLuxe</title>
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/js.cookie.js"></script>
+
     <script src="js/serverRequest.js"></script>
 
     <script src="/bower_components/angular/angular.js"></script>
     <script src="/bower_components/angular-route/angular-route.js"></script>
+    <script src="/bower_components/jquery/src/jquery.js"></script>
+    <script src="/bower_components/js-cookie/src/js.cookie.js"></script>
 
     <script src="js/accounts.js"></script>
     <script src="js/headerMenu.js"></script>
