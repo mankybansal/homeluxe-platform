@@ -32,7 +32,7 @@ function updateLikes(){
 
 $(document).ready(function () {
 
-    $('.loginOverlay').fadeIn(1000);
+    $('.loginOverlay').show();
     
     $(".signOutButton").click(function(){
         Cookies.remove('myUser');
