@@ -1,8 +1,8 @@
 var homeluxeApp = angular.module('homeluxeApp', ['ngRoute']);
 
-homeluxeApp.directive('homeluxeAppControl', function() {
+homeluxeApp.directive('homeluxeAppControl', function () {
     return {
-        controller: function($scope, $interval) {
+        controller: function ($scope, $interval) {
             $scope.getServer = function () {
                 if (typeof location.origin != 'undefined') {
                     if (location.host === 'dev.homeluxe.in') {
@@ -53,7 +53,7 @@ homeluxeApp.directive('homeluxeAppControl', function() {
                     $scope.serverRequest("member/login", myObject, callback);
                 },
 
-                userRegiserForm: function (name, email, password, callback) {
+                userRegisterForm: function (name, email, password, callback) {
                     var myObject = {
                         "token": $scope.guestToken,
                         "name": name,
@@ -131,9 +131,9 @@ homeluxeApp.directive('homeluxeAppControl', function() {
     };
 });
 
-homeluxeApp.directive('userControl', function() {
+homeluxeApp.directive('userControl', function () {
     return {
-        controller: function($scope, $interval) {
+        controller: function ($scope, $interval) {
             $scope.hideLoginOverlay = function () {
                 $('.loginOverlay').fadeOut(500);
             };
@@ -156,11 +156,13 @@ homeluxeApp.directive('userControl', function() {
 
             $scope.submitRegister = function () {
                 if ($scope.isValid($scope.guest.name) && $scope.isValid($scope.guest.email) && $scope.isValid($scope.guest.password))
-                    if (response.status == "Success")
-                        $scope.login();
-                    else if (response.status == "Failed" && response.message == "User already exists")
-                        showAlert('You already have an account.');
-                    else showAlert('Please fill the form correctly.');
+                    $scope.requests.userRegisterForm($scope.guest.name, $scope.guest.email, $scope.guest.password, function (response) {
+                        if (response.status == "Success")
+                            $scope.login();
+                        else if (response.status == "Failed" && response.message == "User already exists")
+                            showAlert('You already have an account.');
+                        else showAlert('Please fill the form correctly.');
+                    });
                 else showAlert('Please fill the form correctly.');
             };
 
@@ -312,7 +314,7 @@ homeluxeApp.controller("browseStyleControl", function ($scope, $rootScope) {
     $scope.getStyles = function () {
         $scope.requests.getStyles(function (response) {
             $rootScope.styles = response;
-            
+
             $('.mainCard').fadeIn(1000).animate({marginTop: '0px'}, 500);
 
             if (urlStyle != null) {

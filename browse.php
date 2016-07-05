@@ -345,6 +345,7 @@
 <body ng-app="homeluxeApp" homeluxe-app-control user-control>
 <header-menu></header-menu>
 <login-overlay></login-overlay>
+
 <div ng-controller="styleViewerControl">
     <style-viewer></style-viewer>
     <div class="mainCardContainer" ng-controller="browseStyleControl">
@@ -362,5 +363,6 @@
         </div>
     </div>
 </div>
+
 </body>
 </html>
