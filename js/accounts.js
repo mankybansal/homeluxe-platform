@@ -29,7 +29,8 @@ homeluxeApp.controller("userControl", function ($scope, $interval) {
        if ($scope.isValid($scope.register.name) && $scope.isValid($scope.register.email) && $scope.isValid($scope.register.password) && $scope.isValid($scope.register.phone))
             requests.userRegiserForm($scope.register.name,$scope.register.email,$scope.register.phone,$scope.register.password, function (response) {
                 if (response.status == "Success")
-                    $scope.login($scope.register.email,$scope.register.password);
+                    $scope.guest = {username: $scope.register.email, password: $scope.register.password};
+                    $scope.login();
                 else if (response.status == "Failed" && response.message == "User already exists")
                     showAlert('You already have an account.');
                 else showAlert('Please fill the form correctly.');
