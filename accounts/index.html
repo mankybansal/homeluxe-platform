@@ -131,6 +131,8 @@
             </div>
 
             <div class="avatarBox">
+                <img class='profilePic' src='{{ngMyUser.profile_pic}}' ng-show="ngMyUser.profile_pic"/>
+                <i class='fa fa-user defaultUser' ng-show="!ngMyUser.profile_pic"></i>
             </div>
 
             <div class="profileBox">
@@ -167,7 +169,10 @@
             <div class="viewPanel" id="viewMyProfile">
                 <div class="myProfileBox">
                     <div class="boxHeader">My Profile</div>
-                    <div class="myDP"></div>
+                    <div class="myDP">
+                        <img src='{{ngMyUser.profile_pic}}' ng-show="ngMyUser.profile_pic" class='myDPimage'>
+                        <i class='fa fa-user defaultUser' ng-show="!ngMyUser.profile_pic"></i>
+                    </div>
                     <div class="myInfo">
                         <div class="myInfoIcon"><i class="fa fa-user"></i></div>
                         <div class="myInfoText">{{ngMyUser.name}}</div>
@@ -195,11 +200,11 @@
                     </div>
                 </div>
                 <!--<div class='likeBoxRoom' ng-repeat="like in myLikes" id='{{like.catalogueKey}}' ng-if="!like.catalogueKey">-->
-                    <!--<div class='likeBoxImageBox'>-->
-                        <!--<img src='../images/NOIMAGE.png' class='likeBoxImage'></div>-->
-                    <!--<div class='likeBoxStyleTitle'>{{like.name}}</div>-->
-                    <!--<div class='likeBoxDescription'>{like.description}}-->
-                    <!--</div>-->
+                <!--<div class='likeBoxImageBox'>-->
+                <!--<img src='../images/NOIMAGE.png' class='likeBoxImage'></div>-->
+                <!--<div class='likeBoxStyleTitle'>{{like.name}}</div>-->
+                <!--<div class='likeBoxDescription'>{like.description}}-->
+                <!--</div>-->
                 <!--</div>-->
             </div>
 

@@ -17,9 +17,11 @@ homeluxeApp.controller("memberDashboardControl", function ($scope, $rootScope, $
 
     $scope.showDashboard = function () {
         $(".viewPanel").hide();
+
         $(".menuLeft")
             .find(".optionSelected").removeClass("optionSelected")
             .find(".viewOverview").parent().addClass("optionSelected");
+
         $("#viewOverview").fadeIn(500);
 
         setTimeout(function () {
@@ -29,15 +31,6 @@ homeluxeApp.controller("memberDashboardControl", function ($scope, $rootScope, $
         setTimeout(function () {
             $('.contentOverlay').fadeIn(1000);
         }, 3000);
-
-        if ($scope.$parent.ngMyUser.profile_pic)
-            $(".avatarBox").empty().append("<img class='profilePic' src='" + $scope.$parent.ngMyUser.profile_pic + "'/>");
-        else
-            $(".avatarBox").empty().append("<i class='fa fa-user' style='font-size: 25px; margin-top: 7.5px; margin-left: 10px; color: rgba(0,0,0,0.2);'></i>");
-
-        $(".myDP").append("<img src='" + $scope.$parent.ngMyUser.profile_pic + "' class='myDPimage'>");
-        if ($scope.$parent.ngMyUser.fbConnected) $(".connectedTo").html("Connected to Facebook");
-        else $(".connectedTo").html("Not Connected");
     };
 
     $scope.getLikes = function () {
@@ -61,11 +54,6 @@ $(document).ready(function () {
         Cookies.remove('myUser');
         hideDashboard();
     });
-    //
-    // if (myUser = Cookies.getJSON('myUser')) {
-    //     showAlert("Signing in as <b>" + myUser.name + "</b> &nbsp; <i class='fa fa-circle-o-notch fa-spin'></i>");
-    //     setTimeout(showDashboard(), 3000);
-    // }
 
     $(".menuOption").click(function () {
         var menuGroupSelected = $(this).parent().find(".menuGroupLabel").text();
@@ -82,7 +70,6 @@ $(document).ready(function () {
         $("#" + $(this).find(".menuOptionSelect").attr('class').split(' ')[1]).fadeIn(500);
     });
 });
-
 
 function hideDashboard() {
     setTimeout(function () {
