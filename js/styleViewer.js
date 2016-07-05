@@ -2,13 +2,6 @@
  * Created by mayankbansal on 6/21/16.
  */
 
-// var images = [];
-// var currentImage = 0;
-// var currentStyle;
-//
-// var currentStyleNode;
-// var currentImageNode;
-
 function getURLParameter(name) {
     return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [, ""])[1].replace(/\+/g, '%20')) || null;
 }
@@ -36,8 +29,7 @@ function changeUrlParam(param, value) {
     }
 }
 
-
-homeluxeApp.controller("browseStyleControl", function ($scope, $compile) {
+homeluxeApp.controller("browseStyleControl", function ($scope) {
     getServer();
 
     $scope.mySplit = function (string, nb) {
@@ -71,17 +63,22 @@ homeluxeApp.controller("browseStyleControl", function ($scope, $compile) {
 
 });
 
-
 homeluxeApp.controller("styleViewerControl", function ($scope) {
 
     $scope.styles = [];
 
     $scope.init = function () {
         $scope.images = [];
-        $scope.currentImage = 0;
-        $scope.currentStyle = null;
-        $scope.currentStyleNode = null;
-        $scope.currentImageNode = null;
+        $scope.current = {
+            image: 0,
+            style: null,
+            styleNode: null,
+            imageNode: null
+        };
+        $scope.current.image = 0;
+        $scope.current.style = null;
+        $scope.current.styleNode = null;
+        $scope.current.imageNode = null;
     };
 
     $scope.updateLikes = function (styleNode, imageNode) {
@@ -107,7 +104,7 @@ homeluxeApp.controller("styleViewerControl", function ($scope) {
 
     $scope.likeStyle = function () {
         if ($scope.$parent.ngMyUser = Cookies.getJSON("myUser"))
-            requests.likeNode($scope.$parent.ngMyUser.token, $scope.currentStyleNode, function (response) {
+            requests.likeNode($scope.$parent.ngMyUser.token, $scope.current.styleNode, function (response) {
                 if (response.status == "Success")
                     $(".changeHeartStyle").removeClass("fa-heart-o").addClass("fa-heart");
                 else if (response.message == "Invalid token detected")
@@ -120,7 +117,7 @@ homeluxeApp.controller("styleViewerControl", function ($scope) {
 
     $scope.likeRoom = function () {
         if ($scope.$parent.ngMyUser = Cookies.getJSON("myUser"))
-            requests.likeNode($scope.$parent.ngMyUser.token, $scope.currentImageNode, function (response) {
+            requests.likeNode($scope.$parent.ngMyUser.token, $scope.current.imageNode, function (response) {
                 if (response.status == "Success")
                     $(".changeHeartRoom").removeClass("fa-heart-o").addClass("fa-heart");
                 else
@@ -130,18 +127,19 @@ homeluxeApp.controller("styleViewerControl", function ($scope) {
             loginButtonClick();
     };
 
+    $scope.leftNav = true;
+    $scope.rightNav = true;
 
     $scope.viewStyle = function (styleNum) {
-        $('.leftNav').hide();
 
-        $scope.currentImage = 0;
+        $scope.leftNav = false;
         $('.coverContainer').fadeIn(500);
-
-        $scope.currentStyle = styleNum;
         $('.resultCard').fadeIn(500);
         $('.centerDesc').fadeIn(500);
 
-        $scope.currentStyleNode = $scope.styles[styleNum].id;
+        $scope.current.image = 0;
+        $scope.current.style = styleNum;
+        $scope.current.styleNode = $scope.styles[styleNum].id;
 
         $('.coverImage').empty().append("<img src='images/styles/covers/clear-images/" + $scope.styles[styleNum].cover_pic + "' class='coverPic'>");
 
@@ -171,44 +169,28 @@ homeluxeApp.controller("styleViewerControl", function ($scope) {
                 };
             }
             $scope.loadImage();
-        } else {
-            $('.leftNav').hide();
-            $('.rightNav').hide();
-        }
-
-        if ($scope.styles[styleNum].images.length == 1) {
-            $('.leftNav').hide();
-            $('.rightNav').hide();
         }
     };
 
     $scope.leftNavClick = function () {
-        $scope.currentImage -= 1;
-        $('.leftNav').show();
-        $('.rightNav').show();
-        if ($scope.currentImage <= 0) {
-            $scope.currentImage = 0;
-            $('.leftNav').hide();
-        }
+        $scope.current.image -= 1;
+        if ($scope.current.image <= 0) {
+            $scope.current.image = 0;
         $scope.loadImage();
     };
 
     $scope.rightNavClick = function () {
-        $scope.currentImage++;
-        $('.leftNav').show();
-        $('.rightNav').show();
-        if ($scope.currentImage >= ($scope.images.length - 1)) {
-            $scope.currentImage = $scope.images.length - 1;
-            $('.rightNav').hide();
-        }
+        $scope.current.image++;
+        if ($scope.current.image >= ($scope.images.length - 1)) {
+            $scope.current.image = $scope.images.length - 1;
         $scope.loadImage();
     };
 
     $scope.loadImage = function () {
-        $scope.currentImageNode = $scope.images[$scope.currentImage].id;
-        $scope.updateLikes($scope.currentStyleNode, $scope.currentImageNode);
+        $scope.current.imageNode = $scope.images[$scope.current.image].id;
+        $scope.updateLikes($scope.current.styleNode, $scope.current.imageNode);
         $(".styleContainer").css({
-            "background": "url('images/styles/" + $scope.images[$scope.currentImage].img + "')",
+            "background": "url('images/styles/" + $scope.images[$scope.current.image].img + "')",
             "background-size": "contain",
             "background-repeat": "no-repeat",
             "background-position": "center"
@@ -217,61 +199,6 @@ homeluxeApp.controller("styleViewerControl", function ($scope) {
 
     $scope.init();
 });
-
-
-// function viewStyle(styleNum) {
-//
-//     $('.leftNav').hide();
-//
-//     currentImage = 0;
-//     $('.coverContainer').fadeIn(500);
-//
-//     currentStyle = styleNum;
-//     $('.resultCard').fadeIn(500);
-//     $('.centerDesc').fadeIn(500);
-//
-//     currentStyleNode = styles[styleNum].id;
-//
-//     $('.coverImage').empty().append("<img src='images/styles/covers/clear-images/" + styles[styleNum].cover_pic + "' class='coverPic'>");
-//
-//     $(".coverBG").css({
-//         "background": "url('images/styles/covers/blurred-images/" + styles[styleNum].cover_pic + "')",
-//         "background-size": "100% 100%",
-//         "background-repeat": "no-repeat",
-//         "background-position": "center"
-//     });
-//     $('.coverTitle').html("This style is called <b>" + styles[styleNum].name + "</b>!");
-//     $('.coverTextBox').html(styles[styleNum].description);
-//     $(".viewStyleTitle2").html(styles[styleNum].name);
-//
-//     changeUrlParam('style', styles[styleNum].catalogueKey);
-//
-//     if (typeof myRandomToken !== 'undefined') {
-//         changeUrlParam('token', myRandomToken);
-//     }
-//
-//     images = [];
-//
-//     if (styles[styleNum].images.length != 0) {
-//         for (var i = 0; i < styles[styleNum].images.length; i++) {
-//             images[i] = {
-//                 "img": styles[styleNum].name + '/' + styles[styleNum].images[i].file,
-//                 "id": styles[styleNum].images[i].id
-//             };
-//         }
-//
-//         loadImage();
-//     } else {
-//         $('.leftNav').hide();
-//         $('.rightNav').hide();
-//     }
-//
-//     if (styles[styleNum].images.length == 1) {
-//         $('.leftNav').hide();
-//         $('.rightNav').hide();
-//     }
-//
-// }
 
 function callDesigner() {
     window.location = 'index.php#contactUsX';
@@ -284,11 +211,11 @@ function coverContainerClose() {
 function fbShare() {
     FB.ui({
         method: 'feed',
-        name: styles[currentStyle].name + ' on HomeLuxe.in',
+        name: styles[current.style].name + ' on HomeLuxe.in',
         link: window.location.href,
-        picture: 'http://www.homeluxe.in/images/styles/' + styles[currentStyle].name + '/' + styles[currentStyle].images[0].file.img,
+        picture: 'http://www.homeluxe.in/images/styles/' + styles[current.style].name + '/' + styles[current.style].images[0].file.img,
         caption: 'This style is available on HomeLuxe.in',
-        description: styles[currentStyle].description,
+        description: styles[current.style].description,
         message: 'Check out this style. It looks absolutely beautiful! :)'
     });
 }

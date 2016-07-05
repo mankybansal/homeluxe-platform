@@ -24,12 +24,12 @@
             </div>
         </div>
         <div class="imageNav">
-            <div class="leftNav" ng-click="leftNavClick()">
+            <div class="leftNav" ng-show="current.image!=0" ng-click="leftNavClick()">
                 <div style="height:calc((100% - 100px)/2); width:100%;"></div>
                 <i class="fa fa-angle-left navAngles"></i>
             </div>
 
-            <div class="rightNav" ng-click="rightNavClick()">
+            <div class="rightNav" ng-show="current.image!=(images.length - 1)" ng-click="rightNavClick()">
                 <div style="height:calc((100% - 100px)/2); width:100%;"></div>
                 <i class="fa fa-angle-right navAngles"></i>
             </div>
