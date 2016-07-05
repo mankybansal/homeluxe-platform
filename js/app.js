@@ -8,7 +8,7 @@ homeluxeApp.config(['$routeProvider', function ($routeProvider) {
     when('/newAccount', {
         templateUrl: 'accounts/index.html'
     }).
-    otherwise('/', {
+    otherwise({
         templateUrl: 'home.html'
     });
 }]);
