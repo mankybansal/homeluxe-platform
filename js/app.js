@@ -88,7 +88,7 @@ homeluxeApp.controller("userControl", function ($scope, $rootScope, $interval) {
                                 $scope.facebook.connected = true;
                                 $scope.loginSuccess();
                             }
-                            else facebookRegister();
+                            else $scope.facebookRegister();
                         });
                     });
                     console.log($scope.facebook);
