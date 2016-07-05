@@ -3,6 +3,7 @@
  */
 
 var dashboard = true;
+guestToken = true;
 
 homeluxeApp.controller("memberDashboardControl", function ($scope, $rootScope, $interval) {
 
@@ -14,6 +15,7 @@ homeluxeApp.controller("memberDashboardControl", function ($scope, $rootScope, $
 
 
     $scope.getLikes = function () {
+        $scope.$parent.ngMyUser = Cookie.getJSON('myUser');
         console.log($scope.$parent.ngMyUser.token);
 
         requests.getLikes($scope.$parent.ngMyUser.token, function (response) {
