@@ -3,7 +3,6 @@
  */
 
 var dashboard = true;
-guestToken = true;
 
 homeluxeApp.controller("memberDashboardControl", function ($scope, $rootScope, $interval) {
 
