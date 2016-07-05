@@ -309,6 +309,8 @@ homeluxeApp.controller("browseStyleControl", function ($scope, $rootScope) {
         return array[nb];
     };
 
+    console.log($scope.guestToken);
+
     $scope.getStyles = function () {
         $scope.requests.getStyles(function (response) {
             $rootScope.styles = response;
