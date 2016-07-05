@@ -174,14 +174,14 @@ homeluxeApp.controller("styleViewerControl", function ($scope) {
 
     $scope.leftNavClick = function () {
         $scope.current.image -= 1;
-        if ($scope.current.image <= 0) {
+        if ($scope.current.image <= 0)
             $scope.current.image = 0;
         $scope.loadImage();
     };
 
     $scope.rightNavClick = function () {
         $scope.current.image++;
-        if ($scope.current.image >= ($scope.images.length - 1)) {
+        if ($scope.current.image >= ($scope.images.length - 1))
             $scope.current.image = $scope.images.length - 1;
         $scope.loadImage();
     };
