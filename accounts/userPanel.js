@@ -40,11 +40,11 @@ $(document).ready(function () {
         Cookies.remove('myUser');
         hideDashboard();
     });
-
-    if (myUser = Cookies.getJSON('myUser')) {
-        showAlert("Signing in as <b>" + myUser.name + "</b> &nbsp; <i class='fa fa-circle-o-notch fa-spin'></i>");
-        setTimeout(showDashboard(), 3000);
-    }
+    //
+    // if (myUser = Cookies.getJSON('myUser')) {
+    //     showAlert("Signing in as <b>" + myUser.name + "</b> &nbsp; <i class='fa fa-circle-o-notch fa-spin'></i>");
+    //     setTimeout(showDashboard(), 3000);
+    // }
 
     $(".menuOption").click(function () {
         var menuGroupSelected = $(this).parent().find(".menuGroupLabel").text();
