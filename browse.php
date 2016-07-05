@@ -409,8 +409,8 @@
 <header-menu></header-menu>
 <login-overlay></login-overlay>
 
-<div ng-controller="styleViewerControl">
-    <style-viewer></style-viewer>
+<div ng-controller="rootControl">
+    <style-viewer ng-controller="styleViewerControl"></style-viewer>
     <div class="mainCardContainer" ng-controller="browseStyleControl">
         <div class="mainCard">
             <div class="introPanel" style="width: 100%;">

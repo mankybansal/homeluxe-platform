@@ -83,6 +83,10 @@ function likeRoom() {
         loginButtonClick();
 }
 
+homeluxeApp.controller("rootControl", function ($scope, $compile) {
+    $scope.styles = [];
+});
+
 homeluxeApp.controller("browseStyleControl", function ($scope, $compile) {
 
     getServer();
@@ -122,7 +126,10 @@ homeluxeApp.controller("browseStyleControl", function ($scope, $compile) {
 
     $scope.getStyles();
 
-    $scope.styles = [];
+});
+
+
+homeluxeApp.controller("styleViewerControl", function ($scope) {
 
     $scope.init = function () {
         $scope.images = [];
@@ -218,12 +225,6 @@ homeluxeApp.controller("browseStyleControl", function ($scope, $compile) {
     };
 
     $scope.init();
-});
-
-
-homeluxeApp.controller("styleViewerControl", function ($scope) {
-
-
 });
 
 
