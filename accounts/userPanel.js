@@ -65,8 +65,6 @@ function showDashboard() {
         .find(".viewOverview").parent().addClass("optionSelected");
     $("#viewOverview").fadeIn(500);
     
-    getLikes();
-
     setTimeout(function () {
         $('.loginOverlay').fadeOut(1000);
     }, 2000);
