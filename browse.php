@@ -346,9 +346,9 @@
 <header-menu></header-menu>
 <login-overlay></login-overlay>
 
-<div ng-controller="styleViewerControl">
+<div browse-style-control style-viewer-control">
     <style-viewer></style-viewer>
-    <div class="mainCardContainer" ng-controller="browseStyleControl">
+    <div class="mainCardContainer">
         <div class="mainCard">
             <div class="introPanel" style="width: 100%;">
                 <div class="diamondContainer clear">
