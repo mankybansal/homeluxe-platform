@@ -27,208 +27,208 @@
 
 </head>
 
-<body ng-app="homeluxeApp" ng-controller="userControl">
+<body ng-app="homeluxeApp" ng-controller="homeluxeAppControl">
+    <div ng-controller="userControl">
+    <login-overlay></login-overlay>
 
-<login-overlay></login-overlay>
+    <div class="mainUnderlay"></div>
 
-<div class="mainUnderlay"></div>
+    <div class="contentOverlay" ng-controller="memberDashboardControl">
 
-<div class="contentOverlay" ng-controller="memberDashboardControl">
+        <div class="menuLeft">
 
-    <div class="menuLeft">
+            <div class="menuOptionGroup">
+                <a href="http://homeluxe.in"><img src="../images/logoWhite.png" class="menuHeaderLogo"></a>
+            </div>
+
+            <div class="menuOptionGroup">
+                <div class="menuGroupLabel">Main</div>
+
+                <div class="menuOption optionSelected">
+                    <div class="menuOptionSelect viewOverview"></div>
+                    <div class="menuOptionIcon">
+                        <i class="fa fa-dashboard menuIcon"></i>
+                    </div>
+                    <div class="menuOptionText">Overview</div>
+                </div>
+
+                <div class="menuOption">
+                    <div class="menuOptionSelect viewMyLikes"></div>
+                    <div class="menuOptionIcon">
+                        <i class="fa fa-thumbs-up menuIcon"></i>
+                    </div>
+                    <div class="menuOptionText">My Likes</div>
+                </div>
+
+                <div class="menuOption">
+                    <div class="menuOptionSelect viewQuiz"></div>
+                    <div class="menuOptionIcon">
+                        <i class="fa fa-question-circle menuIcon"></i>
+                    </div>
+                    <div class="menuOptionText">Quiz Results</div>
+                </div>
+
+                <div class="menuOption">
+                    <div class="menuOptionSelect viewMyProfile"></div>
+                    <div class="menuOptionIcon">
+                        <i class="fa fa-user menuIcon"></i>
+                    </div>
+                    <div class="menuOptionText">My Profile</div>
+                </div>
+            </div>
+
+            <div class="menuOptionGroup">
+                <div class="menuGroupLabel">Help & Settings</div>
+
+                <div class="menuOption signOutButton" ng-click="logout()">
+                    <div class="menuOptionSelect viewLogout"></div>
+                    <div class="menuOptionIcon">
+                        <i class="fa fa-sign-out menuIcon"></i>
+                    </div>
+                    <div class="menuOptionText">Sign Out</div>
+                </div>
+
+                <div class="menuOption">
+                    <div class="menuOptionSelect viewHelp"></div>
+                    <div class="menuOptionIcon">
+                        <i class="fa fa-question-circle menuIcon"></i>
+                    </div>
+                    <div class="menuOptionText">Help</div>
+                </div>
+
+                <div class="menuOption">
+                    <div class="menuOptionSelect viewReport"></div>
+                    <div class="menuOptionIcon">
+                        <i class="fa fa-exclamation-circle menuIcon"></i>
+                    </div>
+                    <div class="menuOptionText">Report Error</div>
+                </div>
+
+                <div class="menuOption">
+                    <div class="menuOptionSelect viewSettings"></div>
+                    <div class="menuOptionIcon">
+                        <i class="fa fa-gear menuIcon"></i>
+                    </div>
+                    <div class="menuOptionText">Settings</div>
+                </div>
+            </div>
 
 
-        <div class="menuOptionGroup">
-            <a href="http://homeluxe.in"><img src="../images/logoWhite.png" class="menuHeaderLogo"></a>
         </div>
 
-        <div class="menuOptionGroup">
-            <div class="menuGroupLabel">Main</div>
+        <div class="mainContent">
+            <div class="menuTop">
 
-            <div class="menuOption optionSelected">
-                <div class="menuOptionSelect viewOverview"></div>
-                <div class="menuOptionIcon">
-                    <i class="fa fa-dashboard menuIcon"></i>
+                <img src='../images/MENU.png' class="menuLogo">
+                <div class="menuTitle">My HomeLuxe</div>
+                <div class="menuSection">
+                    <i class="fa fa-angle-right"></i>&nbsp;<span class="menuGroupSelected">Main</span>
                 </div>
-                <div class="menuOptionText">Overview</div>
-            </div>
 
-            <div class="menuOption">
-                <div class="menuOptionSelect viewMyLikes"></div>
-                <div class="menuOptionIcon">
-                    <i class="fa fa-thumbs-up menuIcon"></i>
+                <div class="menuSection">
+                    <i class="fa fa-angle-right"></i>&nbsp;<span class="menuOptionSelected">Overview</span>
                 </div>
-                <div class="menuOptionText">My Likes</div>
-            </div>
 
-            <div class="menuOption">
-                <div class="menuOptionSelect viewQuiz"></div>
-                <div class="menuOptionIcon">
-                    <i class="fa fa-question-circle menuIcon"></i>
+                <div class="avatarBox">
+                    <img class='profilePic' src='{{ngMyUser.profile_pic}}' ng-show="ngMyUser.profile_pic"/>
+                    <i class='fa fa-user defaultUser' ng-show="!ngMyUser.profile_pic"></i>
                 </div>
-                <div class="menuOptionText">Quiz Results</div>
-            </div>
 
-            <div class="menuOption">
-                <div class="menuOptionSelect viewMyProfile"></div>
-                <div class="menuOptionIcon">
-                    <i class="fa fa-user menuIcon"></i>
+                <div class="profileBox">
+                    <span style="color: #999;">Welcome, </span>
+                    <span style="color: #333;">{{ ngMyUser.name }}</span>
                 </div>
-                <div class="menuOptionText">My Profile</div>
             </div>
-        </div>
+            <div class="fillContent">
 
-        <div class="menuOptionGroup">
-            <div class="menuGroupLabel">Help & Settings</div>
+                <div class="viewPanel viewSelected" id="viewOverview">
 
-            <div class="menuOption signOutButton" ng-click="logout()">
-                <div class="menuOptionSelect viewLogout"></div>
-                <div class="menuOptionIcon">
-                    <i class="fa fa-sign-out menuIcon"></i>
-                </div>
-                <div class="menuOptionText">Sign Out</div>
-            </div>
-
-            <div class="menuOption">
-                <div class="menuOptionSelect viewHelp"></div>
-                <div class="menuOptionIcon">
-                    <i class="fa fa-question-circle menuIcon"></i>
-                </div>
-                <div class="menuOptionText">Help</div>
-            </div>
-
-            <div class="menuOption">
-                <div class="menuOptionSelect viewReport"></div>
-                <div class="menuOptionIcon">
-                    <i class="fa fa-exclamation-circle menuIcon"></i>
-                </div>
-                <div class="menuOptionText">Report Error</div>
-            </div>
-
-            <div class="menuOption">
-                <div class="menuOptionSelect viewSettings"></div>
-                <div class="menuOptionIcon">
-                    <i class="fa fa-gear menuIcon"></i>
-                </div>
-                <div class="menuOptionText">Settings</div>
-            </div>
-        </div>
-
-
-    </div>
-
-    <div class="mainContent">
-        <div class="menuTop">
-
-            <img src='../images/MENU.png' class="menuLogo">
-            <div class="menuTitle">My HomeLuxe</div>
-            <div class="menuSection">
-                <i class="fa fa-angle-right"></i>&nbsp;<span class="menuGroupSelected">Main</span>
-            </div>
-
-            <div class="menuSection">
-                <i class="fa fa-angle-right"></i>&nbsp;<span class="menuOptionSelected">Overview</span>
-            </div>
-
-            <div class="avatarBox">
-                <img class='profilePic' src='{{ngMyUser.profile_pic}}' ng-show="ngMyUser.profile_pic"/>
-                <i class='fa fa-user defaultUser' ng-show="!ngMyUser.profile_pic"></i>
-            </div>
-
-            <div class="profileBox">
-                <span style="color: #999;">Welcome, </span>
-                <span style="color: #333;">{{ ngMyUser.name }}</span>
-            </div>
-        </div>
-        <div class="fillContent">
-
-            <div class="viewPanel viewSelected" id="viewOverview">
-
-                <div class="statsBoxes">
-                    <div class="statsTint tintBlue">
-                        <div class="statsIcon">
-                            <i class="fa fa-thumbs-up"></i>
-                            <span class='dataLikeCount' style="color: rgba(0,0,0,0.2); margin-left: 10px; ">{{myLikes.length}}</span>
+                    <div class="statsBoxes">
+                        <div class="statsTint tintBlue">
+                            <div class="statsIcon">
+                                <i class="fa fa-thumbs-up"></i>
+                                <span class='dataLikeCount' style="color: rgba(0,0,0,0.2); margin-left: 10px; ">{{myLikes.length}}</span>
+                            </div>
+                            <div class="statsTintText">Liked Styles</div>
                         </div>
-                        <div class="statsTintText">Liked Styles</div>
+                        <div class="statsContent">
+                            <div class="statsDesc">View styles and lookbooks that you've liked on HomeLuxe.</div>
+                            <div class="actionButton" onclick="viewLikes()">VIEW LIKES</div>
+                        </div>
                     </div>
-                    <div class="statsContent">
-                        <div class="statsDesc">View styles and lookbooks that you've liked on HomeLuxe.</div>
-                        <div class="actionButton" onclick="viewLikes()">VIEW LIKES</div>
+
+                    <!--<div class="statsBoxes" onclick="viewLikes()">-->
+                    <!--<div style="width: 100%; height: 100%; background: #468fde; font-size: 25px; color: white; box-sizing: border-box; padding: 100px 35px 40px 35px;">-->
+                    <!--Don't know which style suits you best? <br><br><br>-->
+                    <!--<span style="font-size: 17px; text-transform: uppercase;">Take the style quiz!</span>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                </div>
+
+                <div class="viewPanel" id="viewMyProfile">
+                    <div class="myProfileBox">
+                        <div class="boxHeader">My Profile</div>
+                        <div class="myDP">
+                            <img src='{{ngMyUser.profile_pic}}' ng-show="ngMyUser.profile_pic" class='myDPimage'>
+                            <i class='fa fa-user defaultUser' ng-show="!ngMyUser.profile_pic"></i>
+                        </div>
+                        <div class="myInfo">
+                            <div class="myInfoIcon"><i class="fa fa-user"></i></div>
+                            <div class="myInfoText">{{ngMyUser.name}}</div>
+                        </div>
+                        <div class="myInfo">
+                            <div class="myInfoIcon"><i class="fa fa-envelope"></i></div>
+                            <div class="myInfoText">{{ngMyUser.email}}</div>
+                        </div>
+                        <div class="myInfo" ng-show="ngMyUser.fbConnected">
+                            <div class="myInfoIcon"><i class="fa fa-facebook"></i></div>
+                            <div class="myInfoText">Connected to Facebook</div>
+                        </div>
                     </div>
                 </div>
 
-                <!--<div class="statsBoxes" onclick="viewLikes()">-->
-                <!--<div style="width: 100%; height: 100%; background: #468fde; font-size: 25px; color: white; box-sizing: border-box; padding: 100px 35px 40px 35px;">-->
-                <!--Don't know which style suits you best? <br><br><br>-->
-                <!--<span style="font-size: 17px; text-transform: uppercase;">Take the style quiz!</span>-->
-                <!--</div>-->
-                <!--</div>-->
-            </div>
-
-            <div class="viewPanel" id="viewMyProfile">
-                <div class="myProfileBox">
-                    <div class="boxHeader">My Profile</div>
-                    <div class="myDP">
-                        <img src='{{ngMyUser.profile_pic}}' ng-show="ngMyUser.profile_pic" class='myDPimage'>
-                        <i class='fa fa-user defaultUser' ng-show="!ngMyUser.profile_pic"></i>
+                <div class="viewPanel" id="viewMyLikes">
+                    <div ng-repeat="like in myLikes" id='{{like.catalogueKey}}' ng-if="like.catalogueKey"
+                         class='likeBox'>
+                        <div class='likeBoxImageBox'>
+                            <img src='../images/styles/covers/clear-images/{{like.cover_pic}}' class='likeBoxImage'>
+                        </div>
+                        <div class='likeBoxStyleTitle'>{{like.name}}</div>
+                        <div class='likeBoxDescription'>{{like.description}}</div>
+                        <div class='likeBoxPrice'>
+                            <i class='fa fa-rupee'></i>&nbsp;{{like.price}}
+                        </div>
                     </div>
-                    <div class="myInfo">
-                        <div class="myInfoIcon"><i class="fa fa-user"></i></div>
-                        <div class="myInfoText">{{ngMyUser.name}}</div>
-                    </div>
-                    <div class="myInfo">
-                        <div class="myInfoIcon"><i class="fa fa-envelope"></i></div>
-                        <div class="myInfoText">{{ngMyUser.email}}</div>
-                    </div>
-                    <div class="myInfo" ng-show="ngMyUser.fbConnected">
-                        <div class="myInfoIcon"><i class="fa fa-facebook"></i></div>
-                        <div class="myInfoText">Connected to Facebook</div>
-                    </div>
+                    <!--<div class='likeBoxRoom' ng-repeat="like in myLikes" id='{{like.catalogueKey}}' ng-if="!like.catalogueKey">-->
+                    <!--<div class='likeBoxImageBox'>-->
+                    <!--<img src='../images/NOIMAGE.png' class='likeBoxImage'></div>-->
+                    <!--<div class='likeBoxStyleTitle'>{{like.name}}</div>-->
+                    <!--<div class='likeBoxDescription'>{like.description}}-->
+                    <!--</div>-->
+                    <!--</div>-->
                 </div>
-            </div>
 
-            <div class="viewPanel" id="viewMyLikes">
-                <div ng-repeat="like in myLikes" id='{{like.catalogueKey}}' ng-if="like.catalogueKey" class='likeBox'>
-                    <div class='likeBoxImageBox'>
-                        <img src='../images/styles/covers/clear-images/{{like.cover_pic}}' class='likeBoxImage'>
-                    </div>
-                    <div class='likeBoxStyleTitle'>{{like.name}}</div>
-                    <div class='likeBoxDescription'>{{like.description}}</div>
-                    <div class='likeBoxPrice'>
-                        <i class='fa fa-rupee'></i>&nbsp;{{like.price}}
-                    </div>
+                <div class="viewPanel" id="viewLogout">
+                    <div class="logoutBox">Logging out... &nbsp; <i class="fa fa-circle-o-notch fa-spin"></i></div>
                 </div>
-                <!--<div class='likeBoxRoom' ng-repeat="like in myLikes" id='{{like.catalogueKey}}' ng-if="!like.catalogueKey">-->
-                <!--<div class='likeBoxImageBox'>-->
-                <!--<img src='../images/NOIMAGE.png' class='likeBoxImage'></div>-->
-                <!--<div class='likeBoxStyleTitle'>{{like.name}}</div>-->
-                <!--<div class='likeBoxDescription'>{like.description}}-->
-                <!--</div>-->
-                <!--</div>-->
-            </div>
 
-            <div class="viewPanel" id="viewLogout">
-                <div class="logoutBox">Logging out... &nbsp; <i class="fa fa-circle-o-notch fa-spin"></i></div>
-            </div>
+                <div class="viewPanel" id="viewQuiz">
+                    <div class="comingSoonBox">Feature not ready yet.<br><br>Coming Soon.</div>
+                </div>
 
-            <div class="viewPanel" id="viewQuiz">
-                <div class="comingSoonBox">Feature not ready yet.<br><br>Coming Soon.</div>
-            </div>
+                <div class="viewPanel" id="viewHelp">
+                    <div class="comingSoonBox">Feature not ready yet.<br><br>Coming Soon.</div>
+                </div>
+                <div class="viewPanel" id="viewReport">
+                    <div class="comingSoonBox">Feature not ready yet.<br><br>Coming Soon.</div>
+                </div>
+                <div class="viewPanel" id="viewSettings">
+                    <div class="comingSoonBox">Feature not ready yet.<br><br>Coming Soon.</div>
+                </div>
 
-            <div class="viewPanel" id="viewHelp">
-                <div class="comingSoonBox">Feature not ready yet.<br><br>Coming Soon.</div>
             </div>
-            <div class="viewPanel" id="viewReport">
-                <div class="comingSoonBox">Feature not ready yet.<br><br>Coming Soon.</div>
-            </div>
-            <div class="viewPanel" id="viewSettings">
-                <div class="comingSoonBox">Feature not ready yet.<br><br>Coming Soon.</div>
-            </div>
-
         </div>
     </div>
 </div>
-
 </body>
 </html>
