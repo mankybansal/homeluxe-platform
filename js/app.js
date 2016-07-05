@@ -44,17 +44,17 @@ homeluxeApp.controller("userControl", function ($scope, $rootScope, $interval) {
             $(".loginPanel").fadeIn(500);
         }, 200);
         var spacerHeight = $(".loginSpacer").height();
-        $(".loginSpacer").animate({"height": spacerHeight + 65}, 500);
+        $(".loginSpacer").animate({"height": spacerHeight + 35}, 500);
     };
 
     $scope.userRegister = function () {
-        $(".loginContainer").animate({"height": "600px"}, 500);
+        $(".loginContainer").animate({"height": "590px"}, 500);
         $(".loginPanel").hide();
         setTimeout(function () {
             $(".registerPanel").fadeIn(500);
         }, 200);
         var spacerHeight = $(".loginSpacer").height();
-        $(".loginSpacer").animate({"height": spacerHeight - 65}, 500);
+        $(".loginSpacer").animate({"height": spacerHeight - 35}, 500);
     };
 
     $scope.facebookRegister = function () {
