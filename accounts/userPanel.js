@@ -14,15 +14,15 @@ homeluxeApp.controller("memberDashboardControl", function ($scope, $rootScope, $
 
 
     $scope.getLikes = function () {
-        if ($scope.$parent.ngMyUser = Cookies.getJSON("myUser")) {
-            requests.getLikes($scope.$parent.ngMyUser.token, function (response) {
-                $scope.$apply(function () {
-                    if (response.success != "false") {
-                        $scope.myLikes = response;
-                    }
-                });
+        console.log($scope.$parent.ngMyUser.token);
+
+        requests.getLikes($scope.$parent.ngMyUser.token, function (response) {
+            $scope.$apply(function () {
+                if (response.success != "false") {
+                    $scope.myLikes = response;
+                }
             });
-        }
+        });
     };
 
     $scope.init();
