@@ -10,7 +10,6 @@ homeluxeApp.controller("memberDashboardControl", function ($scope, $rootScope, $
     getServer();
     $scope.init = function () {
         $scope.myLikes = {};
-        $scope.$parent.ngMyUser = Cookies.getJSON('myUser');
         $scope.getLikes();
         $scope.showDashboard();
     };
@@ -40,14 +39,12 @@ homeluxeApp.controller("memberDashboardControl", function ($scope, $rootScope, $
         else $(".connectedTo").html("Not Connected");
     };
 
-
     $scope.getLikes = function () {
         requests.getLikes($scope.$parent.ngMyUser.token, function (response) {
-            if (typeof response.success == 'undefined' && response.success != "false") {
-                $scope.$apply(function () {
-                    $scope.myLikes = response;       
-                });
-            }
+            $scope.$apply(function () {
+                if (typeof response.success == 'undefined' && response.success != "false")
+                    $scope.myLikes = response;
+            });
         });
     };
 
