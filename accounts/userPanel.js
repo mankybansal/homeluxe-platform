@@ -12,7 +12,7 @@ homeluxeApp.controller("memberDashboardControl", function ($scope, $rootScope, $
         $scope.myLikes = [];
         $scope.$parent.ngMyUser = Cookies.getJSON('myUser');
         $scope.getLikes();
-        showDashboard();
+        $scope.showDashboard();
     };
 
     $scope.showDashboard = function (){
