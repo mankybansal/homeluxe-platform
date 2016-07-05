@@ -136,7 +136,7 @@ homeluxeApp.controller("userControl", function ($scope, $rootScope, $interval) {
         Cookies.set('myUser', $scope.ngMyUser);
         $('.alertMessage').hide();
         $('.loginOverlay').hide();
-        if (typeof dashboard != 'undefined' && dashboard) showDashboard();
+        if (typeof dashboard != 'undefined' && dashboard) $scope.showDashboard();
     };
 
     $scope.init();
