@@ -152,7 +152,7 @@ homeluxeApp.controller("browseStyleControl", function ($scope, $compile) {
         });
         $('.coverTitle').html("This style is called <b>" + $scope.styles[styleNum].name + "</b>!");
         $('.coverTextBox').html($scope.styles[styleNum].description);
-        $(".viewStyleTitle2").html(styles[styleNum].name);
+        $(".viewStyleTitle2").html($scope.styles[styleNum].name);
 
         changeUrlParam('style', $scope.styles[styleNum].catalogueKey);
 
