@@ -97,12 +97,13 @@
 }
 
 .registerButton {
+    width: 360px;
     background: yellowgreen;
 }
 
 .faceBookLogin {
     padding: 10px;
-    width: 100%;
+    width: 360px;
     background: #3b5998;
     padding-top: 20px;
 }
