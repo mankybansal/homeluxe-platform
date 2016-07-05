@@ -342,7 +342,7 @@
 
 </head>
 
-<body ng-app="homeluxeApp" homeluxe-app-control user-control style-viewer-control browse-style-control="">
+<body ng-app="homeluxeApp" homeluxe-app-control user-control style-viewer-control browse-style-control>
 <header-menu></header-menu>
 <login-overlay></login-overlay>
 
