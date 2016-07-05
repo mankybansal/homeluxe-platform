@@ -30,7 +30,6 @@ homeluxeApp.controller("memberDashboardControl", function ($scope, $rootScope, $
             $('.contentOverlay').fadeIn(1000);
         }, 3000);
 
-        $(".dataName").html($scope.$parent.ngMyUser.name);
         if ($scope.$parent.ngMyUser.profile_pic)
             $(".avatarBox").empty().append("<img class='profilePic' src='" + $scope.$parent.ngMyUser.profile_pic + "'/>");
         else
@@ -47,6 +46,7 @@ homeluxeApp.controller("memberDashboardControl", function ($scope, $rootScope, $
             $scope.$apply(function () {
                 if (typeof response.success == 'undefined' && response.success != "false") {
                     $scope.myLikes = response;
+                    console.log(myLikes.length);
                 }
             });
         });
