@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="homeluxeApp"  ng-controller="homeluxeControl">
+<html lang="en">
 <head>
 
 
@@ -404,7 +404,7 @@
 
 </head>
 
-<body ng-controller="userControl">
+<body ng-app="homeluxeApp" ng-controller="userControl">
 
 <header-menu></header-menu>
 <login-overlay></login-overlay>
