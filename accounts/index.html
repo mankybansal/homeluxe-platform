@@ -170,19 +170,15 @@
                     <div class="myDP"></div>
                     <div class="myInfo">
                         <div class="myInfoIcon"><i class="fa fa-user"></i></div>
-                        <div class="myInfoText"><span class="myName"></span></div>
+                        <div class="myInfoText">{{ngMyUser.name}}</div>
                     </div>
                     <div class="myInfo">
                         <div class="myInfoIcon"><i class="fa fa-envelope"></i></div>
-                        <div class="myInfoText"><span class="myEmail"></span></div>
-                    </div>
-                    <div class="myInfo">
-                        <div class="myInfoIcon"><i class="fa fa-phone"></i></div>
-                        <div class="myInfoText"><span class="myPhone"></span></div>
+                        <div class="myInfoText">{{ngMyUser.email}}</div>
                     </div>
                     <div class="myInfo">
                         <div class="myInfoIcon"><i class="fa fa-link"></i></div>
-                        <div class="myInfoText"><span class="connectedTo"></span></div>
+                        <div class="myInfoText"><{{ngMyUser.fbConnected}}</div>
                     </div>
                 </div>
             </div>
