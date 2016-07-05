@@ -67,9 +67,9 @@ homeluxeApp.controller("styleViewerControl", function ($scope) {
 
     $scope.init = function () {
         $scope.styles = [];
-        $scope.images = [];
         $scope.current = {
             image: 0,
+            images: [],
             style: null,
             styleNode: null,
             imageNode: null
@@ -103,7 +103,7 @@ homeluxeApp.controller("styleViewerControl", function ($scope) {
                 if (response.status == "Success")
                     $(".changeHeartStyle").removeClass("fa-heart-o").addClass("fa-heart");
                 else if (response.message == "Invalid token detected")
-                    logout();
+                    $scope.$parent.logout();
                 else
                     console.log("Some Error Occurred");
             });
@@ -115,6 +115,8 @@ homeluxeApp.controller("styleViewerControl", function ($scope) {
             requests.likeNode($scope.$parent.ngMyUser.token, $scope.current.imageNode, function (response) {
                 if (response.status == "Success")
                     $(".changeHeartRoom").removeClass("fa-heart-o").addClass("fa-heart");
+                else if (response.message == "Invalid token detected")
+                    $scope.$parent.logout();
                 else
                     console.log("Some Error Occurred");
             });
@@ -128,9 +130,12 @@ homeluxeApp.controller("styleViewerControl", function ($scope) {
         $('.resultCard').fadeIn(500);
         $('.centerDesc').fadeIn(500);
 
-        $scope.current.image = 0;
-        $scope.current.style = styleNum;
-        $scope.current.styleNode = $scope.styles[styleNum].id;
+        $scope.current = {
+            image: 0,
+            images: [],
+            style: styleNum,
+            styleNode: $scope.styles[styleNum].id
+        };
 
         $('.coverImage').empty().append("<img src='images/styles/covers/clear-images/" + $scope.styles[styleNum].cover_pic + "' class='coverPic'>");
 
@@ -140,9 +145,6 @@ homeluxeApp.controller("styleViewerControl", function ($scope) {
             "background-repeat": "no-repeat",
             "background-position": "center"
         });
-        // $('.coverTitle').html("This style is called <b>" + $scope.styles[styleNum].name + "</b>!");
-        // $('.coverTextBox').html($scope.styles[styleNum].description);
-        // $(".viewStyleTitle2").html($scope.styles[styleNum].name);
 
         changeUrlParam('style', $scope.styles[styleNum].catalogueKey);
 
@@ -150,11 +152,9 @@ homeluxeApp.controller("styleViewerControl", function ($scope) {
             changeUrlParam('token', myRandomToken);
         }
 
-        $scope.images = [];
-
         if ($scope.styles[styleNum].images.length != 0) {
             for (var i = 0; i < $scope.styles[styleNum].images.length; i++)
-                $scope.images[i] = {
+                $scope.current.images[i] = {
                     "img": $scope.styles[styleNum].name + '/' + $scope.styles[styleNum].images[i].file,
                     "id": $scope.styles[styleNum].images[i].id
                 };
@@ -171,41 +171,41 @@ homeluxeApp.controller("styleViewerControl", function ($scope) {
 
     $scope.rightNavClick = function () {
         $scope.current.image++;
-        if ($scope.current.image >= ($scope.images.length - 1))
-            $scope.current.image = $scope.images.length - 1;
+        if ($scope.current.image >= ($scope.current.images.length - 1))
+            $scope.current.image = $scope.current.images.length - 1;
         $scope.loadImage();
     };
 
     $scope.loadImage = function () {
-        $scope.current.imageNode = $scope.images[$scope.current.image].id;
+        $scope.current.imageNode = $scope.current.images[$scope.current.image].id;
         $scope.updateLikes($scope.current.styleNode, $scope.current.imageNode);
         $(".styleContainer").css({
-            "background": "url('images/styles/" + $scope.images[$scope.current.image].img + "')",
+            "background": "url('images/styles/" + $scope.current.images[$scope.current.image].img + "')",
             "background-size": "contain",
             "background-repeat": "no-repeat",
             "background-position": "center"
         });
     };
 
+    $scope.fbShare = function() {
+        FB.ui({
+            method: 'feed',
+            name: $scope.styles[$scope.current.style].name + ' on HomeLuxe.in',
+            link: window.location.href,
+            picture: 'http://www.homeluxe.in/images/styles/' + $scope.styles[$scope.current.style].name + '/' + $scope.styles[$scope.current.style].images[0].file.img,
+            caption: 'This style is available on HomeLuxe.in',
+            description: $scope.styles[$scope.current.style].description,
+            message: 'Check out this style. It looks absolutely beautiful! :)'
+        });
+    };
+
+    $scope.callDesigner = function() {
+        window.location = 'index.php#contactUsX';
+    };
+
+    $scope.coverContainerClose = function() {
+        $('.coverContainer').hide();
+    };
+
     $scope.init();
 });
-
-function callDesigner() {
-    window.location = 'index.php#contactUsX';
-}
-
-function coverContainerClose() {
-    $('.coverContainer').hide();
-}
-
-function fbShare() {
-    FB.ui({
-        method: 'feed',
-        name: styles[current.style].name + ' on HomeLuxe.in',
-        link: window.location.href,
-        picture: 'http://www.homeluxe.in/images/styles/' + styles[current.style].name + '/' + styles[current.style].images[0].file.img,
-        caption: 'This style is available on HomeLuxe.in',
-        description: styles[current.style].description,
-        message: 'Check out this style. It looks absolutely beautiful! :)'
-    });
-}

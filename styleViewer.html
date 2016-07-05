@@ -1,4 +1,4 @@
-<div class="coverContainer" onclick="coverContainerClose()">
+<div class="coverContainer" ng-click="coverContainerClose()">
     <div class="coverBG"></div>
     <div class="coverFG">
         <div class="coverTop">
@@ -29,7 +29,7 @@
                 <i class="fa fa-angle-left navAngles"></i>
             </div>
 
-            <div class="rightNav" ng-show="current.image!=(images.length - 1)" ng-click="rightNavClick()">
+            <div class="rightNav" ng-show="current.image!=(current.images.length - 1)" ng-click="rightNavClick()">
                 <div style="height:calc((100% - 100px)/2); width:100%;"></div>
                 <i class="fa fa-angle-right navAngles"></i>
             </div>
@@ -44,11 +44,11 @@
                 <span class="hideMobile">&nbsp;&nbsp;Room</span>
             </div>
             <div class="iconContainer">
-                <i class="fa fa-facebook-square shareStyle facebookStyle" onclick="fbShare()"></i>
+                <i class="fa fa-facebook-square shareStyle facebookStyle" ng-click="fbShare()"></i>
             </div>
 
             <div class="actionButton browseLooks " onclick="menuBrowseClick()">BROWSE OTHER LOOKS</div>
-            <div class="actionButton callDesigner " onclick="callDesigner()">CALL A DESIGNER</div>
+            <div class="actionButton callDesigner " ng-click="callDesigner()">CALL A DESIGNER</div>
         </div>
     </div>
 

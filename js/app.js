@@ -210,8 +210,6 @@ window.fbAsyncInit = function () {
     ref.parentNode.insertBefore(js, ref);
 }(document));
 
-var styles;
-
 homeluxeApp.controller("quizAppControl", function($scope){
 
     $scope.startQuiz = function(){
@@ -233,7 +231,7 @@ homeluxeApp.controller("quizAppControl", function($scope){
         if (!($scope.question = $scope.questions[$scope.currentQuestion])) {
             $scope.quizOver = true;
             requests.submitQuiz($scope.myAnswers.join(), function (response) {
-                styles = response;
+                $scope.$parent.styles = response;
                 viewStyle(0);
             });
         }
