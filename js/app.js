@@ -1,5 +1,133 @@
 var homeluxeApp = angular.module('homeluxeApp', ['ngRoute']);
 
+homeluxeApp.controller("homeluxeAppControl", function ($scope) {
+
+    $scope.getServer = function () {
+        if (typeof location.origin != 'undefined') {
+            if (location.host === 'dev.homeluxe.in') {
+                $scope.apiBaseURL = "https://dev.homeluxe.in:3000/";
+                $scope.baseURL = "https://dev.homeluxe.in/";
+            } else {
+                $scope.apiBaseURL = "http://homeluxe.in:3000/";
+                $scope.baseURL = "http://homeluxe.in/";
+            }
+        }
+    };
+
+    $scope.serverRequest = function (url, data, callback) {
+        console.log(apiBaseURL + url);
+        console.log(data);
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            contentType: "application/x-www-form-urlencoded",
+            url: $scope.apiBaseURL + url,
+            data: data,
+            timeout: 25000, // sets timeout
+            success: function (response) {
+                $scope.$apply(function () {
+                    console.log(response);
+                    callback && callback(response);
+                });
+            },
+            error: function (response) {
+                console.log(response);
+                console.log("SERVER REQUEST ERROR");
+            }
+        });
+    };
+
+    $scope.requests = {
+        getGuestToken: function (callback) {
+            var myObject = {};
+            $scope.serverRequest("getToken", myObject, callback);
+        },
+
+        userLogin: function (username, password, callback) {
+            var myObject = {
+                "token": guestToken,
+                "email": username,
+                "password": password
+            };
+            $scope.serverRequest("member/login", myObject, callback);
+        },
+
+        userRegiserForm: function (name, email, password, callback) {
+            var myObject = {
+                "token": guestToken,
+                "name": name,
+                "email": email,
+                "password": password
+            };
+            $scope.serverRequest("member/register", myObject, callback);
+        },
+
+        userRegisterFacebook: function (name, email, oAuth, profilePic, callback) {
+            var myObject = {
+                "token": guestToken,
+                "name": name,
+                "email": email,
+                "password": oAuth,
+                "oauth": oAuth,
+                "profile_pic": profilePic
+            };
+            $scope.serverRequest("member/register", myObject, callback);
+        },
+
+        getStyles: function (callback) {
+            var myObject = {
+                'token': guestToken
+            };
+            $scope.serverRequest("browse", myObject, callback);
+        },
+
+        getQuiz: function (callback) {
+            var myObject = {
+                "submit": 0,
+                "token": guestToken
+            };
+            $scope.serverRequest("quiz", myObject, callback);
+        },
+
+        submitQuiz: function (answerSet, callback) {
+            var myObject = {
+                "submit": 1,
+                "token": guestToken,
+                "answer_set": answerSet
+            };
+            $scope.serverRequest("quiz", myObject, callback);
+        },
+
+        getLikes: function (userToken, callback) {
+            var myObject = {
+                "token": userToken
+            };
+            $scope.serverRequest("member/likes", myObject, callback);
+        },
+
+        likeNode: function (userToken, nodeID, callback) {
+            var myObject = {
+                "token": userToken,
+                "like_node": nodeID
+            };
+            $scope.serverRequest("member/like", myObject, callback);
+        }
+    };
+
+    $scope.init = function () {
+        $scope.apiBaseURL = null;
+        $scope.baseURL = null;
+        $scope.guestToken = null;
+        $scope.requests.getGuestToken(function (response) {
+            if (response.success)
+                $scope.guestToken = response.token;
+        });
+        $scope.getServer();
+    };
+
+    $scope.init();
+});
+
 homeluxeApp.controller("userControl", function ($scope, $rootScope, $interval) {
 
     $scope.hideLoginOverlay = function () {
@@ -12,7 +140,7 @@ homeluxeApp.controller("userControl", function ($scope, $rootScope, $interval) {
 
     $scope.login = function () {
         if ($scope.isValid($scope.guest.email) && $scope.isValid($scope.guest.password))
-            requests.userLogin($scope.guest.email, $scope.guest.password, function (response) {
+            $scope.requests.userLogin($scope.guest.email, $scope.guest.password, function (response) {
                 $scope.$apply(function () {
                     if (response.status == "Success") {
                         $scope.ngMyUser = response;
@@ -26,7 +154,7 @@ homeluxeApp.controller("userControl", function ($scope, $rootScope, $interval) {
 
     $scope.submitRegister = function () {
         if ($scope.isValid($scope.guest.name) && $scope.isValid($scope.guest.email) && $scope.isValid($scope.guest.password))
-            requests.userRegiserForm($scope.guest.name, $scope.guest.email, $scope.guest.password, function (response) {
+            $scope.requests.userRegiserForm($scope.guest.name, $scope.guest.email, $scope.guest.password, function (response) {
                 if (response.status == "Success")
                     $scope.login();
                 else if (response.status == "Failed" && response.message == "User already exists")
@@ -57,7 +185,7 @@ homeluxeApp.controller("userControl", function ($scope, $rootScope, $interval) {
     };
 
     $scope.facebookRegister = function () {
-        requests.userRegisterFacebook($scope.facebook.name, $scope.facebook.email, $scope.facebook.id, $scope.facebook.dp, function (response) {
+        $scope.requests.userRegisterFacebook($scope.facebook.name, $scope.facebook.email, $scope.facebook.id, $scope.facebook.dp, function (response) {
             console.log(response);
             $scope.facebook.connected = true;
             $scope.login($scope.facebook.email, $scope.facebook.id);
@@ -80,7 +208,7 @@ homeluxeApp.controller("userControl", function ($scope, $rootScope, $interval) {
                     $scope.facebook.id = response.id;
                     $scope.facebook.email = response.email;
 
-                    requests.userLogin(response.email, response.id, function (response) {
+                    $scope.requests.userLogin(response.email, response.id, function (response) {
                         $scope.$apply(function () {
                             if (response.status == "Success") {
                                 $scope.ngMyUser = response;
@@ -149,7 +277,7 @@ homeluxeApp.controller("quizAppControl", function ($scope, $rootScope) {
         $scope.myProgress = 0;
         $scope.quizOver = false;
         $scope.inProgress = true;
-        requests.getQuiz(function (response) {
+        $scope.requests.getQuiz(function (response) {
             $scope.$apply(function () {
                 $scope.questions = response;
                 $scope.getNextQuestion();
@@ -161,7 +289,7 @@ homeluxeApp.controller("quizAppControl", function ($scope, $rootScope) {
         $scope.myProgress += 100 / ($scope.questions.length + 1);
         if (!($scope.question = $scope.questions[$scope.currentQuestion])) {
             $scope.quizOver = true;
-            requests.submitQuiz($scope.myAnswers.join(), function (response) {
+            $scope.requests.submitQuiz($scope.myAnswers.join(), function (response) {
                 $rootScope.styles = response;
                 $scope.$parent.viewStyle(0);
             });
@@ -184,7 +312,7 @@ homeluxeApp.controller("browseStyleControl", function ($scope, $rootScope) {
     };
 
     $scope.getStyles = function () {
-        requests.getStyles(function (response) {
+        $scope.requests.getStyles(function (response) {
             $scope.$apply(function () {
                 $rootScope.styles = response;
             });
@@ -224,7 +352,7 @@ homeluxeApp.controller("styleViewerControl", function ($scope, $rootScope) {
 
     $scope.updateLikes = function (styleNode, imageNode) {
         if ($scope.$parent.ngMyUser = Cookies.getJSON("myUser"))
-            requests.getLikes($scope.$parent.ngMyUser.token, function (response) {
+            $scope.requests.getLikes($scope.$parent.ngMyUser.token, function (response) {
                 if (response.success != "false") {
                     var flag1 = false, flag2 = false;
                     $.each(response, function (index, item) {
@@ -245,7 +373,7 @@ homeluxeApp.controller("styleViewerControl", function ($scope, $rootScope) {
 
     $scope.likeStyle = function () {
         if ($scope.$parent.ngMyUser = Cookies.getJSON("myUser"))
-            requests.likeNode($scope.$parent.ngMyUser.token, $scope.current.styleNode, function (response) {
+            $scope.requests.likeNode($scope.$parent.ngMyUser.token, $scope.current.styleNode, function (response) {
                 if (response.status == "Success")
                     $(".changeHeartStyle").removeClass("fa-heart-o").addClass("fa-heart");
                 else if (response.message == "Invalid token detected")
@@ -258,7 +386,7 @@ homeluxeApp.controller("styleViewerControl", function ($scope, $rootScope) {
 
     $scope.likeRoom = function () {
         if ($scope.$parent.ngMyUser = Cookies.getJSON("myUser"))
-            requests.likeNode($scope.$parent.ngMyUser.token, $scope.current.imageNode, function (response) {
+            $scope.requests.likeNode($scope.$parent.ngMyUser.token, $scope.current.imageNode, function (response) {
                 if (response.status == "Success")
                     $(".changeHeartRoom").removeClass("fa-heart-o").addClass("fa-heart");
                 else if (response.message == "Invalid token detected")
@@ -344,7 +472,7 @@ homeluxeApp.controller("styleViewerControl", function ($scope, $rootScope) {
 homeluxeApp.directive("headerMenu", function ($templateRequest, $compile) {
 
     var template;
-    if(typeof dashboard != 'undefined') template = "../modules/headerMenu.html";
+    if (typeof dashboard != 'undefined') template = "../modules/headerMenu.html";
     else template = "modules/headerMenu.html";
 
     return {
@@ -362,7 +490,7 @@ homeluxeApp.directive("headerMenu", function ($templateRequest, $compile) {
 homeluxeApp.directive("loginOverlay", function ($templateRequest, $compile) {
 
     var template;
-    if(typeof dashboard != 'undefined') template = "../modules/loginOverlay.html";
+    if (typeof dashboard != 'undefined') template = "../modules/loginOverlay.html";
     else template = "modules/loginOverlay.html";
 
     return {
@@ -380,7 +508,7 @@ homeluxeApp.directive("loginOverlay", function ($templateRequest, $compile) {
 homeluxeApp.directive("styleViewer", function ($templateRequest, $compile) {
 
     var template;
-    if(typeof dashboard != 'undefined') template = "../modules/styleViewer.html";
+    if (typeof dashboard != 'undefined') template = "../modules/styleViewer.html";
     else template = "modules/styleViewer.html";
 
     return {

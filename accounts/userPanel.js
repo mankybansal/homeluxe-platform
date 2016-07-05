@@ -3,17 +3,16 @@
  */
 
 var dashboard = true;
-guestToken = true;
 
 homeluxeApp.controller("memberDashboardControl", function ($scope, $rootScope, $interval) {
 
     getServer();
     $scope.init = function () {
         $scope.myLikes = {};
-        if($scope.$parent.ngMyUser = Cookies.getJSON('myUser')){
+        if ($scope.$parent.ngMyUser = Cookies.getJSON('myUser')) {
             $scope.getLikes();
             $scope.showDashboard();
-        }else{
+        } else {
             hideDashboard();
         }
     };
@@ -39,12 +38,12 @@ homeluxeApp.controller("memberDashboardControl", function ($scope, $rootScope, $
             });
         });
     };
-    
-    $scope.logout = function(){
+
+    $scope.logout = function () {
         $scope.$parent.logout();
         hideDashboard();
     };
-    
+
     $scope.init();
 });
 
