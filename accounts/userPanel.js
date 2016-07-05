@@ -37,10 +37,6 @@ homeluxeApp.controller("memberDashboardControl", function ($scope, $rootScope, $
             $(".avatarBox").empty().append("<i class='fa fa-user' style='font-size: 25px; margin-top: 7.5px; margin-left: 10px; color: rgba(0,0,0,0.2);'></i>");
 
         $(".myDP").append("<img src='" + $scope.$parent.ngMyUser.profile_pic + "' class='myDPimage'>");
-        $(".myName").html(myUser.name);
-        $(".myEmail").html(myUser.email);
-        $(".myPhone").html(myUser.mobile);
-
         if ($scope.$parent.ngMyUser.fbConnected) $(".connectedTo").html("Connected to Facebook");
         else $(".connectedTo").html("Not Connected");
     }
