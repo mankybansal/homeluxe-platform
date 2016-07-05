@@ -170,7 +170,7 @@ homeluxeApp.controller("browseStyleControl", function ($scope, $compile) {
                 };
             }
 
-            loadImage();
+            $scope.loadImage();
         } else {
             $('.leftNav').hide();
             $('.rightNav').hide();
