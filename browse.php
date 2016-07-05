@@ -110,9 +110,7 @@
     <script src="/bower_components/angular/angular.js"></script>
     <script src="/bower_components/angular-route/angular-route.js"></script>
     <script src="/bower_components/js-cookie/src/js.cookie.js"></script>
-
-
-    <script src="js/serverRequest.js"></script>
+    
     <script src="js/app.js"></script>
     <script src="js/headerMenu.js"></script>
 

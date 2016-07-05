@@ -17,10 +17,8 @@
     <script src="/bower_components/angular-route/angular-route.js"></script>
     <script src="/bower_components/js-cookie/src/js.cookie.js"></script>
 
-    <script type="text/javascript" src="js/serverRequest.js"></script>
     <script type="text/javascript" src="js/headerMenu.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
-
 
     <style>
         html, body {
@@ -63,10 +61,9 @@
 </head>
 
 
-<body ng-app="homeluxeApp" ng-controller="userControl">
+<body ng-app="homeluxeApp" homeluxe-app-control user-control>
 
 <login-overlay></login-overlay>
-
 <header-menu></header-menu>
 
 <div class="introPanel sectionPanel animated fadeInRight" style="display: block;">
