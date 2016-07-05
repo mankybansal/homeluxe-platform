@@ -94,6 +94,10 @@
 
     ?>
     
+   
+    <meta charset="UTF-8">
+    <title>Browse Styles | HomeLuxe</title>
+
     <link rel="stylesheet" href="bower_components/animate.css/animate.css" type="text/css">
     <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.css">
 
@@ -101,10 +105,6 @@
     <link rel="stylesheet" href="css/accountsDefault.css" type="text/css">
     <link rel="stylesheet" href="css/headerMenu.css" type="text/css">
     <link rel="stylesheet" href="css/styleViewer.css" type="text/css">
-
-    <meta charset="UTF-8">
-    <title>Browse Styles | HomeLuxe</title>
-
 
     <script src="/bower_components/jquery/dist/jquery.js"></script>
     <script src="/bower_components/angular/angular.js"></script>

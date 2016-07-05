@@ -142,15 +142,15 @@ homeluxeApp.controller("userControl", function ($scope, $rootScope, $interval) {
     $scope.init();
 });
 
-homeluxeApp.controller("quizAppControl", function($scope, $rootScope){
+homeluxeApp.controller("quizAppControl", function ($scope, $rootScope) {
 
-    $scope.startQuiz = function(){
+    $scope.startQuiz = function () {
         $scope.currentQuestion = 0;
         $scope.myAnswers = [];
         $scope.myProgress = 0;
         $scope.quizOver = false;
         $scope.inProgress = true;
-        requests.getQuiz(function(response){
+        requests.getQuiz(function (response) {
             $scope.$apply(function () {
                 $scope.questions = response;
                 $scope.getNextQuestion();
@@ -176,7 +176,7 @@ homeluxeApp.controller("quizAppControl", function($scope, $rootScope){
     };
 });
 
-homeluxeApp.controller("browseStyleControl", function ($scope,$rootScope) {
+homeluxeApp.controller("browseStyleControl", function ($scope, $rootScope) {
     getServer();
 
     $scope.mySplit = function (string, nb) {
@@ -210,7 +210,7 @@ homeluxeApp.controller("browseStyleControl", function ($scope,$rootScope) {
 
 });
 
-homeluxeApp.controller("styleViewerControl", function ($scope,$rootScope) {
+homeluxeApp.controller("styleViewerControl", function ($scope, $rootScope) {
 
     $scope.init = function () {
         $rootScope.styles = [];
@@ -319,7 +319,7 @@ homeluxeApp.controller("styleViewerControl", function ($scope,$rootScope) {
         $scope.updateLikes($scope.current.styleNode, $scope.current.imageNode);
     };
 
-    $scope.fbShare = function() {
+    $scope.fbShare = function () {
         FB.ui({
             method: 'feed',
             name: $rootScope.styles[$scope.current.style].name + ' on HomeLuxe.in',
@@ -331,11 +331,11 @@ homeluxeApp.controller("styleViewerControl", function ($scope,$rootScope) {
         });
     };
 
-    $scope.callDesigner = function() {
+    $scope.callDesigner = function () {
         window.location = 'index.php#contactUsX';
     };
 
-    $scope.coverContainerClose = function() {
+    $scope.coverContainerClose = function () {
         $('.coverContainer').hide();
     };
 
