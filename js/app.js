@@ -330,7 +330,7 @@ homeluxeApp.controller("browseStyleControl", function ($scope, $rootScope) {
         });
     };
 
-    $$scope.getStyles();
+    $scope.getStyles();
 
     $scope.viewStyle = function (styleNum) {
         $scope.$parent.viewStyle(styleNum);
