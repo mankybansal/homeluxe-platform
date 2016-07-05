@@ -45,7 +45,7 @@ homeluxeApp.controller("memberDashboardControl", function ($scope, $rootScope, $
     $scope.getLikes = function () {
         requests.getLikes($scope.$parent.ngMyUser.token, function (response) {
             $scope.$apply(function () {
-                if (response.success != "false") {
+                if (typeof response.success == 'undefined' && response.success != "false") {
                     $scope.myLikes = response;
                     console.log($scope.myLikes);
                 }
