@@ -3,32 +3,29 @@
  */
 
 var dashboard = true;
-var myLikes;
 
-function getLikes(){
-    requests.getLikes(myUser.token, function(response){
-        if(response.success != "false"){
-            myLikes = response;
-            updateLikes();
-        }
-    });
-}
 
-function updateLikes(){
-    $(".dataLikeCount").html(myLikes.length);
-    $("#viewMyLikes").empty();
-    if(myLikes.length > 0){
-        $.each(myLikes, function(index,item){
-            if(item.catalogueKey){
-                $("#viewMyLikes").append("<div id='"+item.catalogueKey+"' class='likeBox'><div class='likeBoxImageBox'><img src='../images/styles/covers/clear-images/"+item.cover_pic+"' class='likeBoxImage'></div><div class='likeBoxStyleTitle'>"+item.name+"</div><div class='likeBoxDescription'>"+item.description+"</div><div class='likeBoxPrice'><i class='fa fa-rupee'></i>&nbsp;"+item.price+"</div></div>");
-                //$("#viewMyLikes").append("<div id='"+item.catalogueKey+"' class='likeBox'><div class='likeBoxImageBox'><img src='../images/NOIMAGE.png' class='likeBoxImage'></div><div class='likeBoxStyleTitle'>"+item.name+"</div><div class='likeBoxDescription'>"+item.description+"</div><div class='likeBoxPrice'><i class='fa fa-rupee'></i>&nbsp;"+item.price+"</div></div>");
-            }else{
-                $("#viewMyLikes").append("<div class='likeBoxRoom'><div class='likeBoxImageBox'><img src='../images/NOIMAGE.png' class='likeBoxImage'></div><div class='likeBoxStyleTitle'>"+item.name+"</div><div class='likeBoxDescription'>"+item.desc+"</div></div>");
+homeluxeApp.controller("memberDashboardControl", function ($scope, $rootScope, $interval) {
 
-            }
+    $scope.init = function () {
+        $scope.myLikes = [];
+    };
+
+
+    $scope.getLikes = function(){
+        requests.getLikes($scope.$parent.ngMyUser.token, function(response){
+            $scope.$apply(function () {
+                if(response.success != "false"){
+                    $scope.myLikes = response;
+                }
+            });
         });
-    }
-}
+    };
+    
+    $scope.init();
+});
+
+
 
 $(document).ready(function () {
 

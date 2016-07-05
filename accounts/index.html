@@ -31,7 +31,7 @@
 
 <login-overlay></login-overlay>
 
-<div class="mainUnderlay"></div>
+<div class="mainUnderlay" ng-controller="memberDashboardControl"></div>
 
 <div class="contentOverlay">
 
@@ -146,7 +146,7 @@
                     <div class="statsTint tintBlue">
                         <div class="statsIcon">
                             <i class="fa fa-thumbs-up"></i>
-                            <span class='dataLikeCount' style="color: rgba(0,0,0,0.2); margin-left: 10px; ">0</span>
+                            <span class='dataLikeCount' style="color: rgba(0,0,0,0.2); margin-left: 10px; ">{{myLikes.length}}</span>
                         </div>
                         <div class="statsTintText">Liked Styles</div>
                     </div>
@@ -157,10 +157,10 @@
                 </div>
 
                 <!--<div class="statsBoxes" onclick="viewLikes()">-->
-                   <!--<div style="width: 100%; height: 100%; background: #468fde; font-size: 25px; color: white; box-sizing: border-box; padding: 100px 35px 40px 35px;">-->
-                        <!--Don't know which style suits you best? <br><br><br>-->
-                        <!--<span style="font-size: 17px; text-transform: uppercase;">Take the style quiz!</span>-->
-                    <!--</div>-->
+                <!--<div style="width: 100%; height: 100%; background: #468fde; font-size: 25px; color: white; box-sizing: border-box; padding: 100px 35px 40px 35px;">-->
+                <!--Don't know which style suits you best? <br><br><br>-->
+                <!--<span style="font-size: 17px; text-transform: uppercase;">Take the style quiz!</span>-->
+                <!--</div>-->
                 <!--</div>-->
             </div>
 
@@ -187,7 +187,25 @@
                 </div>
             </div>
 
-            <div class="viewPanel" id="viewMyLikes"></div>
+            <div class="viewPanel" id="viewMyLikes">
+                <div ng-repeat="like in myLikes" id='{{like.catalogueKey}}' ng-if="like.catalogueKey" class='likeBox'>
+                    <div class='likeBoxImageBox'>
+                        <img src='../images/styles/covers/clear-images/{{like.cover_pic}}' class='likeBoxImage'>
+                    </div>
+                    <div class='likeBoxStyleTitle'>{{like.name}}</div>
+                    <div class='likeBoxDescription'>{{like.description}}</div>
+                    <div class='likeBoxPrice'>
+                        <i class='fa fa-rupee'></i>&nbsp;{{like.price}}
+                    </div>
+                </div>
+                <div class='likeBoxRoom' ng-repeat="like in myLikes" id='{{like.catalogueKey}}' ng-if="!like.catalogueKey">
+                    <div class='likeBoxImageBox'>
+                        <img src='../images/NOIMAGE.png' class='likeBoxImage'></div>
+                    <div class='likeBoxStyleTitle'>{{like.name}}</div>
+                    <div class='likeBoxDescription'>{like.description}}
+                    </div>
+                </div>
+            </div>
 
             <div class="viewPanel" id="viewLogout">
                 <div class="logoutBox">Logging out... &nbsp; <i class="fa fa-circle-o-notch fa-spin"></i></div>
