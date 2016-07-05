@@ -22,7 +22,6 @@ homeluxeApp.controller("userControl", function ($scope, $rootScope, $interval) {
                 });
             });
         else showAlert('Please enter a username & password.');
-        if (typeof dashboard != 'undefined' && dashboard) showDashboard();
     };
 
     $scope.submitRegister = function () {
