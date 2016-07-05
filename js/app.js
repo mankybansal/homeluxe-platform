@@ -15,7 +15,7 @@ homeluxeApp.controller("homeluxeAppControl", function ($scope) {
     };
 
     $scope.serverRequest = function (url, data, callback) {
-        console.log(apiBaseURL + url);
+        console.log($scope.apiBaseURL + url);
         console.log(data);
         $.ajax({
             type: "POST",
