@@ -320,12 +320,12 @@
     </span>
     </div>
 
-    <div class="questionCardContainer animated fadeInUp" ng-show="!quizOver">
+    <div class="questionCardContainer" ng-show="!quizOver">
     <span class="aligner">
-    <div class="questionCard">
+    <div class="questionCard animated fadeInUp">
         <div class="questionText">{{question.Questions.name}}</div>
         <div class="questionOptions">
-            <div class="option animated fadeInUp" ng-repeat="option in question.Options" ng-click="saveAnswer(option.id)">
+            <div class="option" ng-repeat="option in question.Options" ng-click="saveAnswer(option.id)">
                 <div class="optionImageContainer">
                     <img ng-src='{{"images/optionPictures/" + option.image}}' class='optionImage'>
                 </div>
