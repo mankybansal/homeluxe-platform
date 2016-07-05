@@ -408,7 +408,7 @@
 
 <header-menu></header-menu>
 <login-overlay></login-overlay>
-<style-viewer></style-viewer>
+<style-viewer ng-controller="styleViewerControl"></style-viewer>
 
 <div class="mainCardContainer">
     <div class="mainCard">
