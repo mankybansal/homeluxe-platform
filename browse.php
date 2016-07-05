@@ -344,27 +344,27 @@
 
 </head>
 
-<body ng-app="homeluxeApp" ng-controller="userControl">
+<body ng-app="homeluxeApp" ng-controller="homeluxeAppControl">
+    <div ng-controller="userControl">
+    <header-menu></header-menu>
+    <login-overlay></login-overlay>
 
-<header-menu></header-menu>
-<login-overlay></login-overlay>
-
-<div ng-controller="styleViewerControl">
-    <style-viewer ></style-viewer>
-    <div class="mainCardContainer" ng-controller="browseStyleControl">
-        <div class="mainCard">
-            <div class="introPanel" style="width: 100%;">
-                <div class="diamondContainer clear">
-                    <div class='diamond' ng-repeat="style in styles" ng-click="viewStyle(style.id)">
-                        <div class='diamondText' id='style{{style.id}}' style="background: url('images/styles/{{style.name}}/{{mySplit(style.images[2].file,0) + 'thumb.' + mySplit(style.images[2].file,1)}}'); background-size: auto 160%; background-repeat: no-repeat; background-position: center;">
-                            <div class='textHighlight'>{{style.name}}</div>
+    <div ng-controller="styleViewerControl">
+        <style-viewer ></style-viewer>
+        <div class="mainCardContainer" ng-controller="browseStyleControl">
+            <div class="mainCard">
+                <div class="introPanel" style="width: 100%;">
+                    <div class="diamondContainer clear">
+                        <div class='diamond' ng-repeat="style in styles" ng-click="viewStyle(style.id)">
+                            <div class='diamondText' id='style{{style.id}}' style="background: url('images/styles/{{style.name}}/{{mySplit(style.images[2].file,0) + 'thumb.' + mySplit(style.images[2].file,1)}}'); background-size: auto 160%; background-repeat: no-repeat; background-position: center;">
+                                <div class='textHighlight'>{{style.name}}</div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
+    </div>
 </body>
 </html>
