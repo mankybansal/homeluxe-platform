@@ -10,15 +10,43 @@ homeluxeApp.controller("memberDashboardControl", function ($scope, $rootScope, $
     getServer();
     $scope.init = function () {
         $scope.myLikes = [];
+        $scope.$parent.ngMyUser = Cookies.getJSON('myUser');
         $scope.getLikes();
         showDashboard();
     };
 
+    $scope.showDashboard = function (){
+        $(".viewPanel").hide();
+        $(".menuLeft")
+            .find(".optionSelected").removeClass("optionSelected")
+            .find(".viewOverview").parent().addClass("optionSelected");
+        $("#viewOverview").fadeIn(500);
+
+        setTimeout(function () {
+            $('.loginOverlay').fadeOut(1000);
+        }, 2000);
+
+        setTimeout(function () {
+            $('.contentOverlay').fadeIn(1000);
+        }, 3000);
+
+        $(".dataName").html($scope.$parent.ngMyUser.name);
+        if ($scope.$parent.ngMyUser.profile_pic)
+            $(".avatarBox").empty().append("<img class='profilePic' src='" + $scope.$parent.ngMyUser.profile_pic + "'/>");
+        else
+            $(".avatarBox").empty().append("<i class='fa fa-user' style='font-size: 25px; margin-top: 7.5px; margin-left: 10px; color: rgba(0,0,0,0.2);'></i>");
+
+        $(".myDP").append("<img src='" + $scope.$parent.ngMyUser.profile_pic + "' class='myDPimage'>");
+        $(".myName").html(myUser.name);
+        $(".myEmail").html(myUser.email);
+        $(".myPhone").html(myUser.mobile);
+
+        if ($scope.$parent.ngMyUser.fbConnected) $(".connectedTo").html("Connected to Facebook");
+        else $(".connectedTo").html("Not Connected");
+    }
+
 
     $scope.getLikes = function () {
-        $scope.$parent.ngMyUser = Cookies.getJSON('myUser');
-        console.log($scope.$parent.ngMyUser.token);
-
         requests.getLikes($scope.$parent.ngMyUser.token, function (response) {
             $scope.$apply(function () {
                 if (response.success != "false") {
@@ -62,36 +90,6 @@ $(document).ready(function () {
     });
 });
 
-function showDashboard() {
-
-    $(".viewPanel").hide();
-    $(".menuLeft")
-        .find(".optionSelected").removeClass("optionSelected")
-        .find(".viewOverview").parent().addClass("optionSelected");
-    $("#viewOverview").fadeIn(500);
-
-    setTimeout(function () {
-        $('.loginOverlay').fadeOut(1000);
-    }, 2000);
-
-    setTimeout(function () {
-        $('.contentOverlay').fadeIn(1000);
-    }, 3000);
-
-    $(".dataName").html(myUser.name);
-    if (myUser.profile_pic)
-        $(".avatarBox").empty().append("<img class='profilePic' src='" + myUser.profile_pic + "'/>");
-    else
-        $(".avatarBox").empty().append("<i class='fa fa-user' style='font-size: 25px; margin-top: 7.5px; margin-left: 10px; color: rgba(0,0,0,0.2);'></i>");
-
-    $(".myDP").append("<img src='" + myUser.profile_pic + "' class='myDPimage'>");
-    $(".myName").html(myUser.name);
-    $(".myEmail").html(myUser.email);
-    $(".myPhone").html(myUser.mobile);
-
-    if (myUser.fbConnected) $(".connectedTo").html("Connected to Facebook");
-    else $(".connectedTo").html("Not Connected");
-}
 
 function hideDashboard() {
     setTimeout(function () {
