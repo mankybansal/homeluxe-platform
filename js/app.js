@@ -242,7 +242,7 @@ homeluxeApp.controller("userControl", function ($scope, $rootScope, $interval) {
     };
 
     $scope.gotoDashboard = function () {
-        window.location = baseURL + "accounts/";
+        window.location = $scope.baseURL + "accounts/";
     };
 
     $scope.logout = function () {
