@@ -472,6 +472,7 @@ homeluxeApp.directive("headerMenu", function ($templateRequest, $compile) {
     else template = "modules/headerMenu.html";
 
     return {
+        restrict: "AE",
         link: function (scope, element) {
             $templateRequest(template).then(function (html) {
                 var template = angular.element(html);

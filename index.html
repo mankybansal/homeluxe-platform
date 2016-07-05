@@ -516,7 +516,9 @@
 
 </head>
 
-<body ng-app="homeluxeApp" homeluxe-app-control user-control login-overlay header-menu>
+<body ng-app="homeluxeApp" homeluxe-app-control user-control>
+    <header-menu></header-menu>
+    <login-overlay></login-overlay>
     <div id="fullpage">
         <div class="section introSection" id="section0">
             <div class="screen1" style="z-index: 70;">
@@ -752,8 +754,8 @@
                     <input class="contactInput" id="NAME" name="NAME" type="text" placeholder="Full Name">
                     <input class="contactInput" id="EMAIL" name="EMAIL" type="email" placeholder="Email Address">
                     <input class="contactInput" id="PHONE" name="PHONE" type="text" placeholder="Phone Number">
-                        <textarea class="textInput" id="MESSAGE" name="MESSAGE" rows="3"
-                                  placeholder="Type your message here"></textarea>
+                            <textarea class="textInput" id="MESSAGE" name="MESSAGE" rows="3"
+                                      placeholder="Type your message here"></textarea>
                     <div class="contactSuccess" style="display: none; margin-top: 20px; font-size: 20px;">We will
                         contact
                         you!
