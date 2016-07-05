@@ -410,16 +410,18 @@
 <login-overlay></login-overlay>
 
 <div ng-controller="styleViewerControl">
-    <style-viewer ></style-viewer>
+    <style-viewer></style-viewer>
     <div class="mainCardContainer" ng-controller="browseStyleControl">
         <div class="mainCard">
             <div class="introPanel" style="width: 100%;">
                 <div class="diamondContainer clear">
-                    <div class='diamond' ng-repeat="style in styles" ng-click="viewStyle(style.id)">
+                    <span ng-repeat="style in styles">
+                    <div class='diamond' ng-click="viewStyle(style.id)">
                         <div class='diamondText' id='style{{style.id}}'>
                             <div class='textHighlight'>{{style.name}}</div>
                         </div>
                     </div>
+                    </span>
                 </div>
             </div>
         </div>
