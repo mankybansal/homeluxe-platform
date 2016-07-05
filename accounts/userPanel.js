@@ -10,9 +10,12 @@ homeluxeApp.controller("memberDashboardControl", function ($scope, $rootScope, $
     getServer();
     $scope.init = function () {
         $scope.myLikes = {};
-        $scope.$parent.ngMyUser = Cookies.getJSON('myUser');
-        $scope.getLikes();
-        $scope.showDashboard();
+        if($scope.$parent.ngMyUser = Cookies.getJSON('myUser')){
+            $scope.getLikes();
+            $scope.showDashboard();
+        }else{
+            hideDashboard();
+        }
     };
 
     $scope.showDashboard = function () {
@@ -62,11 +65,11 @@ $(document).ready(function () {
 
 function hideDashboard() {
     setTimeout(function () {
-        $('.contentOverlay').fadeOut(1000);
-    }, 2000);
+        $('.contentOverlay').fadeOut(500);
+    }, 1000);
 
     setTimeout(function () {
-        $('.loginOverlay').fadeIn(1000);
+        $('.loginOverlay').fadeIn(500);
         showAlert("Successfully logged out.");
-    }, 3000);
+    }, 1500);
 }
