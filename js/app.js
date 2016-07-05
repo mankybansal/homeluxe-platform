@@ -161,6 +161,7 @@ homeluxeApp.directive('userControl', function () {
 
             $scope.login = function () {
                 if ($scope.isValid($scope.guest.email) && $scope.isValid($scope.guest.password))
+                    console.log("Entered");
                     $scope.requests.userLogin($scope.guest.email, $scope.guest.password, function (response) {
                         if (response.status == "Success") {
                             $scope.ngMyUser = response;
