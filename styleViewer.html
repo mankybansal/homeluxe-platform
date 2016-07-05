@@ -2,13 +2,13 @@
     <div class="coverBG"></div>
     <div class="coverFG">
         <div class="coverTop">
-            <div class="coverTitle"></div>
+            <div class="coverTitle">This style is called <b>{{styles[styleNum].name}}</b>!</div>
             <div class="coverSubtitle">We hope you love it.</div>
         </div>
         <div class="coverBottom">
             <div class="coverImage"></div>
             <div class="coverText">
-                <span class="coverTextBox"></span><br><br><br><br>
+                <span class="coverTextBox">{{styles[styleNum].description}}</span><br><br><br><br>
                 <div class="actionButton" style="margin: 0 auto;">VIEW ROOMS</div>
             </div>
         </div>
@@ -20,7 +20,7 @@
         <div class="headerBar">
             <img src="images/logo.png" class="resultLogo" onclick="menuHomeClick()">
             <div class="viewInfo">
-                <span class="viewStyleTitle2"></span>
+                <span class="viewStyleTitle2">{{styles[styleNum].name}}</span>
             </div>
         </div>
         <div class="imageNav">

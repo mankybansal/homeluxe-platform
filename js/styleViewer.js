@@ -65,9 +65,8 @@ homeluxeApp.controller("browseStyleControl", function ($scope) {
 
 homeluxeApp.controller("styleViewerControl", function ($scope) {
 
-    $scope.styles = [];
-
     $scope.init = function () {
+        $scope.styles = [];
         $scope.images = [];
         $scope.current = {
             image: 0,
@@ -75,10 +74,6 @@ homeluxeApp.controller("styleViewerControl", function ($scope) {
             styleNode: null,
             imageNode: null
         };
-        $scope.current.image = 0;
-        $scope.current.style = null;
-        $scope.current.styleNode = null;
-        $scope.current.imageNode = null;
     };
 
     $scope.updateLikes = function (styleNode, imageNode) {
@@ -127,12 +122,8 @@ homeluxeApp.controller("styleViewerControl", function ($scope) {
             loginButtonClick();
     };
 
-    $scope.leftNav = true;
-    $scope.rightNav = true;
-
     $scope.viewStyle = function (styleNum) {
 
-        $scope.leftNav = false;
         $('.coverContainer').fadeIn(500);
         $('.resultCard').fadeIn(500);
         $('.centerDesc').fadeIn(500);
@@ -149,9 +140,9 @@ homeluxeApp.controller("styleViewerControl", function ($scope) {
             "background-repeat": "no-repeat",
             "background-position": "center"
         });
-        $('.coverTitle').html("This style is called <b>" + $scope.styles[styleNum].name + "</b>!");
-        $('.coverTextBox').html($scope.styles[styleNum].description);
-        $(".viewStyleTitle2").html($scope.styles[styleNum].name);
+        // $('.coverTitle').html("This style is called <b>" + $scope.styles[styleNum].name + "</b>!");
+        // $('.coverTextBox').html($scope.styles[styleNum].description);
+        // $(".viewStyleTitle2").html($scope.styles[styleNum].name);
 
         changeUrlParam('style', $scope.styles[styleNum].catalogueKey);
 
@@ -162,12 +153,11 @@ homeluxeApp.controller("styleViewerControl", function ($scope) {
         $scope.images = [];
 
         if ($scope.styles[styleNum].images.length != 0) {
-            for (var i = 0; i < $scope.styles[styleNum].images.length; i++) {
+            for (var i = 0; i < $scope.styles[styleNum].images.length; i++)
                 $scope.images[i] = {
                     "img": $scope.styles[styleNum].name + '/' + $scope.styles[styleNum].images[i].file,
                     "id": $scope.styles[styleNum].images[i].id
                 };
-            }
             $scope.loadImage();
         }
     };
