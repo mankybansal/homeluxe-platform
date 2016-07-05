@@ -31,6 +31,7 @@ function serverRequest(url, data, callback) {
         });
     } else {
         console.log(apiBaseURL + url);
+        console.log(data);
         $.ajax({
             type: "POST",
             dataType: "json",
