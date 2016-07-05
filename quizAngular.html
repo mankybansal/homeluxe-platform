@@ -325,7 +325,7 @@
     <div class="questionCard animated fadeInUp" ng-show="!quizOver">
         <div class="questionText">{{question.Questions.name}}</div>
         <div class="questionOptions">
-            <div class="option" ng-repeat="option in question.Options" ng-click="saveAnswer(option.id)">
+            <div class="option animated fadeIn" ng-repeat="option in question.Options" ng-click="saveAnswer(option.id)">
                 <div class="optionImageContainer">
                     <img ng-src='{{"images/optionPictures/" + option.image}}' class='optionImage'>
                 </div>
