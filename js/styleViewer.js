@@ -142,31 +142,31 @@ homeluxeApp.controller("browseStyleControl", function ($scope, $compile) {
 
         $scope.currentStyleNode = styles[styleNum].id;
 
-        $('.coverImage').empty().append("<img src='images/styles/covers/clear-images/" + styles[styleNum].cover_pic + "' class='coverPic'>");
+        $('.coverImage').empty().append("<img src='images/styles/covers/clear-images/" + $scope.styles[styleNum].cover_pic + "' class='coverPic'>");
 
         $(".coverBG").css({
-            "background": "url('images/styles/covers/blurred-images/" + styles[styleNum].cover_pic + "')",
+            "background": "url('images/styles/covers/blurred-images/" + $scope.styles[styleNum].cover_pic + "')",
             "background-size": "100% 100%",
             "background-repeat": "no-repeat",
             "background-position": "center"
         });
-        $('.coverTitle').html("This style is called <b>" + styles[styleNum].name + "</b>!");
-        $('.coverTextBox').html(styles[styleNum].description);
+        $('.coverTitle').html("This style is called <b>" + $scope.styles[styleNum].name + "</b>!");
+        $('.coverTextBox').html($scope.styles[styleNum].description);
         $(".viewStyleTitle2").html(styles[styleNum].name);
 
-        changeUrlParam('style', styles[styleNum].catalogueKey);
+        changeUrlParam('style', $scope.styles[styleNum].catalogueKey);
 
-        if (typeof myRandomToken !== 'undefined') {
-            changeUrlParam('token', myRandomToken);
-        }
+        // if (typeof myRandomToken !== 'undefined') {
+        //     changeUrlParam('token', myRandomToken);
+        // }
 
         $scope.images = [];
 
-        if (styles[styleNum].images.length != 0) {
-            for (var i = 0; i < styles[styleNum].images.length; i++) {
+        if ($scope.styles[styleNum].images.length != 0) {
+            for (var i = 0; i < $scope.styles[styleNum].images.length; i++) {
                 $scope.images[i] = {
-                    "img": styles[styleNum].name + '/' + styles[styleNum].images[i].file,
-                    "id": styles[styleNum].images[i].id
+                    "img": $scope.styles[styleNum].name + '/' + $scope.styles[styleNum].images[i].file,
+                    "id": $scope.styles[styleNum].images[i].id
                 };
             }
 
@@ -176,7 +176,7 @@ homeluxeApp.controller("browseStyleControl", function ($scope, $compile) {
             $('.rightNav').hide();
         }
 
-        if (styles[styleNum].images.length == 1) {
+        if ($scope.styles[styleNum].images.length == 1) {
             $('.leftNav').hide();
             $('.rightNav').hide();
         }
