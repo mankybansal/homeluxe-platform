@@ -77,7 +77,7 @@ homeluxeApp.directive('homeluxeAppControl', function () {
 
                 getStyles: function (callback) {
                     var myObject = {
-                        'token': $scope.guestToken
+                        "token": $scope.guestToken
                     };
                     $scope.serverRequest("browse", myObject, callback);
                 },
