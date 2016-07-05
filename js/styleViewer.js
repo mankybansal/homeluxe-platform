@@ -87,37 +87,28 @@ homeluxeApp.controller("browseStyleControl", function ($scope, $compile) {
 
     getServer();
 
+    $scope.styles = [];
+
     $scope.getStyles = function () {
         requests.getStyles(function (response) {
+            $scope.$apply(function () {
+                $scope.styles = response;
+            });
 
-            styles = response;
+            // $.each(styles, function (index, item) {
+            //     $('.diamondContainer').append("<div class='diamond' id='styleDia" + index + "' ng-click='viewStyle(" + index + ")'><div class='diamondText' id='style" + index + "' ><div class='textHighlight'>" + item.name + "</div></div></div>");
+            //
+            //     var str = item.images[2].file;
+            //     var res = str.split(".");
+            //
+            //     $("#style" + index).css({
+            //         "background": "url('images/styles/" + item.name + "/" + res[0] + "thumb." + res[1] + "')",
+            //         "background-size": "auto 160%",
+            //         "background-repeat": "no-repeat",
+            //         "background-position": "center"
+            //     });
+            // });
 
-            $compile(
-                $.each(styles, function (index, item) {
-
-                    if (item.images[0].name != 'NOIMAGE.png') {
-                        $('.diamondContainer').append("<div class='diamond' id='styleDia" + index + "' ng-click='viewStyle(" + index + ")'><div  data-adaptive-background data-ab-css-background data-ab-parent='#styleDia" + index + "' class='diamondText' id='style" + index + "' ><div class='textHighlight'>" + item.name + "</div></div></div>");
-
-                        var str = item.images[2].file;
-                        var res = str.split(".");
-
-                        $("#style" + index).css({
-                            "background": "url('images/styles/" + item.name + "/" + res[0] + "thumb." + res[1] + "')",
-                            "background-size": "auto 160%",
-                            "background-repeat": "no-repeat",
-                            "background-position": "center"
-                        });
-                    } else {
-                        $('.diamondContainer').append("<div class='diamond' ng-click='viewStyle(" + index + ")'><div  class='diamondText' id='style" + index + "' ><div class='textHighlight'>" + item.name + "</div></div></div>");
-                        $("#style" + index).css({
-                            "background": "url('images/styles/" + item.name + "/" + item.images[2].file + "')",
-                            "background-size": "auto 100%",
-                            "background-repeat": "no-repeat",
-                            "background-position": "center"
-                        });
-                    }
-                })
-            )($scope);
 
             $('.mainCard').fadeIn(1000).animate({marginTop: '0px'}, 500);
 
@@ -130,7 +121,7 @@ homeluxeApp.controller("browseStyleControl", function ($scope, $compile) {
             }
         });
     };
-    
+
     $scope.getStyles();
 });
 
