@@ -303,49 +303,52 @@
 
     }
 </style>
-<body ng-app="homeluxeApp" ng-controller="userControl">
 
-<login-overlay></login-overlay>
-<header-menu></header-menu>
+<body ng-app="homeluxeApp" ng-controller="homeluxeAppControl">
+    <div ng-controller="userControl">
+        <login-overlay></login-overlay>
+        <header-menu></header-menu>
 
-<div ng-controller="styleViewerControl">
-    <style-viewer></style-viewer>
-    <div ng-controller="quizAppControl">
+        <div ng-controller="styleViewerControl">
+            <style-viewer></style-viewer>
+            <div ng-controller="quizAppControl">
 
-        <div class="introPanel sectionPanel" ng-show="!inProgress">
-            <span class="aligner">
-            <div class="introTitle">Ready to find your style?</div>
+                <div class="introPanel sectionPanel" ng-show="!inProgress">
+                <span class="aligner">
+                <div class="introTitle">Ready to find your style?</div>
 
-                <div class="introSubTitle">
-                We'll be asking you a few simple questions. <br>
-                All you have to do is pick an option that suits you the most.
-            </div>
+                    <div class="introSubTitle">
+                        We'll be asking you a few simple questions. <br>
+                        All you have to do is pick an option that suits you the most.
+                    </div>
 
-                <div class="continueButton actionButton" ng-click="startQuiz()">CONTINUE</div>
-            </span>
-        </div>
+                    <div class="continueButton actionButton" ng-click="startQuiz()">CONTINUE</div>
+                </span>
+                </div>
 
-        <div class="questionCardContainer" ng-show="!quizOver">
-            <span class="aligner">
-            <div class="questionCard" ng-show="!quizOver">
-                <div class="questionText animated fadeInUp">{{question.Questions.name}}</div>
-                <div class="questionOptions">
-                    <div class="option animated fadeIn" ng-repeat="option in question.Options" ng-click="saveAnswer(option.id)">
-                        <div class="optionImageContainer">
-                            <img ng-src='{{"images/optionPictures/" + option.image}}' class='optionImage'>
+                <div class="questionCardContainer" ng-show="!quizOver">
+                <span class="aligner">
+                <div class="questionCard" ng-show="!quizOver">
+                    <div class="questionText animated fadeInUp">{{question.Questions.name}}</div>
+                    <div class="questionOptions">
+                        <div class="option animated fadeIn" ng-repeat="option in question.Options"
+                             ng-click="saveAnswer(option.id)">
+                            <div class="optionImageContainer">
+                                <img ng-src='{{"images/optionPictures/" + option.image}}' class='optionImage'>
+                            </div>
+                            <div class="optionText">{{option.name}}</div>
                         </div>
-                        <div class="optionText">{{option.name}}</div>
                     </div>
                 </div>
-            </div>
-            </span>
-        </div>
+                </span>
+                </div>
 
-        <div class="footer">
-            <div class="quizProgress" ng-style="{width: myProgress + '%'}"></div>
+                <div class="footer">
+                    <div class="quizProgress" ng-style="{width: myProgress + '%'}"></div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-
 </body>
+
 </html>
