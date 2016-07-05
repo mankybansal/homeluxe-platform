@@ -3,6 +3,7 @@
  */
 
 var dashboard = true;
+guestToken = true;
 
 homeluxeApp.controller("memberDashboardControl", function ($scope, $rootScope, $interval) {
 
@@ -35,19 +36,17 @@ homeluxeApp.controller("memberDashboardControl", function ($scope, $rootScope, $
             });
         });
     };
-
+    
+    $scope.logout = function(){
+        $scope.$parent.logout();
+        hideDashboard();
+    };
+    
     $scope.init();
 });
 
 
 $(document).ready(function () {
-
-    $('.loginOverlay').show();
-
-    $(".signOutButton").click(function () {
-        Cookies.remove('myUser');
-        hideDashboard();
-    });
 
     $(".menuOption").click(function () {
         var menuGroupSelected = $(this).parent().find(".menuGroupLabel").text();
