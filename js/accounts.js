@@ -26,12 +26,10 @@ homeluxeApp.controller("userControl", function ($scope, $interval) {
     };
 
     $scope.submitRegister = function () {
-        if ($scope.isValid($scope.register.name) && $scope.isValid($scope.register.email) && $scope.isValid($scope.register.password) && $scope.isValid($scope.register.phone))
-            requests.userRegiserForm($scope.register.name, $scope.register.email, $scope.register.phone, $scope.register.password, function (response) {
-                if (response.status == "Success") {
-                    $scope.guest = {username: $scope.register.email, password: $scope.register.password};
+        if ($scope.isValid($scope.guest.name) && $scope.isValid($scope.guest.email) && $scope.isValid($scope.guest.password) && $scope.isValid($scope.guest.phone))
+            requests.userRegiserForm($scope.guest.name, $scope.guest.email, $scope.guest.phone, $scope.guest.password, function (response) {
+                if (response.status == "Success")
                     $scope.login();
-                }
                 else if (response.status == "Failed" && response.message == "User already exists")
                     showAlert('You already have an account.');
                 else showAlert('Please fill the form correctly.');
@@ -120,8 +118,7 @@ homeluxeApp.controller("userControl", function ($scope, $interval) {
         $scope.regFBEmail = null;
         $scope.fbConnected = null;
         $scope.guest = {};
-        $scope.register = {};
-
+        
         $scope.cookieChecker = $interval(function () {
             $scope.checkCookie();
         }, 3000);
