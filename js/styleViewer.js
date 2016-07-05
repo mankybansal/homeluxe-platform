@@ -206,7 +206,7 @@ homeluxeApp.controller("styleViewerControl", function ($scope) {
 
     $scope.loadImage = function () {
         $scope.currentImageNode = $scope.images[$scope.currentImage].id;
-        //updateLikes($scope.currentStyleNode, $scope.currentImageNode);
+        $scope.updateLikes($scope.currentStyleNode, $scope.currentImageNode);
         $(".styleContainer").css({
             "background": "url('images/styles/" + $scope.images[$scope.currentImage].img + "')",
             "background-size": "contain",
