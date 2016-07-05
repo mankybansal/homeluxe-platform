@@ -17,28 +17,24 @@ homeluxeApp.directive('homeluxeAppControl', function () {
 
             $scope.serverRequest = function (url, data, callback) {
                 console.log($scope.apiBaseURL + url);
-                $scope.$watch("guestToken", function (n, o) {
-                    if (n == o) return;
-                    $.ajax({
-                        type: "POST",
-                        dataType: "json",
-                        contentType: "application/x-www-form-urlencoded",
-                        url: $scope.apiBaseURL + url,
-                        data: data,
-                        timeout: 25000, // sets timeout
-                        success: function (response) {
-                            $scope.$apply(function () {
-                                console.log(response);
-                                callback && callback(response);
-                            });
-                        },
-                        error: function (response) {
+                $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    contentType: "application/x-www-form-urlencoded",
+                    url: $scope.apiBaseURL + url,
+                    data: data,
+                    timeout: 25000, // sets timeout
+                    success: function (response) {
+                        $scope.$apply(function () {
                             console.log(response);
-                            console.log("SERVER REQUEST ERROR");
-                        }
-                    });
-
-                }, true);
+                            callback && callback(response);
+                        });
+                    },
+                    error: function (response) {
+                        console.log(response);
+                        console.log("SERVER REQUEST ERROR");
+                    }
+                });
             };
 
             $scope.requests = {
@@ -48,58 +44,76 @@ homeluxeApp.directive('homeluxeAppControl', function () {
                 },
 
                 userLogin: function (username, password, callback) {
-                    var myObject = {
-                        "token": $scope.guestToken,
-                        "email": username,
-                        "password": password
-                    };
-                    $scope.serverRequest("member/login", myObject, callback);
+                    $scope.$watch("guestToken", function (n, o) {
+                        if (n == o) return;
+                        var myObject = {
+                            "token": $scope.guestToken,
+                            "email": username,
+                            "password": password
+                        };
+                        $scope.serverRequest("member/login", myObject, callback);
+                    }, true);
                 },
 
                 userRegisterForm: function (name, email, password, callback) {
-                    var myObject = {
-                        "token": $scope.guestToken,
-                        "name": name,
-                        "email": email,
-                        "password": password
-                    };
-                    $scope.serverRequest("member/register", myObject, callback);
+                    $scope.$watch("guestToken", function (n, o) {
+                        if (n == o) return;
+                        var myObject = {
+                            "token": $scope.guestToken,
+                            "name": name,
+                            "email": email,
+                            "password": password
+                        };
+                        $scope.serverRequest("member/register", myObject, callback);
+                    }, true);
                 },
 
                 userRegisterFacebook: function (name, email, oAuth, profilePic, callback) {
-                    var myObject = {
-                        "token": $scope.guestToken,
-                        "name": name,
-                        "email": email,
-                        "password": oAuth,
-                        "oauth": oAuth,
-                        "profile_pic": profilePic
-                    };
-                    $scope.serverRequest("member/register", myObject, callback);
+                    $scope.$watch("guestToken", function (n, o) {
+                        if (n == o) return;
+                        var myObject = {
+                            "token": $scope.guestToken,
+                            "name": name,
+                            "email": email,
+                            "password": oAuth,
+                            "oauth": oAuth,
+                            "profile_pic": profilePic
+                        };
+                        $scope.serverRequest("member/register", myObject, callback);
+                    }, true);
                 },
 
                 getStyles: function (callback) {
-                    var myObject = {
-                        "token": $scope.guestToken
-                    };
-                    $scope.serverRequest("browse", myObject, callback);
+                    $scope.$watch("guestToken", function (n, o) {
+                        if (n == o) return;
+                        var myObject = {
+                            "token": $scope.guestToken
+                        };
+                        $scope.serverRequest("browse", myObject, callback);
+                    }, true);
                 },
 
                 getQuiz: function (callback) {
-                    var myObject = {
-                        "submit": 0,
-                        "token": $scope.guestToken
-                    };
-                    $scope.serverRequest("quiz", myObject, callback);
+                    $scope.$watch("guestToken", function (n, o) {
+                        if (n == o) return;
+                        var myObject = {
+                            "submit": 0,
+                            "token": $scope.guestToken
+                        };
+                        $scope.serverRequest("quiz", myObject, callback);
+                    }, true);
                 },
 
                 submitQuiz: function (answerSet, callback) {
-                    var myObject = {
-                        "submit": 1,
-                        "token": $scope.guestToken,
-                        "answer_set": answerSet
-                    };
-                    $scope.serverRequest("quiz", myObject, callback);
+                    $scope.$watch("guestToken", function (n, o) {
+                        if (n == o) return;
+                        var myObject = {
+                            "submit": 1,
+                            "token": $scope.guestToken,
+                            "answer_set": answerSet
+                        };
+                        $scope.serverRequest("quiz", myObject, callback);
+                    },true);
                 },
 
                 getLikes: function (userToken, callback) {
