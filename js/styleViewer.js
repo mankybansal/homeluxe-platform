@@ -114,10 +114,10 @@ homeluxeApp.controller("browseStyleControl", function ($scope, $compile) {
 
             if (urlStyle != null) {
                 var styleNumber;
-                for (var i = 0; i < styles.length; i++)
-                    if (styles[i].catalogueKey == urlStyle)
+                for (var i = 0; i < $scope.styles.length; i++)
+                    if ($scope.styles[i].catalogueKey == urlStyle)
                         styleNumber = i;
-                viewStyle(styleNumber);
+                $scope.viewStyle(styleNumber);
             }
         });
     };
