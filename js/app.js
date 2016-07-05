@@ -1,5 +1,18 @@
 var homeluxeApp = angular.module('homeluxeApp', ['ngRoute']);
 
+homeluxeApp.config(['$routeProvider', function ($routeProvider) {
+    $routeProvider.
+    when('/browse', {
+        templateUrl: 'browse.php'
+    }).
+    when('/newaccount', {
+        templateUrl: 'accounts/index.html'
+    }).
+    otherwise({
+        redirectTo: '/nope'
+    });
+}]);
+
 homeluxeApp.directive('homeluxeAppControl', function () {
     return {
         controller: function ($scope, $interval) {
@@ -113,7 +126,7 @@ homeluxeApp.directive('homeluxeAppControl', function () {
                             "answer_set": answerSet
                         };
                         $scope.serverRequest("quiz", myObject, callback);
-                    },true);
+                    }, true);
                 },
 
                 getLikes: function (userToken, callback) {
