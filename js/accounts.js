@@ -58,10 +58,10 @@ homeluxeApp.controller("userControl", function ($scope, $interval) {
     };
 
     $scope.facebookRegister = function () {
-        requests.userRegisterFacebook($scope.regFBName, $scope.regFBEmail, $scope.regFBID, $scope.regFBDP, function (response) {
+        requests.userRegisterFacebook($scope.facebook.name, $scope.facebook.email, $scope.facebook.id, $scope.facebook.dp, function (response) {
             console.log(response);
-            $scope.fbConnected = true;
-            $scope.login($scope.regFBEmail, $scope.regFBID);
+            $scope.facebook.connected = true;
+            $scope.login($scope.facebook.email, $scope.facebook.id);
         });
     };
 
@@ -72,24 +72,20 @@ homeluxeApp.controller("userControl", function ($scope, $interval) {
                 showAlert("Please wait... &nbsp; <i class='fa fa-circle-o-notch fa-spin'></i>");
 
                 FB.api('/me/picture?type=normal', function (response) {
-                    $scope.regFBDP = response.data.url;
-                    console.log(response.data.url);
+                    $scope.facebook.dp = response.data.url;
                 });
 
                 FB.api('/me?fields=name,picture,email,id,link', function (response) {
 
-                    $scope.regFBName = response.name;
-                    $scope.regFBEmail = response.email;
-                    $scope.regFBID = response.id;
-
-                    console.log(response);
-
+                    $scope.facebook.name = response.name;
+                    $scope.facebook.id = response.id;
+                    $scope.facebook.email = response.email;
+                    
                     requests.userLogin(response.email, response.id, function (response) {
                         $scope.$apply(function () {
                             if (response.status == "Success") {
                                 $scope.ngMyUser = response;
-                                //myUser = response;
-                                $scope.fbConnected = true;
+                                $scope.facebook.connected = true;
                                 $scope.loginSuccess();
                             }
                             else facebookRegister();
@@ -97,13 +93,11 @@ homeluxeApp.controller("userControl", function ($scope, $interval) {
                     });
                 });
             }
-            else console.log('User cancelled login or did not fully authorize.');
+            else showAlert('Facebook Login Failed.');
         }, {scope: 'email,public_profile'});
     };
 
     $scope.checkCookie = function () {
-        console.log('CHECK COOKIE');
-        console.log($scope.ngMyUser);
         if (!($scope.ngMyUser = Cookies.getJSON('myUser')))
             $scope.ngMyUser = false;
     };
@@ -112,11 +106,7 @@ homeluxeApp.controller("userControl", function ($scope, $interval) {
         $scope.checkCookie();
         $scope.accountOptions = false;
         $scope.ngMyUser = false;
-        $scope.regFBID = null;
-        $scope.regFBDP = null;
-        $scope.regFBName = null;
-        $scope.regFBEmail = null;
-        $scope.fbConnected = null;
+        $scope.facebook = {};
         $scope.guest = {};
         
         $scope.cookieChecker = $interval(function () {
@@ -141,7 +131,7 @@ homeluxeApp.controller("userControl", function ($scope, $interval) {
 
     $scope.loginSuccess = function () {
         // SET COOKIES
-        if ($scope.fbConnected) $scope.ngMyUser.fbConnected = $scope.fbConnected;
+        if ($scope.facebook.connected) $scope.ngMyUser.fbConnected = $scope.facebook.connected;
         Cookies.set('myUser', $scope.ngMyUser);
         $('.alertMessage').hide();
         $('.loginOverlay').hide();
