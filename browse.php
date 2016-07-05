@@ -93,8 +93,8 @@
     }
 
     ?>
-    
-   
+
+
     <meta charset="UTF-8">
     <title>Browse Styles | HomeLuxe</title>
 
@@ -115,7 +115,7 @@
     <script src="js/serverRequest.js"></script>
     <script src="js/app.js"></script>
     <script src="js/headerMenu.js"></script>
-    
+
     <style>
 
         html, body {
@@ -344,19 +344,16 @@
 
 </head>
 
-<body ng-app="homeluxeApp" ng-controller="userControl">
-
-<header-menu></header-menu>
-<login-overlay></login-overlay>
-
+<body ng-app="homeluxeApp" homeluxe-app-control user-control header-menu login-overlay>
 <div ng-controller="styleViewerControl">
-    <style-viewer ></style-viewer>
+    <style-viewer></style-viewer>
     <div class="mainCardContainer" ng-controller="browseStyleControl">
         <div class="mainCard">
             <div class="introPanel" style="width: 100%;">
                 <div class="diamondContainer clear">
                     <div class='diamond' ng-repeat="style in styles" ng-click="viewStyle(style.id)">
-                        <div class='diamondText' id='style{{style.id}}' style="background: url('images/styles/{{style.name}}/{{mySplit(style.images[2].file,0) + 'thumb.' + mySplit(style.images[2].file,1)}}'); background-size: auto 160%; background-repeat: no-repeat; background-position: center;">
+                        <div class='diamondText' id='style{{style.id}}'
+                             style="background: url('images/styles/{{style.name}}/{{mySplit(style.images[2].file,0) + 'thumb.' + mySplit(style.images[2].file,1)}}'); background-size: auto 160%; background-repeat: no-repeat; background-position: center;">
                             <div class='textHighlight'>{{style.name}}</div>
                         </div>
                     </div>
@@ -365,6 +362,5 @@
         </div>
     </div>
 </div>
-
 </body>
 </html>

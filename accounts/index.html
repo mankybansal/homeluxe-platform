@@ -3,8 +3,6 @@
 <head>
 
     <meta charset="UTF-8">
-
-
     <title>My HomeLuxe | HomeLuxe.in</title>
 
     <link rel="stylesheet" href="../bower_components/animate.css/animate.css" type="text/css">
@@ -20,23 +18,19 @@
     <script src="../bower_components/js-cookie/src/js.cookie.js"></script>
 
 
-    <script src="../js/serverRequest.js"></script>
+    <!--<script src="../js/serverRequest.js"></script>-->
     <script src="../js/app.js"></script>
     <script src="../js/headerMenu.js"></script>
     <script src="userPanel.js"></script>
 
 </head>
 
-<body ng-app="homeluxeApp" ng-controller="userControl">
-
-<login-overlay></login-overlay>
-
+<body ng-app="homeluxeApp" homeluxe-app-control user-control login-overlay>
 <div class="mainUnderlay"></div>
 
 <div class="contentOverlay" ng-controller="memberDashboardControl">
 
     <div class="menuLeft">
-
 
         <div class="menuOptionGroup">
             <a href="http://homeluxe.in"><img src="../images/logoWhite.png" class="menuHeaderLogo"></a>
@@ -81,7 +75,7 @@
         <div class="menuOptionGroup">
             <div class="menuGroupLabel">Help & Settings</div>
 
-            <div class="menuOption signOutButton">
+            <div class="menuOption signOutButton" ng-click="logout()">
                 <div class="menuOptionSelect viewLogout"></div>
                 <div class="menuOptionIcon">
                     <i class="fa fa-sign-out menuIcon"></i>
@@ -131,6 +125,8 @@
             </div>
 
             <div class="avatarBox">
+                <img class='profilePic' src='{{ngMyUser.profile_pic}}' ng-show="ngMyUser.profile_pic"/>
+                <i class='fa fa-user defaultUser' ng-show="!ngMyUser.profile_pic"></i>
             </div>
 
             <div class="profileBox">
@@ -167,7 +163,10 @@
             <div class="viewPanel" id="viewMyProfile">
                 <div class="myProfileBox">
                     <div class="boxHeader">My Profile</div>
-                    <div class="myDP"></div>
+                    <div class="myDP">
+                        <img src='{{ngMyUser.profile_pic}}' ng-show="ngMyUser.profile_pic" class='myDPimage'>
+                        <i class='fa fa-user defaultUser' ng-show="!ngMyUser.profile_pic"></i>
+                    </div>
                     <div class="myInfo">
                         <div class="myInfoIcon"><i class="fa fa-user"></i></div>
                         <div class="myInfoText">{{ngMyUser.name}}</div>
@@ -184,7 +183,8 @@
             </div>
 
             <div class="viewPanel" id="viewMyLikes">
-                <div ng-repeat="like in myLikes" id='{{like.catalogueKey}}' ng-if="like.catalogueKey" class='likeBox'>
+                <div ng-repeat="like in myLikes" id='{{like.catalogueKey}}' ng-if="like.catalogueKey"
+                     class='likeBox'>
                     <div class='likeBoxImageBox'>
                         <img src='../images/styles/covers/clear-images/{{like.cover_pic}}' class='likeBoxImage'>
                     </div>
@@ -195,11 +195,11 @@
                     </div>
                 </div>
                 <!--<div class='likeBoxRoom' ng-repeat="like in myLikes" id='{{like.catalogueKey}}' ng-if="!like.catalogueKey">-->
-                    <!--<div class='likeBoxImageBox'>-->
-                        <!--<img src='../images/NOIMAGE.png' class='likeBoxImage'></div>-->
-                    <!--<div class='likeBoxStyleTitle'>{{like.name}}</div>-->
-                    <!--<div class='likeBoxDescription'>{like.description}}-->
-                    <!--</div>-->
+                <!--<div class='likeBoxImageBox'>-->
+                <!--<img src='../images/NOIMAGE.png' class='likeBoxImage'></div>-->
+                <!--<div class='likeBoxStyleTitle'>{{like.name}}</div>-->
+                <!--<div class='likeBoxDescription'>{like.description}}-->
+                <!--</div>-->
                 <!--</div>-->
             </div>
 
@@ -224,6 +224,5 @@
         </div>
     </div>
 </div>
-
 </body>
 </html>
