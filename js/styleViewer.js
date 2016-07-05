@@ -35,83 +35,21 @@ function changeUrlParam(param, value) {
         }
     }
 }
-var myUser;
 
-function updateLikes(styleNode, imageNode) {
-    if (myUser = Cookies.getJSON("myUser"))
-        requests.getLikes(myUser.token, function (response) {
-            if (response.success != "false") {
-                var flag1 = false, flag2 = false;
-                $.each(response, function (index, item) {
-                    if (item.id == styleNode) {
-                        $(".changeHeartStyle").removeClass("fa-heart-o").addClass("fa-heart");
-                        flag1 = true;
-                    }
-                    if (item.id == imageNode) {
-                        $(".changeHeartRoom").removeClass("fa-heart-o").addClass("fa-heart");
-                        flag2 = true;
-                    }
-                });
-                if (!flag1) $(".changeHeartStyle").removeClass("fa-heart").addClass("fa-heart-o")
-                if (!flag2) $(".changeHeartRoom").removeClass("fa-heart").addClass("fa-heart-o");
-            }
-        });
-}
-
-function likeStyle() {
-    if (myUser = Cookies.getJSON("myUser"))
-        requests.likeNode(myUser.token, currentStyleNode, function (response) {
-            if (response.status == "Success")
-                $(".changeHeartStyle").removeClass("fa-heart-o").addClass("fa-heart");
-            else if (response.message == "Invalid token detected")
-                logout();
-            else
-                console.log("Some Error Occurred");
-        });
-    else loginButtonClick();
-}
-
-function likeRoom() {
-    if (myUser = Cookies.getJSON("myUser"))
-        requests.likeNode(myUser.token, currentImageNode, function (response) {
-            if (response.status == "Success")
-                $(".changeHeartRoom").removeClass("fa-heart-o").addClass("fa-heart");
-            else
-                console.log("Some Error Occurred");
-        });
-    else
-        loginButtonClick();
-}
 
 homeluxeApp.controller("browseStyleControl", function ($scope, $compile) {
-   getServer();
+    getServer();
 
-    $scope.mySplit = function(string, nb) {
+    $scope.mySplit = function (string, nb) {
         var array = string.split('.');
         return array[nb];
-    }
-
+    };
 
     $scope.getStyles = function () {
         requests.getStyles(function (response) {
             $scope.$apply(function () {
                 $scope.$parent.styles = response;
             });
-
-            // $.each(styles, function (index, item) {
-            //     $('.diamondContainer').append("<div class='diamond' id='styleDia" + index + "' ng-click='viewStyle(" + index + ")'><div class='diamondText' id='style" + index + "' ><div class='textHighlight'>" + item.name + "</div></div></div>");
-            //
-            //     var str = item.images[2].file;
-            //     var res = str.split(".");
-            //
-            //     $("#style" + index).css({
-            //         "background": "url('images/styles/" + item.name + "/" + res[0] + "thumb." + res[1] + "')",
-            //         "background-size": "auto 160%",
-            //         "background-repeat": "no-repeat",
-            //         "background-position": "center"
-            //     });
-            // });
-
 
             $('.mainCard').fadeIn(1000).animate({marginTop: '0px'}, 500);
 
@@ -127,7 +65,7 @@ homeluxeApp.controller("browseStyleControl", function ($scope, $compile) {
 
     $scope.getStyles();
 
-    $scope.viewStyle = function (styleNum){
+    $scope.viewStyle = function (styleNum) {
         $scope.$parent.viewStyle(styleNum);
     }
 
@@ -145,6 +83,53 @@ homeluxeApp.controller("styleViewerControl", function ($scope) {
         $scope.currentStyleNode = null;
         $scope.currentImageNode = null;
     };
+
+    $scope.updateLikes = function (styleNode, imageNode) {
+        if ($scope.$parent.ngMyUser = Cookies.getJSON("myUser"))
+            requests.getLikes($scope.$parent.ngMyUser.token, function (response) {
+                if (response.success != "false") {
+                    var flag1 = false, flag2 = false;
+                    $.each(response, function (index, item) {
+                        if (item.id == styleNode) {
+                            $(".changeHeartStyle").removeClass("fa-heart-o").addClass("fa-heart");
+                            flag1 = true;
+                        }
+                        if (item.id == imageNode) {
+                            $(".changeHeartRoom").removeClass("fa-heart-o").addClass("fa-heart");
+                            flag2 = true;
+                        }
+                    });
+                    if (!flag1) $(".changeHeartStyle").removeClass("fa-heart").addClass("fa-heart-o")
+                    if (!flag2) $(".changeHeartRoom").removeClass("fa-heart").addClass("fa-heart-o");
+                }
+            });
+    };
+
+    $scope.likeStyle = function () {
+        if ($scope.$parent.ngMyUser = Cookies.getJSON("myUser"))
+            requests.likeNode($scope.$parent.ngMyUser.token, $scope.currentStyleNode, function (response) {
+                if (response.status == "Success")
+                    $(".changeHeartStyle").removeClass("fa-heart-o").addClass("fa-heart");
+                else if (response.message == "Invalid token detected")
+                    logout();
+                else
+                    console.log("Some Error Occurred");
+            });
+        else loginButtonClick();
+    };
+
+    $scope.likeRoom = function () {
+        if ($scope.$parent.ngMyUser = Cookies.getJSON("myUser"))
+            requests.likeNode($scope.$parent.ngMyUser.token, $scope.currentImageNode, function (response) {
+                if (response.status == "Success")
+                    $(".changeHeartRoom").removeClass("fa-heart-o").addClass("fa-heart");
+                else
+                    console.log("Some Error Occurred");
+            });
+        else
+            loginButtonClick();
+    };
+
 
     $scope.viewStyle = function (styleNum) {
         $('.leftNav').hide();
@@ -212,7 +197,7 @@ homeluxeApp.controller("styleViewerControl", function ($scope) {
         $scope.currentImage++;
         $('.leftNav').show();
         $('.rightNav').show();
-        if ($scope.currentImage >= ($scope.images.length-1)) {
+        if ($scope.currentImage >= ($scope.images.length - 1)) {
             $scope.currentImage = $scope.images.length - 1;
             $('.rightNav').hide();
         }
