@@ -304,8 +304,6 @@ homeluxeApp.controller("quizAppControl", function ($scope, $rootScope) {
 });
 
 homeluxeApp.controller("browseStyleControl", function ($scope, $rootScope) {
-    getServer();
-
     $scope.mySplit = function (string, nb) {
         var array = string.split('.');
         return array[nb];
@@ -332,7 +330,6 @@ homeluxeApp.controller("browseStyleControl", function ($scope, $rootScope) {
     $scope.viewStyle = function (styleNum) {
         $scope.$parent.viewStyle(styleNum);
     }
-
 });
 
 homeluxeApp.controller("styleViewerControl", function ($scope, $rootScope) {
