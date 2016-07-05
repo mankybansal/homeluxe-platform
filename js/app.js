@@ -57,7 +57,7 @@ homeluxeApp.directive('homeluxeAppControl', function () {
 
                 userRegisterForm: function (name, email, password, callback) {
                     $scope.$watch("guestToken", function (n, o) {
-                        if (n == o) return;
+                        if (!n || !o) return;
                         var myObject = {
                             "token": $scope.guestToken,
                             "name": name,
@@ -70,7 +70,7 @@ homeluxeApp.directive('homeluxeAppControl', function () {
 
                 userRegisterFacebook: function (name, email, oAuth, profilePic, callback) {
                     $scope.$watch("guestToken", function (n, o) {
-                        if (n == o) return;
+                        if (!n || !o) return;
                         var myObject = {
                             "token": $scope.guestToken,
                             "name": name,
@@ -85,7 +85,7 @@ homeluxeApp.directive('homeluxeAppControl', function () {
 
                 getStyles: function (callback) {
                     $scope.$watch("guestToken", function (n, o) {
-                        if (n == o) return;
+                        if (!n || !o) return;
                         var myObject = {
                             "token": $scope.guestToken
                         };
@@ -95,7 +95,7 @@ homeluxeApp.directive('homeluxeAppControl', function () {
 
                 getQuiz: function (callback) {
                     $scope.$watch("guestToken", function (n, o) {
-                        if (n == o) return;
+                        if (!n || !o) return;
                         var myObject = {
                             "submit": 0,
                             "token": $scope.guestToken
@@ -106,7 +106,7 @@ homeluxeApp.directive('homeluxeAppControl', function () {
 
                 submitQuiz: function (answerSet, callback) {
                     $scope.$watch("guestToken", function (n, o) {
-                        if (n == o) return;
+                        if (!n || !o) return;
                         var myObject = {
                             "submit": 1,
                             "token": $scope.guestToken,
