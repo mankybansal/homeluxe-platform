@@ -168,6 +168,21 @@ homeluxeApp.directive("loginOverlay", function ($templateRequest, $compile) {
     }
 });
 
+
+homeluxeApp.directive("styleViewer", function ($templateRequest, $compile) {
+    return {
+        restrict: "AE",
+        link: function (scope, element) {
+            $templateRequest("styleViewer.html").then(function (html) {
+                var template = angular.element(html);
+                element.append(template);
+                $compile(template)(scope);
+            });
+        }
+    }
+});
+
+
 // Show Alert Message
 function showAlert(message) {
     $(".alertMessage").fadeIn(300).html(message);
@@ -195,7 +210,6 @@ window.fbAsyncInit = function () {
     js.src = "//connect.facebook.net/en_US/all.js";
     ref.parentNode.insertBefore(js, ref);
 }(document));
-
 
 var styles;
 
@@ -231,5 +245,4 @@ homeluxeApp.controller("quizAppController", function($scope){
         $scope.currentQuestion++;
         $scope.getNextQuestion();
     };
-
 });

@@ -35,9 +35,10 @@ function changeUrlParam(param, value) {
         }
     }
 }
+var myUser;
 
 function updateLikes(styleNode, imageNode) {
-    if ($.cookie("myUser-token"))
+    if (myUser = Cookies.getJSON("myUser"))
         requests.getLikes(myUser.token, function (response) {
             if (response.success != "false") {
                 var flag1 = false, flag2 = false;
@@ -58,7 +59,7 @@ function updateLikes(styleNode, imageNode) {
 }
 
 function likeStyle() {
-    if ($.cookie("myUser-token"))
+    if (myUser = Cookies.getJSON("myUser"))
         requests.likeNode(myUser.token, currentStyleNode, function (response) {
             if (response.status == "Success")
                 $(".changeHeartStyle").removeClass("fa-heart-o").addClass("fa-heart");
@@ -71,7 +72,7 @@ function likeStyle() {
 }
 
 function likeRoom() {
-    if ($.cookie("myUser-token"))
+    if (myUser = Cookies.getJSON("myUser"))
         requests.likeNode(myUser.token, currentImageNode, function (response) {
             if (response.status == "Success")
                 $(".changeHeartRoom").removeClass("fa-heart-o").addClass("fa-heart");

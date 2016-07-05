@@ -403,9 +403,9 @@
 
 <body ng-app="homeluxeApp" ng-controller="userControl">
 
-
 <header-menu></header-menu>
 <login-overlay></login-overlay>
+<style-viewer></style-viewer>
 
 <div class="mainCardContainer">
     <div class="mainCard">
@@ -415,6 +415,5 @@
     </div>
 </div>
 
-<div class="styleViewer"></div>
 </body>
 </html>
