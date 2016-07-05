@@ -248,7 +248,6 @@ homeluxeApp.service('stylesService', function() {
     this.styles = [];
     this.setStyles = function (newStyles) {
         this.styles = newStyles;
-        return this.styles;
     };
 
     this.getStyles = function(){
