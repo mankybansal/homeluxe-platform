@@ -342,12 +342,12 @@
 
 </head>
 
-<body ng-app="homeluxeApp" homeluxe-app-control user-control style-viewer-control browse-style-control>
+<body ng-app="homeluxeApp" homeluxe-app-control user-control>
 <header-menu></header-menu>
 <login-overlay></login-overlay>
-
+<div ng-controller="styleViewerControl">
     <style-viewer></style-viewer>
-    <div class="mainCardContainer">
+    <div class="mainCardContainer" ng-controller="browseStyleControl">
         <div class="mainCard">
             <div class="introPanel" style="width: 100%;">
                 <div class="diamondContainer clear">
@@ -361,6 +361,6 @@
             </div>
         </div>
     </div>
-
+</div>
 </body>
 </html>
