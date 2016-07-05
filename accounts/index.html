@@ -176,9 +176,9 @@
                         <div class="myInfoIcon"><i class="fa fa-envelope"></i></div>
                         <div class="myInfoText">{{ngMyUser.email}}</div>
                     </div>
-                    <div class="myInfo">
-                        <div class="myInfoIcon"><i class="fa fa-link"></i></div>
-                        <div class="myInfoText"><{{ngMyUser.fbConnected}}</div>
+                    <div class="myInfo" ng-show="ngMyUser.fbConnected">
+                        <div class="myInfoIcon"><i class="fa fa-facebook"></i></div>
+                        <div class="myInfoText">Connected to Facebook</div>
                     </div>
                 </div>
             </div>
