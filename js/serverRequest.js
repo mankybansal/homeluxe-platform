@@ -115,7 +115,7 @@ var requests = {
         var myObject = {
             "token": userToken
         };
-        serverRequest("member/likes", myObject, callback);
+        serverRequest("likes", myObject, callback);
     },
 
     likeNode: function (userToken, nodeID, callback) {
@@ -123,7 +123,7 @@ var requests = {
             "token": userToken,
             "like_node": nodeID
         };
-        serverRequest("member/like", myObject, callback);
+        serverRequest("like", myObject, callback);
     }
 };
 
