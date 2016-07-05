@@ -203,6 +203,7 @@ homeluxeApp.controller("styleViewerControl", function ($scope) {
             $scope.currentImage = 0;
             $('.leftNav').hide();
         }
+        console.log($scope.currentImage);
         $scope.loadImage();
     };
 
@@ -210,6 +211,7 @@ homeluxeApp.controller("styleViewerControl", function ($scope) {
         $scope.currentImage++;
         $('.leftNav').show();
         $('.rightNav').show();
+        console.log($scope.currentImage);
         if ($scope.currentImage > ($scope.images.length - 1)) {
             $scope.currentImage = $scope.images.length - 1;
             $('.rightNav').hide();
