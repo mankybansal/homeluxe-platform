@@ -93,11 +93,12 @@
 }
 
 .loginButton {
+    width: 100px;
     background: #468fde;
 }
 
 .registerButton {
-    width: 340px;
+    width: 220px;
     background: yellowgreen;
 }
 
