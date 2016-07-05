@@ -50,15 +50,21 @@
                 var phone = encodeURIComponent(document.getElementById("PHONE").value);
                 var message = encodeURIComponent(document.getElementById("MESSAGE").value);
 
-                var dataString = 'name=' + name + '&email=' + email + '&phone=' + phone + '&message=' + message;
-                console.log(dataString);
                 if (name == '' || email == '' || phone == '') {
                     alert("Please fill all the details!");
                 } else {
+                    var dataObj = {
+                        query: {
+                            name: name,
+                            email: email,
+                            phone: phone,
+                            message: message
+                        }
+                    };
                     $.ajax({
                         type: "GET",
-                        url: "send.php",
-                        data: dataString,
+                        url: "https://dev.homeluxe.in:3000/sendmail",
+                        data: dataObj,
                         success: function () {
                             $('.contactSuccess').fadeIn(500);
                             $('.contactSubmit').fadeOut(500);
