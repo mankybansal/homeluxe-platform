@@ -121,10 +121,6 @@ homeluxeApp.controller("browseStyleControl", function ($scope, $compile) {
     };
 
     $scope.getStyles();
-});
-
-
-homeluxeApp.controller("styleViewerControl", function ($scope) {
 
     $scope.styles = [];
 
@@ -222,6 +218,12 @@ homeluxeApp.controller("styleViewerControl", function ($scope) {
     };
 
     $scope.init();
+});
+
+
+homeluxeApp.controller("styleViewerControl", function ($scope) {
+
+
 });
 
 

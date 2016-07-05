@@ -210,7 +210,7 @@ window.fbAsyncInit = function () {
     ref.parentNode.insertBefore(js, ref);
 }(document));
 
-//var styles;
+var styles;
 
 homeluxeApp.controller("quizAppControl", function($scope){
 
