@@ -83,10 +83,6 @@ function likeRoom() {
         loginButtonClick();
 }
 
-homeluxeApp.controller("rootControl", function ($scope, $compile) {
-    $scope.styles = [];
-});
-
 homeluxeApp.controller("browseStyleControl", function ($scope, $compile) {
 
     getServer();
@@ -126,11 +122,15 @@ homeluxeApp.controller("browseStyleControl", function ($scope, $compile) {
 
     $scope.getStyles();
 
+    $scope.viewStyle = function (styleNum){
+        $scope.$parent.viewStyle(styleNum);
+    }
+
 });
 
 
 homeluxeApp.controller("styleViewerControl", function ($scope) {
-
+    $scope.styles = [];
     $scope.init = function () {
         $scope.images = [];
         $scope.currentImage = 0;
