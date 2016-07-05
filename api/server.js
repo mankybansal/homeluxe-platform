@@ -178,7 +178,7 @@ publicRoutes.post('/quiz', function(req,res) {
 
 		if(typeof answer_set != 'undefined' && answer_set && answer_set.length == 6) {
 			/* Complete answer_set start crunching */
-			query = 'MATCH (o:Options)-[LEADS_TO_PROFILE]->(p:Profiles) WHERE ID(o) IN {nodes} WITH p,COUNT(p.name) AS count ORDER BY count DESC LIMIT 1 WITH p MATCH (p)-[:HAS_ROOM]->(r) WITH p,r,r.order AS order ORDER BY order ASC RETURN p.name AS name,p.price AS price,p.catalogueKey AS catalogueKey,p.cover_pic AS cover_pic,p.description AS description,collect(r) AS images;';
+			query = 'MATCH (o:Options)-[LEADS_TO_PROFILE]->(p:Profiles) WHERE ID(o) IN {nodes} WITH p,COUNT(p.name) AS count ORDER BY count DESC LIMIT 1 WITH p MATCH (p)-[:HAS_ROOM]->(r) WITH p,r,r.order AS order ORDER BY order ASC RETURN p.name AS name,p.price AS price,p.catalogueKey AS catalogueKey,p.cover_pic AS cover_pic,p.description AS description,ID(p) as id,collect(r) AS images;';
 			db.query(query, {nodes : answer_set}, function(err,results){
 				if (err)
 					console.log(err);
