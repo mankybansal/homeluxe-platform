@@ -106,10 +106,10 @@
     <link rel="stylesheet" href="css/headerMenu.css" type="text/css">
     <link rel="stylesheet" href="css/styleViewer.css" type="text/css">
 
-    <script src="/bower_components/jquery/dist/jquery.js"></script>
-    <script src="/bower_components/angular/angular.js"></script>
-    <script src="/bower_components/angular-route/angular-route.js"></script>
-    <script src="/bower_components/js-cookie/src/js.cookie.js"></script>
+    <script src="/home/ankit/homeluxe-platform/bower_components/jquery/dist/jquery.js"></script>
+    <script src="/home/ankit/homeluxe-platform/bower_components/angular/angular.js"></script>
+    <script src="/home/ankit/homeluxe-platform/bower_components/angular-route/angular-route.js"></script>
+    <script src="/home/ankit/homeluxe-platform/bower_components/js-cookie/src/js.cookie.js"></script>
     
     <script src="js/app.js"></script>
     <script src="js/headerMenu.js"></script>

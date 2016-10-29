@@ -490,7 +490,7 @@ homeluxeApp.directive("headerMenu", function ($templateRequest, $compile) {
 
     var template;
     if (typeof dashboard != 'undefined') template = "../modules/headerMenu.html";
-    else template = "modules/headerMenu.html";
+    else template = "/home/ankit/homeluxe-platform/modules/headerMenu.html";
 
     return {
         restrict: "AE",
@@ -508,7 +508,7 @@ homeluxeApp.directive("loginOverlay", function ($templateRequest, $compile) {
 
     var template;
     if (typeof dashboard != 'undefined') template = "../modules/loginOverlay.html";
-    else template = "modules/loginOverlay.html";
+    else template = "/home/ankit/homeluxe-platform/modules/loginOverlay.html";
 
     return {
         restrict: "AE",

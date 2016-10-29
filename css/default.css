@@ -19,7 +19,7 @@ a:active {
     text-decoration: underline;
 }
 
-@font-face {
+/*@font-face {
     font-family: RobotoLight;
     src: url('../fonts/Roboto-Light.ttf');
 }
@@ -37,7 +37,7 @@ a:active {
 @font-face {
     font-family: RobotoRegular;
     src: url('../fonts/Roboto-Regular.ttf');
-}
+}*/
 
 html, body {
     width: 100% !important;
@@ -60,7 +60,7 @@ html, body {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     text-align: center;
-    font-family: RobotoLight, sans-serif;
+    font-family: 'Open Sans', sans-serif;
     font-size: 40px;
     padding: 30px;
 }
@@ -83,7 +83,7 @@ html, body {
 
 .HIWStepTitle {
     font-size: 25px;
-    font-family: RobotoRegular, sans-serif;
+    font-family: 'Open Sans', sans-serif;
     text-transform: uppercase;
     margin-bottom: 10px;
     color: #468FDE;
@@ -140,13 +140,13 @@ html, body {
 
 .section {
     text-align: center;
-    font-family: RobotoLight, sans-serif;
+    font-family: 'Open Sans', sans-serif;
     font-size: 40px;
 }
 
 .slideTitle {
 
-    font-family: RobotoLight, sans-serif;
+    font-family: 'Open Sans', sans-serif;
     font-size: 40px;
     color: #333;
     padding: 18px 30px 18px 30px;
@@ -157,7 +157,7 @@ html, body {
 
 .slideSubTitle {
 
-    font-family: RobotoLight, sans-serif;
+    font-family: 'Open Sans', sans-serif;
 
     float: top;
     display: inline-block;
@@ -169,14 +169,14 @@ html, body {
 }
 
 .getStartedButton {
-    font-family: RobotoRegular, sans-serif;
+    font-family: 'Open Sans', sans-serif;
     float: top;
     display: inline-block;
     font-size: 18px;
     color: #FFF;
     margin-top: 25px;
     padding: 18px 30px 18px 30px;
-    background: #468FDE;
+    background: #5BC9E6;
     box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
     cursor: pointer;
 }
@@ -251,7 +251,7 @@ html, body {
     font-size: 30px;
     width: 450px;
     border: 0px;
-    font-family: RobotoLight, sans-serif;
+    font-family: 'Open Sans', sans-serif;
     display: inline-block;
 }
 
@@ -263,7 +263,7 @@ html, body {
     width: 80%;
     outline: none;
     margin: 2.5px;
-    font-family: RobotoLight, sans-serif;
+    font-family: 'Open Sans', sans-serif;
     background: #FFF;
     border: 5px solid #FFF;
     color: #333;
@@ -275,13 +275,13 @@ html, body {
     float: top;
     width: 200px;
     height: 60px;
-    background: yellowgreen;
+    background: #5BC9E6;
     color: white;
     outline: none;
     border: 0px;
     display: inline-block;
     font-size: 18px;
-    font-family: RobotoLight, sans-serif;
+    font-family: 'Open Sans', sans-serif;
     cursor: pointer;
 }
 
@@ -321,13 +321,13 @@ html, body {
     background: #EEE;
     padding: 20px;
     box-sizing: border-box;
-    font-family: RobotoLight, sans-serif;
+    font-family: 'Open Sans', sans-serif;
 }
 
 .emailContainer {
     width: 100%;
     box-sizing: border-box;
-    font-family: RobotoLight, sans-serif;
+    font-family: 'Open Sans', sans-serif;
     font-size: 22px;
     margin: 0 auto;
     color: #333;
@@ -336,7 +336,7 @@ html, body {
 
 .blue {
     font-weight: bold;
-    color: yellowgreen;
+    color: #5BC9E6;
 }
 
 .bounce {
